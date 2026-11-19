@@ -7,6 +7,7 @@ import { pct, priceText, tempLabel } from '@/lib/format';
 import { stickerStyle } from '@/lib/sticker';
 import { JupButton } from '@/components/Jup';
 import LivePrice from '@/components/LivePrice';
+import LiveStamp from '@/components/LiveStamp';
 
 export const dynamicParams = false;
 
@@ -89,6 +90,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         <Link href="/money/" className="cta light" style={{ border: '1.5px solid #C4C4C0' }}>포트폴리오 짜보기<Arrow color="#111" /></Link>
         <p className="small" style={{ margin: '0 8px', fontSize: 12, color: '#5A5A58' }}>세일이어도 더 떨어질 수 있어요. 한 번에 말고 나눠서. 가격: Yahoo Finance {q.date} 종가. 최종 판단은 본인이 해요.</p>
       </div>
+      <LiveStamp market={e.market} />
       <BottomNav active="etf" />
     </main>
   );

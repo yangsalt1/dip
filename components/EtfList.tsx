@@ -1,5 +1,6 @@
 'use client';
 import { useLive } from '@/lib/live';
+import LiveStamp from './LiveStamp';
 import { useState } from 'react';
 import Link from 'next/link';
 import { ETFS, FX_RATE, PALETTE, PRICE_DATE, SECTORS, type Etf, type Market } from '@/lib/data';
@@ -72,6 +73,7 @@ export default function EtfList() {
       )}
 
       <p className="note">가격: Yahoo Finance {PRICE_DATE} 종가, 환율 1달러 = {Math.round(FX_RATE).toLocaleString('ko-KR')}원. 인기 순위는 지금은 수동이에요.</p>
+      <LiveStamp />
       <BottomNav active="etf" />
     </main>
   );

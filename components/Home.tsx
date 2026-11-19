@@ -8,9 +8,10 @@ import { stickerStyle } from '@/lib/sticker';
 import { Arrow, BottomNav, HandIcon, Sticker } from './ui';
 import { NewsExtra } from './NewsCard';
 import Overview, { MktToggle } from './Overview';
+import LiveStamp from './LiveStamp';
 
 const CARD_BG = ['#B1A6FF', '#D8D0C4', '#F2F28E'];
-const FX_BG = ['#F7F7F5', '#F7F7F5', '#F7F7F5'];
+const FX_BG = ['#C9DDF7', '#F2F28E', '#B1A6FF'];
 
 export default function Home() {
   useLive();
@@ -89,7 +90,6 @@ export default function Home() {
           );
         })}
       </div>
-      <p className="note" style={{ fontSize: 13 }}>카드를 누르면 관련 ETF랑 "사? 말아?"가 나와요</p>
 
       </div>
       <div className="colB">
@@ -102,12 +102,12 @@ export default function Home() {
           {FX.map((f, i) => (
             <Link key={f.id} href="/fx/" className="tile" style={{ background: FX_BG[i] }}>
               <b style={{ fontSize: 13 }}>{f.short}</b>
-              <b style={{ fontSize: 13, color: '#1A3FA8' }}>{f.q.dd <= -10 ? '특급 ' : ''}{Math.abs(f.q.dd).toFixed(1)}% 할인</b>
+              <b style={{ fontSize: 13, color: '#111' }}>{f.q.dd <= -10 ? '특급 ' : ''}{Math.abs(f.q.dd).toFixed(1)}% 할인</b>
               <span style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.04em' }}>{Math.round(f.q.last * f.mult).toLocaleString('ko-KR')}원</span>
             </Link>
           ))}
         </div>
-        <Link href="/fx/" className="cta light" style={{ margin: '0 4px', width: 'auto' }}>지금 사? 말아? 보기<Arrow color="#111" /></Link>
+        <Link href="/fx/" className="cta" style={{ margin: '0 4px', width: 'auto' }}>지금 사? 말아? 보기<Arrow /></Link>
       </section>
 
       <section className="section" aria-label="지금 세일 중" style={{ paddingBottom: 0 }}>
@@ -154,6 +154,7 @@ export default function Home() {
       </div>
 
 
+      <LiveStamp />
       <BottomNav active="news" />
     </main>
   );
