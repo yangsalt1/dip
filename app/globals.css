@@ -353,3 +353,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .loginBtn.kakao { background: #FEE500; color: rgba(0,0,0,.85); }
 .loginBtn.naver { background: #03C75A; color: #fff; }
 .loginBtn.google { background: #fff; color: #1F1F1F; border: 1px solid #C4C4C0; }
+
+/* 검은 배너 안 작은 미국/한국 토글 */
+.miniSeg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; background: #2A2A2A; }
+.miniSeg button { min-height: 30px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: #BDBDBA; font-size: 13px; font-weight: 800; cursor: pointer; }
+.miniSeg button[aria-pressed="true"] { background: #F4F4F2; color: #111; }

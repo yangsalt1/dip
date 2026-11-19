@@ -2,13 +2,25 @@ import { ETFS } from '@/lib/data';
 import { overview } from '@/lib/overview';
 
 const DOT: Record<string, string> = { mega: '#FF5A3C', sale: '#B1A6FF', bottom: '#F2F28E', rising: '#9CC3FF' };
+export type Mkt = 'us' | 'kr';
 
-/** 배너: 왼쪽 라벨(세일중/줍줍준비/상승중) + 섹터 이름, 아래 비율 막대 */
-export default function Overview({ size = 'web' }: { size?: 'web' | 'app' }) {
-  const groups = overview();
-  const mega = ETFS.filter((e) => e.kind === 'mega').length;
-  const sale = ETFS.filter((e) => e.kind === 'sale').length;
-  const rest = ETFS.length - mega - sale;
+/** 검은 배너 안 작은 미국/한국 토글 */
+export function MktToggle({ mkt, onChange }: { mkt: Mkt; onChange: (m: Mkt) => void }) {
+  return (
+    <div className="miniSeg" role="group" aria-label="시장 고르기">
+      <button type="button" aria-pressed={mkt === 'us'} onClick={() => onChange('us')}>미국</button>
+      <button type="button" aria-pressed={mkt === 'kr'} onClick={() => onChange('kr')}>한국</button>
+    </div>
+  );
+}
+
+/** 배너: 왼쪽 라벨 + 섹터 이름, 아래 비율 막대 (고른 시장만) */
+export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; mkt: Mkt }) {
+  const groups = overview(mkt);
+  const list = ETFS.filter((e) => e.market === mkt);
+  const mega = list.filter((e) => e.kind === 'mega').length;
+  const sale = list.filter((e) => e.kind === 'sale').length;
+  const up = list.length - mega - sale;
   return (
     <div className={`ov ov-${size}`}>
       <div className="ovGrid">
@@ -21,15 +33,15 @@ export default function Overview({ size = 'web' }: { size?: 'web' | 'app' }) {
       </div>
       <div className="ovBarWrap">
         <div className="ovBar" aria-hidden="true">
-          <span style={{ flex: mega, background: '#FF4D2E' }} />
-          <span style={{ flex: sale, background: '#B1A6FF' }} />
-          <span style={{ flex: rest, background: '#3A3A3A' }} />
+          {mega > 0 && <span style={{ flex: mega, background: '#FF4D2E' }} />}
+          {sale > 0 && <span style={{ flex: sale, background: '#B1A6FF' }} />}
+          {up > 0 && <span style={{ flex: up, background: '#9CC3FF' }} />}
         </div>
         <div className="ovLegend">
-          <span><b style={{ color: '#FF5A3C' }}>{mega}</b> 특급세일</span>
-          <span><b style={{ color: '#B1A6FF' }}>{sale}</b> 일반 세일</span>
-          <span className="dim"><b>{rest}</b> 상승·워워</span>
-          <span className="dim total">전체 {ETFS.length}개 ETF</span>
+          {mega > 0 && <span><b style={{ color: '#FF5A3C' }}>{mega}</b> 특급세일</span>}
+          {sale > 0 && <span><b style={{ color: '#B1A6FF' }}>{sale}</b> 일반 세일</span>}
+          {up > 0 && <span><b style={{ color: '#9CC3FF' }}>{up}</b> 세일 아님</span>}
+          <span className="dim total">{mkt === 'us' ? '미국' : '한국'} ETF {list.length}개</span>
         </div>
       </div>
     </div>

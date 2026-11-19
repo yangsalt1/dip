@@ -5,18 +5,17 @@ import { BRIEF, ETFS, FX, isKnife, type Etf } from '@/lib/data';
 import { stickerStyle } from '@/lib/sticker';
 import { Arrow, BottomNav, HandIcon, Sticker } from './ui';
 import { NewsExtra } from './NewsCard';
-import Overview from './Overview';
+import Overview, { MktToggle } from './Overview';
 
 const CARD_BG = ['#B1A6FF', '#D8D0C4', '#F2F28E'];
 const FX_BG = ['#F7F7F5', '#F7F7F5', '#F7F7F5'];
 
 export default function Home() {
   const [open, setOpen] = useState(-1);
-  const [nm, setNm] = useState<'us' | 'kr'>('us');
-  const cards = nm === 'us' ? BRIEF.cards : BRIEF.cardsKr;
-  const pickNews = (m: 'us' | 'kr') => { setNm(m); setOpen(-1); };
 
-  const [mkt, setMkt] = useState<'us' | 'kr'>('us');
+  const [mkt, setMktRaw] = useState<'us' | 'kr'>('us');
+  const setMkt = (m: 'us' | 'kr') => { setMktRaw(m); setOpen(-1); };
+  const cards = mkt === 'us' ? BRIEF.cards : BRIEF.cardsKr;
   const list = ETFS.filter((e) => e.market === mkt);
   const byScore = (a: Etf, b: Etf) => b.q.buy - a.q.buy;
   const megas = list.filter((e) => e.kind === 'mega').sort(byScore);
@@ -59,15 +58,10 @@ export default function Home() {
       <div className="colA">
       <div className="stack keep">
         <section className="card dark" style={{ gap: 14 }}>
-          <div className="row"><span className="small" style={{ color: '#BDBDBA', fontWeight: 700 }}>오늘 시장은</span></div>
-          <Overview size="app" />
-          <p className="small" style={{ margin: 0, color: '#8A8A88' }}>{BRIEF.weather.detail}</p>
+          <div className="row"><span className="small" style={{ color: '#BDBDBA', fontWeight: 700 }}>오늘 시장은</span><MktToggle mkt={mkt} onChange={setMkt} /></div>
+          <Overview size="app" mkt={mkt} />
+          <p className="small" style={{ margin: 0, color: '#8A8A88' }}>{mkt === 'us' ? BRIEF.weather.detailUs : BRIEF.weather.detailKr}</p>
         </section>
-
-        <div className="seg" role="group" aria-label="뉴스" style={{ width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-          <button type="button" className={nm === 'us' ? 'on' : ''} aria-pressed={nm === 'us'} onClick={() => pickNews('us')}>미국 뉴스</button>
-          <button type="button" className={nm === 'kr' ? 'on' : ''} aria-pressed={nm === 'kr'} onClick={() => pickNews('kr')}>한국 뉴스</button>
-        </div>
 
         {cards.map((c, i) => {
           const isOpen = open === i;

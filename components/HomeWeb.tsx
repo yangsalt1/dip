@@ -5,14 +5,13 @@ import { BRIEF, ETFS, FX, PRICE_DATE, isKnife, type Etf } from '@/lib/data';
 import { fxVerdict } from '@/lib/fx';
 import { Arrow, BottomNav, HandIcon, Sticker } from './ui';
 import NewsCard from './NewsCard';
-import Overview from './Overview';
+import Overview, { MktToggle } from './Overview';
 
 const NEWS_BG = ['#B1A6FF', '#D8D0C4', '#F2F28E'];
 
 /** 웹(1024px~) 전용 첫 화면 */
 export default function HomeWeb() {
   const [mkt, setMkt] = useState<'us' | 'kr'>('us');
-  const [nm, setNm] = useState<'us' | 'kr'>('us');
   const list = ETFS.filter((e) => e.market === mkt);
   const byScore = (a: Etf, b: Etf) => b.q.buy - a.q.buy;
   const megas = list.filter((e) => e.kind === 'mega').sort(byScore);
@@ -42,21 +41,20 @@ export default function HomeWeb() {
         <div className="wMain">
           <section className="wBanner">
             <div className="row" style={{ alignItems: 'baseline' }}>
-              <span className="small" style={{ color: '#BDBDBA', fontWeight: 700 }}>오늘 시장 한눈에</span>
-              <span className="small" style={{ color: '#8A8A88', fontWeight: 600 }}>{BRIEF.weather.detail}</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span className="small" style={{ color: '#BDBDBA', fontWeight: 700 }}>오늘 시장 한눈에</span>
+                <MktToggle mkt={mkt} onChange={setMkt} />
+              </span>
+              <span className="small" style={{ color: '#8A8A88', fontWeight: 600 }}>{mkt === 'us' ? BRIEF.weather.detailUs : BRIEF.weather.detailKr}</span>
             </div>
-            <Overview size="web" />
+            <Overview size="web" mkt={mkt} />
           </section>
 
           <div className="wSecHead">
-            <h2 style={{ margin: 0 }}>오늘 뉴스</h2>
-            <div className="seg" role="group" aria-label="뉴스" style={{ gridTemplateColumns: '1fr 1fr', width: 260 }}>
-              <button type="button" aria-pressed={nm === 'us'} onClick={() => setNm('us')}>미국 뉴스</button>
-              <button type="button" aria-pressed={nm === 'kr'} onClick={() => setNm('kr')}>한국 뉴스</button>
-            </div>
+            <h2 style={{ margin: 0 }}>오늘 {mkt === 'us' ? '미국' : '한국'} 뉴스</h2>
           </div>
           <div className="wNews3">
-            {(nm === 'us' ? BRIEF.cards : BRIEF.cardsKr).map((c, i) => <NewsCard key={nm + i} c={c} i={i} bg={NEWS_BG[i]} />)}
+            {(mkt === 'us' ? BRIEF.cards : BRIEF.cardsKr).map((c, i) => <NewsCard key={mkt + i} c={c} i={i} bg={NEWS_BG[i]} />)}
           </div>
 
           <div className="wSecHead">

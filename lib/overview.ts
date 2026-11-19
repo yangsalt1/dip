@@ -13,10 +13,10 @@ function topic(word: string) {
   return '는';
 }
 
-export function overview(): OvGroup[] {
+export function overview(mkt: 'us' | 'kr'): OvGroup[] {
   const sectors = Object.keys(NAME) as Sector[];
   const stat = sectors.map((s) => {
-    const qs = ETFS.filter((e) => e.sector === s).map((e) => e.q);
+    const qs = ETFS.filter((e) => e.market === mkt && e.sector === s).map((e) => e.q);
     if (!qs.length) return null;
     return { s, d1: median(qs.map((q) => q.d1)), wk: median(qs.map((q) => q.wk)), dd: median(qs.map((q) => q.dd)) };
   }).filter((x): x is NonNullable<typeof x> => x !== null);
