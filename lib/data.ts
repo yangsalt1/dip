@@ -3,7 +3,7 @@ import cfg from '@/data/etfs.json';
 import brief from '@/content/briefing.json';
 
 export type Market = 'us' | 'kr';
-export type Sector = 'idx' | 'semi' | 'ai' | 'power' | 'div' | 'safe';
+export type Sector = 'idx' | 'kidx' | 'semi' | 'ai' | 'power' | 'bio' | 'defense' | 'div' | 'safe' | 'crypto';
 export type Kind = 'mega' | 'sale' | 'up' | 'wow';
 
 export interface Quote {
@@ -55,7 +55,8 @@ export function kindOf(q: Quote): Kind {
 /** 아직 떨어지는 중(200일선 아래 + 하락 추세) — 칼날 조심, 나눠서 */
 export const isKnife = (q: Quote) => q.factors.trend < 0;
 
-export const ETFS: Etf[] = cfg.etfs.map((e) => {
+// 시세가 아직 없는 ETF(새로 추가했는데 데이터가 안 들어온 경우)는 화면에서 빼기
+export const ETFS: Etf[] = cfg.etfs.filter((e) => quotes[e.yahoo]).map((e) => {
   const q = quotes[e.yahoo];
   return { ...(e as Omit<Etf, 'q' | 'kind'>), q, kind: kindOf(q) };
 });
@@ -74,12 +75,16 @@ export const BRIEF = brief;
 
 export const SECTORS: { id: Sector | 'all'; label: string; color: string }[] = [
   { id: 'all', label: '전체', color: '#111111' },
-  { id: 'idx', label: '대표', color: '#F06C3C' },
+  { id: 'idx', label: '미국 대표', color: '#F06C3C' },
+  { id: 'kidx', label: '한국 대표', color: '#FF9E80' },
   { id: 'semi', label: '반도체', color: '#B1A6FF' },
-  { id: 'ai', label: 'AI', color: '#C9DDF7' },
-  { id: 'power', label: '전력', color: '#F2F28E' },
+  { id: 'ai', label: 'AI·로봇', color: '#C9DDF7' },
+  { id: 'power', label: '전력·원전', color: '#F2F28E' },
+  { id: 'bio', label: '제약·바이오', color: '#FFB8D6' },
+  { id: 'defense', label: '방산·조선', color: '#A8B8C8' },
   { id: 'div', label: '배당', color: '#2DB866' },
   { id: 'safe', label: '금·채권', color: '#D8D0C4' },
+  { id: 'crypto', label: '비트코인', color: '#FFC85C' },
 ];
 
 export const PALETTE = ['#B1A6FF', '#D8D0C4', '#F06C3C', '#F2F28E', '#2DB866', '#C9DDF7'];

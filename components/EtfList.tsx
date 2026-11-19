@@ -35,7 +35,7 @@ export default function EtfList() {
       </div>
 
       <div className="circles" role="group" aria-label="섹터">
-        {SECTORS.map((s) => (
+        {SECTORS.filter((s) => s.id === 'all' || ETFS.some((e) => e.market === market && e.sector === s.id)).map((s) => (
           <button key={s.id} type="button" className="circle" aria-pressed={sector === s.id} onClick={() => setSector(s.id)}
             style={{ background: s.color, color: s.id === 'all' ? '#F4F4F2' : '#111' }}>{s.label}</button>
         ))}
