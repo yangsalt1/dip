@@ -32,7 +32,7 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
       </header>
       <div className="stack keep">
         <section className="card" style={{ background: '#F2F28E', gap: 8 }}>
-          <p style={{ margin: 0, fontSize: 24, lineHeight: 1.3, fontWeight: 800, letterSpacing: '-0.035em' }}>특급 세일 주식,<br />절대 안 놓칩니다.</p>
+          <p style={{ margin: 0, fontSize: 24, lineHeight: 1.3, fontWeight: 800, letterSpacing: '-0.035em' }}>특급 세일 주식,<br />절대 안 놓칠 거야.</p>
           <p className="small" style={{ margin: 0 }}>떨어질 때 주울 용기</p>
         </section>
         {sp.error && <p role="alert" className="small" style={{ margin: '0 8px', color: '#A3200F', fontWeight: 700 }}>로그인하지 못했어요. 다시 한 번 눌러봐요.</p>}

@@ -37,7 +37,7 @@ export default function LoginSheet() {
         <span className="lsGrab" aria-hidden="true" />
         <div className="lsLogo" aria-hidden="true"><i style={{ background: '#B1A6FF' }} /><i style={{ background: '#F06C3C' }}><b>JUP</b></i><i style={{ background: '#F2F28E' }} /></div>
         <span className="lsTag">JUP · 떨어지면 줍는다</span>
-        <h2 id="lsTitle" className="lsTitle">특급 세일 주식,<br />절대 안 놓칩니다.</h2>
+        <h2 id="lsTitle" className="lsTitle">특급 세일 주식,<br />절대 안 놓칠 거야.</h2>
         <p className="lsSub">떨어질 때 주울 용기</p>
         <div className="loginBtns">
           {BTN.map((b) => {
