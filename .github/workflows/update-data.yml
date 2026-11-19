@@ -6,6 +6,11 @@ on:
     - cron: '0 22 * * 0-4'
     - cron: '0 7 * * 1-5'
   workflow_dispatch: {}
+  # 글(briefing)이나 코드를 올리면 시세도 바로 새로 받아오기
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'data/market.json'
 
 permissions:
   contents: write
