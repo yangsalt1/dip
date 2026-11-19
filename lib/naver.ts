@@ -20,6 +20,7 @@ export async function naverKr(codes: string[]): Promise<Record<string, Q>> {
   for (let i = 0; i < codes.length; i += 20) {
     const j = await get(`https://polling.finance.naver.com/api/realtime/domestic/stock/${codes.slice(i, i + 20).join(',')}`);
     for (const d of j?.datas ?? []) {
+      if (d.openPrice === '-' || d.openPrice == null) continue; // 장 열기 전: 어제 등락률 그대로 두기
       const last = num(d.closePrice); const d1 = num(d.fluctuationsRatio);
       if (last > 0 && Number.isFinite(d1)) out[d.itemCode] = { last, d1 };
     }
