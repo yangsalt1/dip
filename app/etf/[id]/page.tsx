@@ -40,6 +40,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       <header style={{ padding: '28px 24px 0' }}>
         <Back href="/etf/" label="ETF 목록으로" />
         <h1 className="title">{e.code}<br /><span>{e.kw}</span></h1>
+        <p className="diffTag" style={{ marginTop: 10 }}>{e.diff}</p>
         <p className="meta" style={{ margin: '8px 0 0' }}>{e.name}</p>
       </header>
 

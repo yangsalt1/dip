@@ -58,7 +58,7 @@ export default function EtfList() {
               <Link key={e.id} href={`/etf/${e.id}/`} className="wListRow" role="listitem">
                 <b className="wRank">{i + 1}</b>
                 <span className="wListName"><b>{e.code}</b><small>{e.name}</small></span>
-                <span className="wListKw"><i style={{ background: sc?.color }} />{e.kw}</span>
+                <span className="wListKw"><i style={{ background: sc?.color }} /><span style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}><span>{e.kw}</span><small className="wDiff">{e.diff}</small></span></span>
                 <span><Sticker kind={e.kind} dd={e.q.dd} d1={e.q.d1} /></span>
                 <b className="wListPrice">{priceText(e, cur)}</b>
                 <b style={{ textAlign: 'right', color: e.q.d1 >= 0 ? '#A3200F' : '#1A3FA8' }}>{e.q.d1 >= 0 ? '+' : ''}{e.q.d1.toFixed(2)}%</b>
@@ -88,6 +88,7 @@ function Card({ e, cur, hero, tag, rank, bg }: { e: Etf; cur: Cur; hero?: boolea
       {hero && <span style={{ fontSize: 64, fontWeight: 800, lineHeight: 0.9, letterSpacing: '-0.05em' }}>{e.code}</span>}
       <span style={{ display: 'flex', flexDirection: 'column', gap: hero ? 6 : 3 }}>
         <b style={{ fontSize: hero ? 22 : 18, letterSpacing: '-0.035em' }}>{e.kw}</b>
+        <span className="diffTag">{e.diff}</span>
         <span className="small soft" style={{ fontSize: hero ? 14 : 13 }}>{e.sub}</span>
       </span>
       <span style={{ display: 'flex', flexDirection: 'column', gap: hero ? 6 : 4, paddingTop: 2 }}>

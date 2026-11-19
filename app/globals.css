@@ -326,3 +326,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .ov-web .ovBar { height: 12px; }
 .ov-web .ovLegend { font-size: 14px; gap: 6px 20px; }
 .ov-web .ovLegend b { font-size: 22px; }
+
+/* 비슷한 ETF와의 차이 (작은 글씨) */
+.diffTag { display: inline-block; align-self: flex-start; margin: 0; padding: 4px 10px; border-radius: 999px; background: rgba(17,17,17,0.07); font-size: 12px; font-weight: 700; color: #3D3D3B; letter-spacing: -0.01em; }
+.dark .diffTag { background: rgba(255,255,255,0.12); color: #CFCFCB; }
+.wDiff { font-size: 12px; font-weight: 600; color: #6E6E6C; line-height: 1.35; }

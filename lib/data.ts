@@ -32,6 +32,8 @@ export interface Etf {
   sector: Sector;
   rank: number;
   sub: string;
+  /** 비슷한 ETF와 뭐가 다른지 · 어떤 사람에게 맞는지 (짧게) */
+  diff: string;
   about: string;
   q: Quote;
   kind: Kind;
