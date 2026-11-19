@@ -23,7 +23,7 @@ export default function LoginSheet() {
   useEffect(() => { if (s.status === 'out') refreshJup(); }, [path]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (s.status !== 'out') return;
-    fetch('/api/auth/providers/').then((r) => r.json()).then((j) => setOn(Object.keys(j ?? {}).filter((k) => k !== 'dev'))).catch(() => setOn([]));
+    fetch('/api/auth/providers/').then((r) => r.json()).then((j) => setOn(Object.keys(j ?? {}).filter((k) => ['kakao', 'naver', 'google'].includes(k)))).catch(() => setOn([]));
   }, [s.status]);
   useEffect(() => {
     const lock = s.status === 'out' && !!on?.length && !FREE.some((f) => path.startsWith(f));
