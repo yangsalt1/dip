@@ -21,7 +21,7 @@ export default function Page() {
           const lo = q.lo ?? Math.min(...q.chart.points);
           const avg = q.avg ?? q.chart.points.reduce((a, b) => a + b, 0) / q.chart.points.length;
           const p = Math.max(0, Math.min(1, (q.last - lo) / (q.hi - lo)));
-          const verdict = p < 0.25 ? '싼 편 · 괜찮음' : p < 0.75 ? '보통' : '비싼 편 · 기다리기';
+          const verdict = p < 0.25 ? '사도 괜츈' : p < 0.75 ? '사도 낫배드' : '비싸게 사는 편';
           const w = (v: number) => Math.round(v * f.mult).toLocaleString('ko-KR') + '원';
           const gap = Math.round((avg - q.last) * f.mult);
           const good = (p < 0.02 ? '지난 1년 중 가장 싸요. ' : p < 0.25 ? '1년 최저와 가까워요. ' : '') +

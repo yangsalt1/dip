@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { BRIEF, ETFS, FX, isKnife, type Etf } from '@/lib/data';
 import { stickerStyle } from '@/lib/sticker';
+import { fxVerdict } from '@/lib/fx';
 import { Arrow, BottomNav, HandIcon, Sticker } from './ui';
 import { NewsExtra } from './NewsCard';
 import Overview, { MktToggle } from './Overview';
@@ -106,6 +107,7 @@ export default function Home() {
               {f.q.dd <= -1
                 ? <span className={`fxSt${FX_COLORS[i % 3].fg === '#fff' ? ' inv' : ''}`}>↓{Math.abs(f.q.dd).toFixed(1)}% {f.q.dd <= -10 ? '특급할인' : '할인 중'}</span>
                 : <span className={`fxSt${FX_COLORS[i % 3].fg === '#fff' ? ' inv' : ''}`}>워워 · 최고가 근처</span>}
+              <span className="fxSt inv">{fxVerdict(f).label}</span>
               <span className="fxPr">{Math.round(f.q.last * f.mult).toLocaleString('ko-KR')}<small>원</small></span>
             </Link>
           ))}
