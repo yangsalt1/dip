@@ -358,3 +358,16 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .miniSeg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; background: #2A2A2A; }
 .miniSeg button { min-height: 30px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: #BDBDBA; font-size: 13px; font-weight: 800; cursor: pointer; }
 .miniSeg button[aria-pressed="true"] { background: #F4F4F2; color: #111; }
+
+/* 폰 첫 화면: 배너 납작하게 → 1번 뉴스까지 한 화면에 */
+.hdr { padding-top: 22px; }
+.mOnly .brand { margin-bottom: 6px; }
+.miniSeg { align-self: flex-start; }
+.ov-app { gap: 12px; }
+.ov-app .ovGrid { gap: 4px; }
+.ov-app .ovItem { grid-template-columns: 78px minmax(0, 1fr); }
+.ov-app .ovLab { font-size: 12px; }
+.ov-app .ovNames { font-size: 20px; line-height: 1.22; }
+.ov-app .ovBar { height: 8px; }
+.ov-app .ovLegend { margin-top: 6px; font-size: 11px; gap: 4px 12px; }
+.ov-app .ovLegend b { font-size: 15px; }

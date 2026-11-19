@@ -49,7 +49,7 @@ export default function Home() {
       <header className="hdr">
         <div>
           <Link href="/" className="brand">JUP<small>떨어질 때 줍는다</small></Link>
-          <h1 className="title">오늘<br /><span>시장은</span></h1>
+          <h1 className="title">오늘 <span>시장은</span></h1>
         </div>
         <span className="meta" style={{ paddingTop: 6 }}>{BRIEF.dateLabel}</span>
       </header>
@@ -57,10 +57,9 @@ export default function Home() {
       <div className="homeGrid">
       <div className="colA">
       <div className="stack keep">
-        <section className="card dark" style={{ gap: 14 }}>
-          <div className="row"><span className="small" style={{ color: '#BDBDBA', fontWeight: 700 }}>오늘 시장은</span><MktToggle mkt={mkt} onChange={setMkt} /></div>
+        <section className="card dark" style={{ gap: 12, paddingTop: 16 }}>
+          <MktToggle mkt={mkt} onChange={setMkt} />
           <Overview size="app" mkt={mkt} />
-          <p className="small" style={{ margin: 0, color: '#8A8A88' }}>{mkt === 'us' ? BRIEF.weather.detailUs : BRIEF.weather.detailKr}</p>
         </section>
 
         {cards.map((c, i) => {
