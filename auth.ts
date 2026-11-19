@@ -6,6 +6,7 @@ import Kakao from 'next-auth/providers/kakao';
 import Credentials from 'next-auth/providers/credentials';
 import { createHash } from 'crypto';
 import { storeReady, touchUser } from '@/lib/store';
+import { REDIS_TOKEN } from '@/lib/redisEnv';
 
 /**
  * 로그인: 구글 · 네이버 · 카카오.
@@ -26,7 +27,7 @@ if (process.env.AUTH_DEV_LOGIN === '1' && !process.env.VERCEL) {
 /** AUTH_SECRET이 없으면 Vercel이 넣어주는 저장소 토큰으로 비밀값을 만들어요 (사용자가 따로 만들 필요 없게). */
 function secret() {
   if (process.env.AUTH_SECRET) return process.env.AUTH_SECRET;
-  const base = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  const base = REDIS_TOKEN;
   return base ? createHash('sha256').update('jup-auth:' + base).digest('hex') : undefined;
 }
 

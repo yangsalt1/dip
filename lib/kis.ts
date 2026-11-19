@@ -1,5 +1,6 @@
 import 'server-only';
 import { Redis } from '@upstash/redis';
+import { REDIS_URL, REDIS_TOKEN } from '@/lib/redisEnv';
 
 /**
  * 한국투자증권 KIS Developers (실전 도메인) 시세 조회.
@@ -11,8 +12,8 @@ const APP_KEY = process.env.KIS_APP_KEY;
 const APP_SECRET = process.env.KIS_APP_SECRET;
 export const kisReady = Boolean(APP_KEY && APP_SECRET);
 
-const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const tok = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const url = REDIS_URL;
+const tok = REDIS_TOKEN;
 const redis = url && tok ? new Redis({ url, token: tok }) : null;
 
 let memTok: { t: string; exp: number } | null = null;

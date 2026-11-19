@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
+import { REDIS_URL, REDIS_TOKEN } from '@/lib/redisEnv';
 import cfg from '@/data/etfs.json';
 import { kisReady, krPrice, usPrice } from '@/lib/kis';
 
@@ -16,8 +17,8 @@ const ALT: Record<string, string[]> = { NAS: ['AMS', 'NYS'], AMS: ['NYS', 'NAS']
 type Live = { at: string; quotes: Record<string, { last: number; d1: number }> };
 const TTL = 30; // 초. 이 시간 안에는 모두가 같은 시세를 같이 써요 (KIS 호출 아끼기)
 
-const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const tok = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const url = REDIS_URL;
+const tok = REDIS_TOKEN;
 const redis = url && tok ? new Redis({ url, token: tok }) : null;
 let mem: { v: Live; exp: number } | null = null;
 const found: Record<string, string> = {};

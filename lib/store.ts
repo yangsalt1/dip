@@ -1,4 +1,5 @@
 import { Redis } from '@upstash/redis';
+import { REDIS_URL, REDIS_TOKEN } from '@/lib/redisEnv';
 
 /**
  * 저장소 (Upstash Redis · Vercel Storage에서 한 번에 연결).
@@ -6,8 +7,8 @@ import { Redis } from '@upstash/redis';
  *   port:<서비스>:<회원번호>  → 내 포트폴리오 분석 결과 (종목 이름·칸·비중만, 사진은 저장 안 함)
  *   quota:<회원번호>:<날짜>   → 하루 분석 횟수
  */
-const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const url = REDIS_URL;
+const token = REDIS_TOKEN;
 const redis = url && token ? new Redis({ url, token }) : null;
 
 // 로컬 테스트용 메모리 저장소 (배포에서는 쓰지 않아요)
