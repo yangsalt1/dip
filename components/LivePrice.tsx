@@ -21,7 +21,7 @@ export default function LivePrice({ id }: { id: string }) {
         <span style={{ paddingBottom: 6, fontSize: 15, fontWeight: 800, color: q.d1 >= 0 ? '#A3200F' : '#1A3FA8' }}>오늘 {pct(q.d1)}</span>
       </div>
       <span className="small soft">≈ {priceText(e, other)} (1달러 = {Math.round(FX_RATE).toLocaleString('ko-KR')}원) · 이번 주 {pct(q.wk)}</span>
-      <span className="small soft" style={{ fontWeight: 700 }}>{t ? `● 실시간 · ${t} 기준 (한국투자증권)` : `${q.date} 종가 기준`}</span>
+      <span className="small soft" style={{ fontWeight: 700 }}>{t ? `● ${t} 업데이트 · ${live.src === 'kis' ? '한국투자증권 실시간' : e.market === 'kr' ? 'Yahoo Finance · 약 15~20분 지연' : 'Yahoo Finance'}` : `${q.date} 종가 기준`}</span>
     </>
   );
 }

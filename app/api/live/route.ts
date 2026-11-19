@@ -3,6 +3,7 @@ import { Redis } from '@upstash/redis';
 import { REDIS_URL, REDIS_TOKEN } from '@/lib/redisEnv';
 import cfg from '@/data/etfs.json';
 import { kisReady, krPrice, usPrice } from '@/lib/kis';
+import { yahooPrice } from '@/lib/yahoo';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
@@ -14,8 +15,8 @@ const EXCD: Record<string, string> = {
 };
 const ALT: Record<string, string[]> = { NAS: ['AMS', 'NYS'], AMS: ['NYS', 'NAS'], NYS: ['AMS', 'NAS'] };
 
-type Live = { at: string; quotes: Record<string, { last: number; d1: number }> };
-const TTL = 30; // 초. 이 시간 안에는 모두가 같은 시세를 같이 써요 (KIS 호출 아끼기)
+type Live = { at: string; src: 'kis' | 'yahoo'; quotes: Record<string, { last: number; d1: number }> };
+const TTL = 60; // 초. 이 시간 안에는 모두가 같은 시세를 같이 써요 (KIS 호출 아끼기)
 
 const url = REDIS_URL;
 const tok = REDIS_TOKEN;
@@ -30,19 +31,23 @@ async function pool<T>(items: T[], n: number, fn: (x: T) => Promise<void>) {
 
 async function fetchAll(): Promise<Live> {
   const quotes: Live['quotes'] = {};
-  await pool(cfg.etfs, 4, async (e) => {
+  const src: Live['src'] = kisReady ? 'kis' : 'yahoo';
+  await pool(cfg.etfs, kisReady ? 4 : 6, async (e) => {
     try {
-      if (e.market === 'kr') {
+      if (kisReady && e.market === 'kr') {
         quotes[e.id] = await krPrice(e.yahoo.replace(/\.K[SQ]$/, ''));
-      } else {
+      } else if (kisReady) {
         const first = found[e.yahoo] ?? EXCD[e.yahoo] ?? 'AMS';
         for (const ex of [first, ...(ALT[first] ?? [])]) {
           try { quotes[e.id] = await usPrice(e.yahoo, ex); found[e.yahoo] = ex; break; } catch { /* 다음 거래소 */ }
         }
       }
+      if (!quotes[e.id]) quotes[e.id] = await yahooPrice(e.yahoo);
     } catch { /* 이 종목은 하루 두 번 업데이트 값 그대로 */ }
   });
-  return { at: new Date().toISOString(), quotes };
+  // 환율 (fx:usd 처럼 저장)
+  await pool(cfg.fx, 3, async (f) => { try { quotes['fx:' + f.id] = await yahooPrice(f.yahoo); } catch { /* 그대로 */ } });
+  return { at: new Date().toISOString(), src, quotes };
 }
 
 export async function GET() {
@@ -51,9 +56,8 @@ export async function GET() {
     const m = (await import('@/data/market.json')).default as { quotes: Record<string, { last: number; d1: number }> };
     const quotes: Live['quotes'] = {};
     for (const e of cfg.etfs) { const q = m.quotes[e.yahoo]; if (q) quotes[e.id] = { last: Math.round(q.last * 1.012 * 100) / 100, d1: Math.round((q.d1 + 1.2) * 100) / 100 }; }
-    return NextResponse.json({ ok: true, at: new Date().toISOString(), quotes });
+    return NextResponse.json({ ok: true, at: new Date().toISOString(), src: 'yahoo', quotes });
   }
-  if (!kisReady) return NextResponse.json({ ok: false, reason: 'no-key' });
   if (mem && mem.exp > Date.now()) return NextResponse.json({ ok: true, ...mem.v });
   try {
     if (redis) {
