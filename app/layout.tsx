@@ -12,7 +12,12 @@ export const metadata: Metadata = {
     siteName: 'DIP',
     title: 'DIP · 떨어질 때 사리라',
     description: '오늘 세일 중인 ETF와 환율을 한눈에. 왕초보를 위한 매일 시장 브리핑.',
-    images: [{ url: '/icon-512.png', width: 512, height: 512, alt: 'DIP' }],
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'DIP · 떨어질 때 사리라' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DIP · 떨어질 때 사리라',
+    images: ['/og.png'],
   },
   manifest: '/manifest.webmanifest',
   icons: { icon: '/icon.svg', apple: '/icon-192.png' },
