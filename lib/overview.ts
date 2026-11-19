@@ -30,7 +30,9 @@ export function overview(): OvGroup[] {
   const out: OvGroup[] = [];
   const add = (key: OvGroup['key'], arr: typeof stat, word: string) => {
     if (!arr.length) return;
-    const names = arr.map((x) => NAME[x.s]);
+    const all = arr.map((x) => NAME[x.s]);
+    // 한 줄이 너무 길어지지 않게 4개까지만, 나머지는 '외 n개'
+    const names = all.length > 4 ? [...all.slice(0, 4), `외 ${all.length - 4}개`] : all;
     out.push({ key, names, lead: `${names.join(', ')}${topic(names[names.length - 1])}`, word });
   };
   add('mega', mega, '특급세일');
