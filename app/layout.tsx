@@ -3,8 +3,17 @@ import './globals.css';
 import SwRegister from '@/components/SwRegister';
 
 export const metadata: Metadata = {
-  title: 'DIP · 나는 떨어질 때 살거야',
-  description: '왕초보를 위한 ETF 시장 브리핑. 떨어져도 즐겁게, buy the dip.',
+  metadataBase: new URL('https://dip-rosy.vercel.app'),
+  title: 'DIP · 떨어질 때 사리라',
+  description: '오늘 세일 중인 ETF와 환율을 한눈에. 왕초보를 위한 매일 시장 브리핑.',
+  openGraph: {
+    type: 'website',
+    url: '/',
+    siteName: 'DIP',
+    title: 'DIP · 떨어질 때 사리라',
+    description: '오늘 세일 중인 ETF와 환율을 한눈에. 왕초보를 위한 매일 시장 브리핑.',
+    images: [{ url: '/icon-512.png', width: 512, height: 512, alt: 'DIP' }],
+  },
   manifest: '/manifest.webmanifest',
   icons: { icon: '/icon.svg', apple: '/icon-192.png' },
   appleWebApp: { capable: true, title: 'DIP', statusBarStyle: 'default' },
