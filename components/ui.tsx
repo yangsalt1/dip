@@ -9,8 +9,7 @@ export function BottomNav({ active }: { active: 'news' | 'etf' | 'jup' | 'money'
       <Link href="/" className="navBrand">JUP<small>떨어질 때 줍는다</small></Link>
       <Link href="/" aria-current={active === 'news' ? 'page' : undefined}>오늘</Link>
       <Link href="/etf/" aria-current={active === 'etf' ? 'page' : undefined}>ETF</Link>
-      <Link href="/jup/" aria-current={active === 'jup' ? 'page' : undefined}>줍줍</Link>
-      <Link href="/money/" aria-current={active === 'money' ? 'page' : undefined}>포트폴리오</Link>
+      <Link href="/money/" aria-current={active === 'money' || active === 'jup' ? 'page' : undefined}>포트폴리오</Link>
     </nav>
   );
 }

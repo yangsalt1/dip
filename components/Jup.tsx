@@ -128,7 +128,7 @@ export default function JupPage() {
       )}
       {s.error && <p role="alert" className="note" style={{ color: '#A3200F' }}>{s.error}</p>}
       <p className="note">세일이어도 더 떨어질 수 있어요. 한 번에 말고 나눠서. 투자 권유 아님. · <Link href="/privacy/">개인정보처리방침</Link></p>
-      <BottomNav active="jup" />
+      <BottomNav active="money" />
     </main>
   );
 }

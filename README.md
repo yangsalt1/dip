@@ -108,3 +108,7 @@ GitHub에 올리면 `.github/workflows/update-data.yml` 이 평일 아침 7시, 
 - 로컬 테스트: `AUTH_DEV_LOGIN=1 AUTH_SECRET=아무값 npm run build && npm start` → 로그인 화면에 테스트 로그인 버튼.
 
 - 뉴스 본문에서 `**키워드**`로 감싸면 그 부분만 굵게 보여요 (components/Rich.tsx).
+
+## 내 주식 분석 (포트폴리오 맨 아래)
+- 캡처 최대 10장 → Claude API로 종목·칸·비중만 읽어요 (사진·금액 저장 안 함). 환경변수 `ANTHROPIC_API_KEY` 필요, 없으면 "준비 중".
+- 하루 10번 제한. 결과는 `port:<회원>`에 저장. 로컬 화면 테스트는 `ANALYZE_MOCK=1`.

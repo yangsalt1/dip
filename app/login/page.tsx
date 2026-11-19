@@ -27,13 +27,13 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
       <header className="hdr">
         <div>
           <Link href="/" className="brand">JUP<small>떨어질 때 줍는다</small></Link>
-          <h1 className="title">줍줍리스트<br /><span>시작하기</span></h1>
+          <h1 className="title">JUP<br /><span>시작하기</span></h1>
         </div>
       </header>
       <div className="stack keep">
         <section className="card" style={{ background: '#F2F28E', gap: 8 }}>
-          <p style={{ margin: 0, fontSize: 24, lineHeight: 1.3, fontWeight: 800, letterSpacing: '-0.035em' }}>찜해두고,<br />세일하면 줍줍.</p>
-          <p className="small" style={{ margin: 0 }}>로그인하면 담아둔 ETF가 폰·컴퓨터 어디서든 그대로 보여요.</p>
+          <p style={{ margin: 0, fontSize: 24, lineHeight: 1.3, fontWeight: 800, letterSpacing: '-0.035em' }}>특급세일 중인 주식,<br />절대 놓치지 않을 거야.</p>
+          <p className="small" style={{ margin: 0 }}>진정한 고수는 떨어질 때 줍는 법</p>
         </section>
         {sp.error && <p role="alert" className="small" style={{ margin: '0 8px', color: '#A3200F', fontWeight: 700 }}>로그인하지 못했어요. 다시 한 번 눌러봐요.</p>}
         <div className="loginBtns">
@@ -57,7 +57,7 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
           처음이면 바로 가입돼요. 시작하면 <Link href="/privacy/" style={{ fontWeight: 800 }}>개인정보처리방침</Link>에 동의하는 걸로 봐요.
         </p>
       </div>
-      <BottomNav active="jup" />
+      <BottomNav active="money" />
     </main>
   );
 }
