@@ -4,19 +4,19 @@ import SwRegister from '@/components/SwRegister';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://dip-rosy.vercel.app'),
-  title: 'JUP · 떨어질 때 사리라',
+  title: 'JUP · 떨어질 때 줍는다',
   description: '오늘 세일 중인 ETF와 환율을 한눈에. 왕초보를 위한 매일 시장 브리핑.',
   openGraph: {
     type: 'website',
     url: '/',
     siteName: 'JUP',
-    title: 'JUP · 떨어질 때 사리라',
+    title: 'JUP · 떨어질 때 줍는다',
     description: '오늘 세일 중인 ETF와 환율을 한눈에. 왕초보를 위한 매일 시장 브리핑.',
-    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'JUP · 떨어질 때 사리라' }],
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'JUP · 떨어질 때 줍는다' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'JUP · 떨어질 때 사리라',
+    title: 'JUP · 떨어질 때 줍는다',
     images: ['/og.png'],
   },
   manifest: '/manifest.webmanifest',

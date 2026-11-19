@@ -74,7 +74,7 @@ export default function JupPage() {
     <main className="app">
       <header className="hdr">
         <div>
-          <Link href="/" className="brand">JUP<small>떨어질 때 사리라</small></Link>
+          <Link href="/" className="brand">JUP<small>떨어질 때 줍는다</small></Link>
           <h1 className="title">줍줍<br /><span>리스트</span></h1>
         </div>
       </header>

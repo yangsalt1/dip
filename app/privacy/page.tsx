@@ -21,7 +21,7 @@ export default function Privacy() {
     <main className="app">
       <header className="hdr">
         <div>
-          <Link href="/" className="brand">JUP<small>떨어질 때 사리라</small></Link>
+          <Link href="/" className="brand">JUP<small>떨어질 때 줍는다</small></Link>
           <h1 className="title">개인정보<br /><span>처리방침</span></h1>
         </div>
       </header>

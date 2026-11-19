@@ -2,7 +2,7 @@
   "name": "jup",
   "version": "0.1.0",
   "private": true,
-  "description": "JUP - 떨어질 때 사리라. 왕초보를 위한 ETF 시장 브리핑 웹앱",
+  "description": "JUP - 떨어질 때 줍는다. 왕초보를 위한 ETF 시장 브리핑 웹앱",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -26,7 +26,7 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
     <main className="app">
       <header className="hdr">
         <div>
-          <Link href="/" className="brand">JUP<small>떨어질 때 사리라</small></Link>
+          <Link href="/" className="brand">JUP<small>떨어질 때 줍는다</small></Link>
           <h1 className="title">줍줍리스트<br /><span>시작하기</span></h1>
         </div>
       </header>

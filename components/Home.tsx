@@ -12,6 +12,9 @@ const FX_BG = ['#F7F7F5', '#F7F7F5', '#F7F7F5'];
 
 export default function Home() {
   const [open, setOpen] = useState(-1);
+  const [nm, setNm] = useState<'us' | 'kr'>('us');
+  const cards = nm === 'us' ? BRIEF.cards : BRIEF.cardsKr;
+  const pickNews = (m: 'us' | 'kr') => { setNm(m); setOpen(-1); };
 
   const [mkt, setMkt] = useState<'us' | 'kr'>('us');
   const list = ETFS.filter((e) => e.market === mkt);
@@ -46,7 +49,7 @@ export default function Home() {
     <main className="app mOnly">
       <header className="hdr">
         <div>
-          <Link href="/" className="brand">JUP<small>떨어질 때 사리라</small></Link>
+          <Link href="/" className="brand">JUP<small>떨어질 때 줍는다</small></Link>
           <h1 className="title">오늘<br /><span>시장은</span></h1>
         </div>
         <span className="meta" style={{ paddingTop: 6 }}>{BRIEF.dateLabel}</span>
@@ -61,7 +64,12 @@ export default function Home() {
           <p className="small" style={{ margin: 0, color: '#8A8A88' }}>{BRIEF.weather.detail}</p>
         </section>
 
-        {BRIEF.cards.map((c, i) => {
+        <div className="seg" role="group" aria-label="뉴스" style={{ width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+          <button type="button" className={nm === 'us' ? 'on' : ''} aria-pressed={nm === 'us'} onClick={() => pickNews('us')}>미국 뉴스</button>
+          <button type="button" className={nm === 'kr' ? 'on' : ''} aria-pressed={nm === 'kr'} onClick={() => pickNews('kr')}>한국 뉴스</button>
+        </div>
+
+        {cards.map((c, i) => {
           const isOpen = open === i;
           return (
             <div key={i} className="card" style={{ background: CARD_BG[i] }}>
