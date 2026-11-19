@@ -11,7 +11,8 @@ import Overview, { MktToggle } from './Overview';
 import LiveStamp from './LiveStamp';
 
 const CARD_BG = ['#B1A6FF', '#D8D0C4', '#F2F28E'];
-const FX_BG = ['#C9DDF7', '#F2F28E', '#B1A6FF'];
+// 시안 A: 빨강 · 노랑 · 인디고 (글씨·스티커는 모두 검정)
+export const FX_COLORS = [{ bg: '#DB6558', fg: '#111' }, { bg: '#EAE675', fg: '#111' }, { bg: '#4B71B6', fg: '#111' }];
 
 export default function Home() {
   useLive();
@@ -100,10 +101,12 @@ export default function Home() {
         </div>
         <div className="grid3">
           {FX.map((f, i) => (
-            <Link key={f.id} href="/fx/" className="tile" style={{ background: FX_BG[i] }}>
-              <b style={{ fontSize: 13 }}>{f.short}</b>
-              <b style={{ fontSize: 13, color: '#111' }}>{f.q.dd <= -10 ? '특급 ' : ''}{Math.abs(f.q.dd).toFixed(1)}% 할인</b>
-              <span style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.04em' }}>{Math.round(f.q.last * f.mult).toLocaleString('ko-KR')}원</span>
+            <Link key={f.id} href="/fx/" className="fxTile" style={{ background: FX_COLORS[i % 3].bg, color: FX_COLORS[i % 3].fg }}>
+              <b className="fxNm">{f.short.replace(/\s*\(.*\)/, '')}{f.mult !== 1 && <small>{f.mult}{f.short.replace(/\s*\(.*\)/, '')}</small>}</b>
+              {f.q.dd <= -1
+                ? <span className={`fxSt${FX_COLORS[i % 3].fg === '#fff' ? ' inv' : ''}`}>↓{Math.abs(f.q.dd).toFixed(1)}% {f.q.dd <= -10 ? '특급할인' : '할인 중'}</span>
+                : <span className={`fxSt${FX_COLORS[i % 3].fg === '#fff' ? ' inv' : ''}`}>워워 · 최고가 근처</span>}
+              <span className="fxPr">{Math.round(f.q.last * f.mult).toLocaleString('ko-KR')}<small>원</small></span>
             </Link>
           ))}
         </div>

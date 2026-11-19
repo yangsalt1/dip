@@ -7,6 +7,7 @@ import { fxVerdict } from '@/lib/fx';
 import { Arrow, BottomNav, HandIcon, Sticker } from './ui';
 import NewsCard from './NewsCard';
 import Overview, { MktToggle } from './Overview';
+import { FX_COLORS } from './Home';
 
 const NEWS_BG = ['#B1A6FF', '#D8D0C4', '#F2F28E'];
 
@@ -85,15 +86,16 @@ export default function HomeWeb() {
         <aside className="wSide">
           <section className="wPanel">
             <h3 className="wListTitle">환율 사? 말아?</h3>
-            {FX.map((f) => {
+            {FX.map((f, i) => {
               const v = fxVerdict(f);
+              const c = FX_COLORS[i % 3];
               const off = f.q.dd <= -1;
               return (
-                <Link key={f.id} href="/fx/" className="wFx2">
-                  <span className="row"><b style={{ fontSize: 16 }}>{f.short}</b><span className={`fxV ${v.good ? 'good' : ''}`}>{v.label}</span></span>
+                <Link key={f.id} href="/fx/" className="wFx2" style={{ background: c.bg, color: c.fg }}>
+                  <span className="row"><b className="fxNm" style={{ fontSize: 30 }}>{f.short.replace(/\s*\(.*\)/, "")}{f.mult !== 1 && <small>{f.mult}엔</small>}</b><span className={`fxV ${v.good ? 'good' : ''}`}>{v.label}</span></span>
                   <span className="wFxBig">{Math.round(f.q.last * f.mult).toLocaleString('ko-KR')}<small>원</small></span>
                   {off
-                    ? <span className={`pilltag ${f.q.dd <= -10 ? 'mega' : 'sale'}`}>↓ {Math.abs(f.q.dd).toFixed(1)}% {f.q.dd <= -10 ? '특급할인' : '할인 중'}</span>
+                    ? <span className={`fxSt${c.fg === '#fff' ? ' inv' : ''}`}>↓{Math.abs(f.q.dd).toFixed(1)}% {f.q.dd <= -10 ? '특급할인' : '할인 중'}</span>
                     : <span className="pilltag up">↑ {Math.abs(f.q.d1).toFixed(2)}% 올랐어</span>}
                 </Link>
               );
