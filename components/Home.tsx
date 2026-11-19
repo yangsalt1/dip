@@ -1,4 +1,5 @@
 'use client';
+import Rich from './Rich';
 import { useState } from 'react';
 import Link from 'next/link';
 import { BRIEF, ETFS, FX, isKnife, type Etf } from '@/lib/data';
@@ -78,7 +79,7 @@ export default function Home() {
               </button>
               {isOpen && (
                 <>
-                  <p className="box" style={{ margin: 0, background: 'rgba(255,255,255,0.55)', fontSize: 16, lineHeight: 1.55, fontWeight: 600 }}>{(c as { short?: string }).short ?? c.more}</p>
+                  <p className="box rich" style={{ margin: 0, background: 'rgba(255,255,255,0.55)', fontSize: 16, lineHeight: 1.55 }}><Rich t={(c as { short?: string }).short ?? c.more} /></p>
                   <NewsExtra c={c} />
                 </>
               )}

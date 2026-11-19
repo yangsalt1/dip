@@ -1,4 +1,5 @@
 'use client';
+import Rich from './Rich';
 import Link from 'next/link';
 import { BRIEF, etfById } from '@/lib/data';
 import { Arrow, Sticker } from './ui';
@@ -32,7 +33,7 @@ export default function NewsCard({ c, i, bg }: { c: Card; i: number; bg: string 
     <section className="wCard nCard" style={{ background: bg }}>
       <div className="row"><span className="num">{i + 1}</span><b style={{ fontSize: 14 }}>{c.label}</b></div>
       <p className="wMid">{c.kid}</p>
-      {c.short && <p className="nShort">{c.short}</p>}
+      {c.short && <p className="nShort rich"><Rich t={c.short} /></p>}
       <NewsExtra c={c} />
     </section>
   );

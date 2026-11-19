@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { BottomNav, Back, StatusChip } from '@/components/ui';
 import { BRIEF, etfById } from '@/lib/data';
 import { pct, priceText } from '@/lib/format';
+import Rich from '@/components/Rich';
 
 type Story = (typeof BRIEF.stories)['nvidia-ceo'];
 const STORIES = BRIEF.stories as Record<string, Story>;
@@ -19,7 +20,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const s = STORIES[id];
   if (!s) notFound();
   return (
-    <main className="app">
+    <main className="app story">
       <header style={{ padding: '28px 24px 0' }}>
         <Back href="/" label="뉴스로" />
         <h1 className="title">{s.title}<br /><span>{s.subtitle}</span></h1>
@@ -30,7 +31,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           <span className="label">무슨 일이 있었냐면</span>
           <ol style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
             {s.timeline.map(([d, t]) => (
-              <li key={d} style={{ display: 'flex', gap: 12 }}><b style={{ flex: 'none', width: 54, fontSize: 14 }}>{d}</b><span style={{ fontSize: 16, fontWeight: 700, lineHeight: 1.45 }}>{t}</span></li>
+              <li key={d} style={{ display: 'flex', gap: 12 }}><b style={{ flex: 'none', width: 54, fontSize: 14 }}>{d}</b><span className="rich" style={{ fontSize: 17, lineHeight: 1.6 }}><Rich t={t} /></span></li>
             ))}
           </ol>
         </section>
@@ -46,7 +47,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
               </div>
             ))}
           </div>
-          <p className="box" style={{ margin: '4px 0 0', background: '#ECECEA', fontSize: 15, fontWeight: 700, lineHeight: 1.5 }}>{s.stocksNote}</p>
+          <p style={{ margin: '4px 0 0', background: '#ECECEA', fontSize: 15, lineHeight: 1.6 }} className="box rich"><Rich t={s.stocksNote} /></p>
         </section>
 
         <section className="card" aria-label="ETF" style={{ background: '#D8D0C4' }}>
@@ -60,18 +61,18 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
               </Link>
             );
           })}
-          <p style={{ margin: 0, fontSize: 14, fontWeight: 700, lineHeight: 1.5 }}>{s.etfsNote}</p>
+          <p className="rich" style={{ margin: 0, fontSize: 15, lineHeight: 1.6 }}><Rich t={s.etfsNote} /></p>
         </section>
 
         <section className="card dark" aria-label="사야 할까" style={{ gap: 14 }}>
           <div className="row"><span className="label">그래서 사? 말아?</span><span className="chip" style={{ background: '#F2F28E', color: '#111' }}>지켜보기 · 나눠서</span></div>
           <p style={{ margin: 0, fontSize: 30, lineHeight: 1.15, fontWeight: 800, letterSpacing: '-0.045em', whiteSpace: 'pre-line' }}>{s.verdict.headline}</p>
           {s.verdict.cases.map(([h, b]) => (
-            <div key={h} className="box" style={{ background: '#2A2A2A', display: 'flex', flexDirection: 'column', gap: 4 }}><b style={{ fontSize: 13, color: '#F2F28E' }}>{h}</b><span style={{ fontSize: 15, fontWeight: 600, lineHeight: 1.5 }}>{b}</span></div>
+            <div key={h} className="box" style={{ background: '#2A2A2A', display: 'flex', flexDirection: 'column', gap: 4 }}><b style={{ fontSize: 13, color: '#F2F28E' }}>{h}</b><span className="rich dk" style={{ fontSize: 15, lineHeight: 1.6 }}><Rich t={b} /></span></div>
           ))}
           <div className="grid2">
-            <div className="box" style={{ background: '#F06C3C', color: '#111', padding: 14 }}><b style={{ fontSize: 12 }}>좋게 보는 쪽</b><p style={{ margin: '4px 0 0', fontSize: 14, fontWeight: 700, lineHeight: 1.45 }}>{s.verdict.bull}</p></div>
-            <div className="box" style={{ background: '#9DB8FF', color: '#111', padding: 14 }}><b style={{ fontSize: 12 }}>걱정하는 쪽</b><p style={{ margin: '4px 0 0', fontSize: 14, fontWeight: 700, lineHeight: 1.45 }}>{s.verdict.bear}</p></div>
+            <div className="box" style={{ background: '#F06C3C', color: '#111', padding: 14 }}><b style={{ fontSize: 12 }}>좋게 보는 쪽</b><p style={{ margin: '4px 0 0', fontSize: 14, lineHeight: 1.55 }} className="rich"><Rich t={s.verdict.bull} /></p></div>
+            <div className="box" style={{ background: '#9DB8FF', color: '#111', padding: 14 }}><b style={{ fontSize: 12 }}>걱정하는 쪽</b><p style={{ margin: '4px 0 0', fontSize: 14, lineHeight: 1.55 }} className="rich"><Rich t={s.verdict.bear} /></p></div>
           </div>
         </section>
 
@@ -81,7 +82,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             {s.watch.map(([t, b], i) => (
               <li key={t} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
                 <span className="num" style={{ width: 30, height: 30, fontSize: 13, background: '#111', color: '#F2F28E', border: 0 }}>{i + 1}</span>
-                <span style={{ display: 'flex', flexDirection: 'column', gap: 2 }}><b style={{ fontSize: 16 }}>{t}</b><span className="small" style={{ color: '#3D3D1A' }}>{b}</span></span>
+                <span style={{ display: 'flex', flexDirection: 'column', gap: 2 }}><b style={{ fontSize: 16 }}>{t}</b><span className="small rich" style={{ color: '#3D3D1A' }}><Rich t={b} /></span></span>
               </li>
             ))}
           </ol>

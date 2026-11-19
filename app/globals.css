@@ -371,3 +371,10 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .ov-app .ovBar { height: 8px; }
 .ov-app .ovLegend { margin-top: 6px; font-size: 11px; gap: 4px 12px; }
 .ov-app .ovLegend b { font-size: 15px; }
+
+/* 뉴스 본문: 보통 굵기 + 키워드만 진하게, 숫자 중간에서 안 끊기게 */
+.rich { font-weight: 500; color: #2A2A28; word-break: keep-all; overflow-wrap: break-word; }
+.rich .kw { font-weight: 800; color: #111; }
+.card.dark .rich, .rich.dk { color: #D6D6D2; }
+.card.dark .rich .kw, .rich.dk .kw { color: #FFFFFF; }
+.story h1, .story li, .story p { word-break: keep-all; }

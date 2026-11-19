@@ -106,3 +106,5 @@ GitHub에 올리면 `.github/workflows/update-data.yml` 이 평일 아침 7시, 
 - 환경변수: `AUTH_GOOGLE_ID/SECRET`, `AUTH_NAVER_ID/SECRET`, `AUTH_KAKAO_ID/SECRET`, (선택) `AUTH_SECRET`, `NEXT_PUBLIC_CONTACT_EMAIL`.
 - 콜백 주소: `https://<도메인>/api/auth/callback/{google|naver|kakao}`
 - 로컬 테스트: `AUTH_DEV_LOGIN=1 AUTH_SECRET=아무값 npm run build && npm start` → 로그인 화면에 테스트 로그인 버튼.
+
+- 뉴스 본문에서 `**키워드**`로 감싸면 그 부분만 굵게 보여요 (components/Rich.tsx).
