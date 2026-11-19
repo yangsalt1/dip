@@ -36,7 +36,7 @@ export default function Money() {
     <main className="app">
       <header className="hdr">
         <div>
-          <Link href="/" className="brand">DIP<small>buy the dip</small></Link>
+          <Link href="/" className="brand">JUP<small>떨어질 때 사리라</small></Link>
           <h1 className="title">포트폴리오<br /><span>짜보기</span></h1>
         </div>
       </header>

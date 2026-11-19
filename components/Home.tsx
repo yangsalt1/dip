@@ -46,7 +46,7 @@ export default function Home() {
     <main className="app mOnly">
       <header className="hdr">
         <div>
-          <Link href="/" className="brand">DIP<small>buy the dip</small></Link>
+          <Link href="/" className="brand">JUP<small>떨어질 때 사리라</small></Link>
           <h1 className="title">오늘<br /><span>시장은</span></h1>
         </div>
         <span className="meta" style={{ paddingTop: 6 }}>{BRIEF.dateLabel}</span>

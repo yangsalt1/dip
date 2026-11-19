@@ -99,3 +99,10 @@ GitHub에 올리면 `.github/workflows/update-data.yml` 이 평일 아침 7시, 
 - [ ] 출시 전 금융 전문 변호사 자문 (특히 "포트폴리오"의 금액·목표별 비중 제시)
 
 모든 숫자는 참고용이고 투자 권유가 아니에요.
+
+## 로그인 · 줍줍리스트 (JUP)
+- 로그인: Auth.js (구글 · 네이버 · 카카오). 키가 들어간 서비스만 버튼이 켜져요.
+- 저장: Upstash Redis (Vercel → Storage에서 연결하면 `KV_REST_API_URL`, `KV_REST_API_TOKEN`이 자동으로 들어와요). 키: `jup:<서비스>:<회원번호>` → ETF id Set.
+- 환경변수: `AUTH_GOOGLE_ID/SECRET`, `AUTH_NAVER_ID/SECRET`, `AUTH_KAKAO_ID/SECRET`, (선택) `AUTH_SECRET`, `NEXT_PUBLIC_CONTACT_EMAIL`.
+- 콜백 주소: `https://<도메인>/api/auth/callback/{google|naver|kakao}`
+- 로컬 테스트: `AUTH_DEV_LOGIN=1 AUTH_SECRET=아무값 npm run build && npm start` → 로그인 화면에 테스트 로그인 버튼.

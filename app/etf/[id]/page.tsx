@@ -5,6 +5,7 @@ import { BottomNav, Back, StatusChip, Arrow, Sticker } from '@/components/ui';
 import { BRIEF, ETFS, FX_RATE, etfById } from '@/lib/data';
 import { pct, priceText, tempLabel } from '@/lib/format';
 import { stickerStyle } from '@/lib/sticker';
+import { JupButton } from '@/components/Jup';
 
 export const dynamicParams = false;
 
@@ -15,7 +16,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const e = etfById(id);
-  return { title: e ? `DIP · ${e.code} ${e.kw}` : 'DIP' };
+  return { title: e ? `JUP · ${e.code} ${e.kw}` : 'JUP' };
 }
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
@@ -101,7 +102,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: '18px 16px 0' }}>
-        <Link href="/money/" className="cta">포트폴리오에 담아보기<Arrow /></Link>
+        <JupButton id={e.id} />
+        <Link href="/money/" className="cta light" style={{ border: '1.5px solid #C4C4C0' }}>포트폴리오 짜보기<Arrow color="#111" /></Link>
         <p className="small" style={{ margin: '0 8px', fontSize: 12, color: '#5A5A58' }}>세일이어도 더 떨어질 수 있어요. 한 번에 말고 나눠서. 가격: Yahoo Finance {q.date} 종가. 최종 판단은 본인이 해요.</p>
       </div>
       <BottomNav active="etf" />

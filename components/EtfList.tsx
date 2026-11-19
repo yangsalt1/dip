@@ -20,7 +20,7 @@ export default function EtfList() {
     <main className="app">
       <header className="hdr">
         <div>
-          <Link href="/" className="brand">DIP<small>buy the dip</small></Link>
+          <Link href="/" className="brand">JUP<small>떨어질 때 사리라</small></Link>
           <h1 className="title">지금 꼭<br /><span>알아야 할 ETF</span></h1>
         </div>
         <div className="seg" role="group" aria-label="통화" style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', marginTop: 36 }}>

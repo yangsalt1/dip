@@ -2,7 +2,7 @@ import { BottomNav, Back } from '@/components/ui';
 import { BRIEF, FX } from '@/lib/data';
 import { pct } from '@/lib/format';
 
-export const metadata = { title: 'DIP · 환율 세일' };
+export const metadata = { title: 'JUP · 환율 세일' };
 const BG = ['#F06C3C', '#B1A6FF', '#F2F28E'];
 const CARE = BRIEF.fxCare as Record<string, string>;
 
