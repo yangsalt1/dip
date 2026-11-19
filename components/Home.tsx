@@ -105,7 +105,7 @@ export default function Home() {
             <Link key={f.id} href="/fx/" className="fxTile" style={{ background: FX_COLORS[i % 3].bg, color: FX_COLORS[i % 3].fg }}>
               <b className="fxNm">{f.short.replace(/\s*\(.*\)/, '')}{f.mult !== 1 && <small>{f.mult}{f.short.replace(/\s*\(.*\)/, '')}</small>}</b>
               {f.q.dd <= -1
-                ? <span className={`fxSt${FX_COLORS[i % 3].fg === '#fff' ? ' inv' : ''}`}>↓{Math.abs(f.q.dd).toFixed(1)}% {f.q.dd <= -10 ? '특급할인' : '할인 중'}</span>
+                ? <span className="fxSt fxOff">↓{Math.abs(f.q.dd).toFixed(1)}% 할인</span>
                 : <span className={`fxSt${FX_COLORS[i % 3].fg === '#fff' ? ' inv' : ''}`}>워워 · 최고가 근처</span>}
               <span className="fxSt inv">{fxVerdict(f).label}</span>
               <span className="fxPr">{Math.round(f.q.last * f.mult).toLocaleString('ko-KR')}<small>원</small></span>

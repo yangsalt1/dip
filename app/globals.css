@@ -444,3 +444,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .fxPr { margin-top: auto; font-size: 21px; font-weight: 800; letter-spacing: -0.04em; }
 .fxPr small { font-size: 13px; }
 @media (min-width: 1024px) { .wFx2 .fxV { background: rgba(255,255,255,.85); color: #111; } .wFx2 .wFxBig small { color: inherit; } }
+/* 할인 스티커: 작게, 칸 안에 딱 */
+.fxSt { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.fxSt.fxOff { font-size: 10.5px; padding: 3px 7px; }
