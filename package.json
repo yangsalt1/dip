@@ -1,0 +1,23 @@
+{
+  "name": "dip",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DIP - 떨어지면 세일. 왕초보를 위한 ETF 시장 브리핑 웹앱",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "npx serve out",
+    "data": "python3 pipeline/update_market.py"
+  },
+  "dependencies": {
+    "next": "16.4.6",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5"
+  }
+}

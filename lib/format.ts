@@ -1,0 +1,45 @@
+import type { Etf, Kind } from './data';
+import { FX_RATE } from './data';
+
+export type Cur = 'usd' | 'krw';
+
+export function priceText(e: Etf, cur: Cur): string {
+  let v = e.q.last;
+  const native: Cur = e.market === 'us' ? 'usd' : 'krw';
+  if (cur === 'usd') {
+    if (native === 'krw') v = v / FX_RATE;
+    return '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  if (native === 'usd') v = v * FX_RATE;
+  return Math.round(v).toLocaleString('ko-KR') + '원';
+}
+
+export function pct(v: number, digits = 2): string {
+  return (v > 0 ? '+' : '') + v.toFixed(digits) + '%';
+}
+
+export function won(n: number): string {
+  if (n >= 10000) return Math.round(n / 10000).toLocaleString('ko-KR') + '만원';
+  return Math.round(n).toLocaleString('ko-KR') + '원';
+}
+
+export const KIND_CHIP: Record<Kind, string> = {
+  mega: '특급세일 진행중',
+  sale: '일반 세일',
+  up: '상승 중~!!',
+  wow: '워워 · 어깨 위일 수도',
+};
+
+export function statusLine(e: Etf): { line: string; side: string } {
+  const { dd, d1 } = e.q;
+  if (e.kind === 'mega') return { line: `최고가보다 ${Math.abs(dd).toFixed(1)}% 특급 할인 중`, side: `오늘 ${pct(d1)}` };
+  if (e.kind === 'sale') return { line: `최고가보다 ${Math.abs(dd).toFixed(1)}% 할인 중`, side: `오늘 ${pct(d1)}` };
+  if (e.kind === 'up') return { line: `오늘 ${pct(d1)} 상승 중~!!`, side: `최고가까지 ${Math.abs(dd).toFixed(1)}% 남음` };
+  return { line: '최고가 바로 근처! 쉬어갈 수 있어요', side: `오늘 ${pct(d1)}` };
+}
+
+export function tempLabel(buy: number): string {
+  if (buy >= 65) return '사도 좋은 구간';
+  if (buy >= 35) return '지켜보기';
+  return '쉬어가기';
+}
