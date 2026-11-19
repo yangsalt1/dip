@@ -6,7 +6,8 @@ export const metadata = { title: 'JUP · 관리자', robots: { index: false, fol
 export const dynamic = 'force-dynamic';
 
 /** 관리자: Vercel 환경변수 ADMIN_IDS 에 적힌 회원번호만 볼 수 있어요 (쉼표로 여러 명). */
-const ADMINS = (process.env.ADMIN_IDS ?? '').split(',').map((x) => x.trim()).filter(Boolean);
+// 기본 관리자(운영자 카카오 계정) + Vercel 환경변수 ADMIN_IDS 로 추가 가능
+const ADMINS = ['kakao:5195172894', ...(process.env.ADMIN_IDS ?? '').split(',')].map((x) => x.trim()).filter(Boolean);
 const PROV: Record<string, string> = { kakao: '카카오', naver: '네이버', google: '구글', dev: '테스트' };
 const d = (iso: string) => { const t = new Date(iso); return `${t.getMonth() + 1}.${t.getDate()} ${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}`; };
 
