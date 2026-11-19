@@ -4,6 +4,7 @@ import { REDIS_URL, REDIS_TOKEN } from '@/lib/redisEnv';
 import cfg from '@/data/etfs.json';
 import { kisReady, krPrice, usPrice } from '@/lib/kis';
 import { yahooPrice } from '@/lib/yahoo';
+import { naverKr, naverUs, naverFx } from '@/lib/naver';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
@@ -15,8 +16,8 @@ const EXCD: Record<string, string> = {
 };
 const ALT: Record<string, string[]> = { NAS: ['AMS', 'NYS'], AMS: ['NYS', 'NAS'], NYS: ['AMS', 'NAS'] };
 
-type Live = { at: string; src: 'kis' | 'yahoo'; quotes: Record<string, { last: number; d1: number }> };
-const TTL = 60; // 초. 이 시간 안에는 모두가 같은 시세를 같이 써요 (KIS 호출 아끼기)
+type Live = { at: string; src: 'kis' | 'naver' | 'yahoo'; quotes: Record<string, { last: number; d1: number }> };
+const TTL = 15; // 초. 이 시간 안에는 모두가 같은 시세를 같이 써요
 
 const url = REDIS_URL;
 const tok = REDIS_TOKEN;
@@ -31,8 +32,16 @@ async function pool<T>(items: T[], n: number, fn: (x: T) => Promise<void>) {
 
 async function fetchAll(): Promise<Live> {
   const quotes: Live['quotes'] = {};
-  const src: Live['src'] = kisReady ? 'kis' : 'yahoo';
-  await pool(cfg.etfs, kisReady ? 4 : 6, async (e) => {
+  const src: Live['src'] = kisReady ? 'kis' : 'naver';
+  // 한국 ETF: 네이버 한 번에
+  const kr = cfg.etfs.filter((e) => e.market === 'kr');
+  if (!kisReady) {
+    try {
+      const m = await naverKr(kr.map((e) => e.yahoo.replace(/\.K[SQ]$/, '')));
+      for (const e of kr) { const q = m[e.yahoo.replace(/\.K[SQ]$/, '')]; if (q) quotes[e.id] = q; }
+    } catch { /* 아래에서 하나씩 */ }
+  }
+  await pool(cfg.etfs.filter((e) => !quotes[e.id]), 6, async (e) => {
     try {
       if (kisReady && e.market === 'kr') {
         quotes[e.id] = await krPrice(e.yahoo.replace(/\.K[SQ]$/, ''));
@@ -42,11 +51,14 @@ async function fetchAll(): Promise<Live> {
           try { quotes[e.id] = await usPrice(e.yahoo, ex); found[e.yahoo] = ex; break; } catch { /* 다음 거래소 */ }
         }
       }
+      if (!quotes[e.id] && e.market !== 'kr') { try { quotes[e.id] = await naverUs(e.yahoo); } catch { /* 야후로 */ } }
       if (!quotes[e.id]) quotes[e.id] = await yahooPrice(e.yahoo);
     } catch { /* 이 종목은 하루 두 번 업데이트 값 그대로 */ }
   });
   // 환율 (fx:usd 처럼 저장)
-  await pool(cfg.fx, 3, async (f) => { try { quotes['fx:' + f.id] = await yahooPrice(f.yahoo); } catch { /* 그대로 */ } });
+  await pool(cfg.fx, 3, async (f) => {
+    try { quotes['fx:' + f.id] = await naverFx(f.id); } catch { try { quotes['fx:' + f.id] = await yahooPrice(f.yahoo); } catch { /* 그대로 */ } }
+  });
   return { at: new Date().toISOString(), src, quotes };
 }
 

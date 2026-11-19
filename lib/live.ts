@@ -47,7 +47,7 @@ export function useLive() {
   const [s, setS] = useState(cur);
   useEffect(() => {
     subs.add(setS);
-    if (!timer && !off) { tick(); timer = setInterval(tick, 60_000); }
+    if (!timer && !off) { tick(); timer = setInterval(tick, 20_000); }
     else setS(cur);
     return () => { subs.delete(setS); };
   }, []);
