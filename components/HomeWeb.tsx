@@ -41,11 +41,7 @@ export default function HomeWeb() {
         <div className="wMain">
           <section className="wBanner">
             <div className="row" style={{ alignItems: 'baseline' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <span className="small" style={{ color: '#BDBDBA', fontWeight: 700 }}>오늘 시장 한눈에</span>
-                <MktToggle mkt={mkt} onChange={setMkt} />
-              </span>
-              <span className="small" style={{ color: '#8A8A88', fontWeight: 600 }}>{mkt === 'us' ? BRIEF.weather.detailUs : BRIEF.weather.detailKr}</span>
+              <MktToggle mkt={mkt} onChange={setMkt} />
             </div>
             <Overview size="web" mkt={mkt} />
           </section>
