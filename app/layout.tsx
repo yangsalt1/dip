@@ -5,7 +5,7 @@ import LoginSheet from '@/components/LoginSheet';
 
 export const metadata: Metadata = {
   // 주소가 바뀌어도 자동으로 따라가요 (SITE_URL > Vercel 기본 주소)
-  metadataBase: new URL(process.env.SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://dip-rosy.vercel.app')),
+  metadataBase: new URL(process.env.SITE_URL || 'https://jup-rosy.vercel.app'),
   title: 'JUP · 떨어질 때 줍는다',
   description: '오늘 세일 중인 ETF와 환율을 한눈에. 왕초보를 위한 매일 시장 브리핑.',
   openGraph: {
