@@ -2,7 +2,7 @@
   "name": "dip",
   "version": "0.1.0",
   "private": true,
-  "description": "DIP - 떨어지면 세일. 왕초보를 위한 ETF 시장 브리핑 웹앱",
+  "description": "DIP - 나는 떨어질 때 살거야. 왕초보를 위한 ETF 시장 브리핑 웹앱",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

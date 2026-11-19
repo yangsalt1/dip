@@ -3,7 +3,7 @@ import './globals.css';
 import SwRegister from '@/components/SwRegister';
 
 export const metadata: Metadata = {
-  title: 'DIP · 떨어지면 세일',
+  title: 'DIP · 나는 떨어질 때 살거야',
   description: '왕초보를 위한 ETF 시장 브리핑. 떨어져도 즐겁게, buy the dip.',
   manifest: '/manifest.webmanifest',
   icons: { icon: '/icon.svg', apple: '/icon-192.png' },
