@@ -1,0 +1,27 @@
+'use client';
+import { etfById, FX_RATE } from '@/lib/data';
+import { pct, priceText } from '@/lib/format';
+import { liveTime, useLive } from '@/lib/live';
+import { StatusChip, Sticker } from './ui';
+
+/** ETF 상세 맨 위 가격 카드 (실시간이면 30초마다 바뀌어요) */
+export default function LivePrice({ id }: { id: string }) {
+  const live = useLive();
+  const e = etfById(id)!;
+  const q = e.q;
+  const native = e.market === 'us' ? 'usd' : 'krw';
+  const other = native === 'usd' ? 'krw' : 'usd';
+  const hiText = native === 'usd' ? '$' + q.hi.toFixed(2) : Math.round(q.hi).toLocaleString('ko-KR') + '원';
+  const t = liveTime(live.at);
+  return (
+    <>
+      <div className="row"><Sticker kind={e.kind} dd={q.dd} d1={q.d1} label={e.kind === 'mega' || e.kind === 'sale' ? `최고가 ${hiText} 대비` : undefined} /><StatusChip kind={e.kind} /></div>
+      <div className="rowEnd">
+        <span className="big" style={{ fontSize: 56 }}>{priceText(e, native)}</span>
+        <span style={{ paddingBottom: 6, fontSize: 15, fontWeight: 800, color: q.d1 >= 0 ? '#A3200F' : '#1A3FA8' }}>오늘 {pct(q.d1)}</span>
+      </div>
+      <span className="small soft">≈ {priceText(e, other)} (1달러 = {Math.round(FX_RATE).toLocaleString('ko-KR')}원) · 이번 주 {pct(q.wk)}</span>
+      <span className="small soft" style={{ fontWeight: 700 }}>{t ? `● 실시간 · ${t} 기준 (한국투자증권)` : `${q.date} 종가 기준`}</span>
+    </>
+  );
+}

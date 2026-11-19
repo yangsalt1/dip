@@ -1,4 +1,5 @@
 'use client';
+import { useLive } from '@/lib/live';
 import { useState } from 'react';
 import Link from 'next/link';
 import { ETFS, FX_RATE, PALETTE, PRICE_DATE, SECTORS, type Etf, type Market } from '@/lib/data';
@@ -7,6 +8,7 @@ import { BottomNav, StatusChip, Sticker } from './ui';
 import { stickerStyle } from '@/lib/sticker';
 
 export default function EtfList() {
+  useLive();
   const [market, setMarket] = useState<Market>('us');
   const [sector, setSector] = useState<string>('all');
   const [cur, setCur] = useState<Cur>('usd');

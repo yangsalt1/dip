@@ -19,6 +19,9 @@ async function load() {
   }
 }
 
+/** 로그인 상태 다시 확인 (화면 이동 뒤 등) */
+export function refreshJup() { load(); }
+
 export function goLogin() {
   const next = location.pathname + location.search;
   location.href = '/login/?next=' + encodeURIComponent(next);

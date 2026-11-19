@@ -1,4 +1,5 @@
 'use client';
+import { useLive } from '@/lib/live';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { BUCKETS, diagnose, type Saved } from '@/lib/buckets';
@@ -21,6 +22,7 @@ async function shrink(f: File): Promise<string> {
 const pct = (n: number) => `${Math.round(n)}%`;
 
 export default function Analyze({ goal }: { goal: Goal }) {
+  useLive();
   const [st, setSt] = useState<'loading' | 'out' | 'in'>('loading');
   const [ready, setReady] = useState(true);
   const [saved, setSaved] = useState<Saved | null>(null);

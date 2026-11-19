@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import SwRegister from '@/components/SwRegister';
+import LoginSheet from '@/components/LoginSheet';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://dip-rosy.vercel.app'),
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
         <SwRegister />
+        <LoginSheet />
       </body>
     </html>
   );

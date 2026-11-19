@@ -1,4 +1,5 @@
 'use client';
+import { useLive } from '@/lib/live';
 import { useState } from 'react';
 import Link from 'next/link';
 import { BRIEF, ETFS, FX, PRICE_DATE, isKnife, type Etf } from '@/lib/data';
@@ -11,6 +12,7 @@ const NEWS_BG = ['#B1A6FF', '#D8D0C4', '#F2F28E'];
 
 /** 웹(1024px~) 전용 첫 화면 */
 export default function HomeWeb() {
+  useLive();
   const [mkt, setMkt] = useState<'us' | 'kr'>('us');
   const list = ETFS.filter((e) => e.market === mkt);
   const byScore = (a: Etf, b: Etf) => b.q.buy - a.q.buy;

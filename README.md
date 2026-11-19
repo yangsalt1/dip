@@ -112,3 +112,8 @@ GitHub에 올리면 `.github/workflows/update-data.yml` 이 평일 아침 7시, 
 ## 내 주식 분석 (포트폴리오 맨 아래)
 - 캡처 최대 10장 → Claude API로 종목·칸·비중만 읽어요 (사진·금액 저장 안 함). 환경변수 `ANTHROPIC_API_KEY` 필요, 없으면 "준비 중".
 - 하루 10번 제한. 결과는 `port:<회원>`에 저장. 로컬 화면 테스트는 `ANALYZE_MOCK=1`.
+
+## 로그인 필수 · 실시간 시세 · 관리자
+- 로그인 버튼이 하나라도 켜지면 모든 화면이 로그인 시트로 잠겨요 (/login, /privacy 제외).
+- 실시간: 한국투자증권 KIS (`KIS_APP_KEY`, `KIS_APP_SECRET`). `/api/live`가 30초 캐시, 화면은 30초마다 갱신. 키 없으면 하루 2번 데이터.
+- 관리자: `/admin` · `ADMIN_IDS`(쉼표로 회원번호). 회원은 로그인할 때 `users` 해시에 기록.

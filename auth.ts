@@ -5,6 +5,7 @@ import Naver from 'next-auth/providers/naver';
 import Kakao from 'next-auth/providers/kakao';
 import Credentials from 'next-auth/providers/credentials';
 import { createHash } from 'crypto';
+import { storeReady, touchUser } from '@/lib/store';
 
 /**
  * 로그인: 구글 · 네이버 · 카카오.
@@ -36,8 +37,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: 'jwt', maxAge: 60 * 60 * 24 * 90 },
   pages: { signIn: '/login/' },
   callbacks: {
-    jwt({ token, account }) {
-      if (account) token.uid = `${account.provider}:${account.providerAccountId}`;
+    async jwt({ token, account }) {
+      if (account) {
+        token.uid = `${account.provider}:${account.providerAccountId}`;
+        // 관리자 페이지에서 볼 수 있게 회원 기록 (실패해도 로그인은 계속)
+        if (storeReady) await touchUser(token.uid as string, account.provider, token.name ?? '', token.email ?? '').catch(() => {});
+      }
       return token;
     },
     session({ session, token }) {

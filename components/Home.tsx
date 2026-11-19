@@ -1,4 +1,5 @@
 'use client';
+import { useLive } from '@/lib/live';
 import Rich from './Rich';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -12,6 +13,7 @@ const CARD_BG = ['#B1A6FF', '#D8D0C4', '#F2F28E'];
 const FX_BG = ['#F7F7F5', '#F7F7F5', '#F7F7F5'];
 
 export default function Home() {
+  useLive();
   const [open, setOpen] = useState(-1);
 
   const [mkt, setMktRaw] = useState<'us' | 'kr'>('us');

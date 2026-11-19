@@ -32,8 +32,8 @@ export async function removeJup(uid: string, id: string) {
   (mem.get(key(uid)) as Set<string> | undefined)?.delete(id);
 }
 export async function clearJup(uid: string) {
-  if (redis) { await redis.del(key(uid), pkey(uid)); return; }
-  mem.delete(key(uid)); mem.delete(pkey(uid));
+  if (redis) { await redis.del(key(uid), pkey(uid)); await redis.hdel('users', uid); return; }
+  mem.delete(key(uid)); mem.delete(pkey(uid)); mem.delete('u:' + uid); (mem.get('users') as Set<string> | undefined)?.delete(uid);
 }
 
 export async function getPort<T>(uid: string): Promise<T | null> {
@@ -54,4 +54,26 @@ export async function bumpQuota(uid: string): Promise<number> {
   const k = `quota:${uid}:${new Date().toISOString().slice(0, 10)}`;
   if (redis) { const n = await redis.incr(k); if (n === 1) await redis.expire(k, 60 * 60 * 26); return n; }
   const n = ((mem.get(k) as number) ?? 0) + 1; mem.set(k, n); return n;
+}
+
+/** 회원 목록 (관리자 페이지용). users 해시: 회원번호 → 정보 */
+export type Member = { uid: string; provider: string; name: string; email: string; first: string; last: string; logins: number };
+export async function touchUser(uid: string, provider: string, name: string, email: string) {
+  const now = new Date().toISOString();
+  const prev = (redis ? ((await redis.hget('users', uid)) as Member | null) : (mem.get('u:' + uid) as Member | undefined)) ?? null;
+  const m: Member = { uid, provider, name: name || prev?.name || '', email: email || prev?.email || '', first: prev?.first ?? now, last: now, logins: (prev?.logins ?? 0) + 1 };
+  if (redis) await redis.hset('users', { [uid]: m });
+  else { mem.set('u:' + uid, m); const all = (mem.get('users') as Set<string>) ?? new Set(); all.add(uid); mem.set('users', all); }
+}
+export async function allUsers(): Promise<Member[]> {
+  if (redis) return Object.values(((await redis.hgetall('users')) ?? {}) as Record<string, Member>);
+  return [...((mem.get('users') as Set<string>) ?? [])].map((u) => mem.get('u:' + u) as Member);
+}
+export async function delUser(uid: string) {
+  if (redis) { await redis.hdel('users', uid); return; }
+  mem.delete('u:' + uid); (mem.get('users') as Set<string> | undefined)?.delete(uid);
+}
+export async function userStats(uid: string) {
+  if (redis) { const [n, p] = await Promise.all([redis.scard(key(uid)), redis.exists(pkey(uid))]); return { jup: n, port: p === 1 }; }
+  return { jup: ((mem.get(key(uid)) as Set<string>) ?? new Set()).size, port: mem.has(pkey(uid)) };
 }

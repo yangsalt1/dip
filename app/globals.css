@@ -392,7 +392,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .lsTag { font-size: 13px; font-weight: 800; color: #5A5A58; margin-top: 2px; }
 .lsTitle { margin: 0; font-size: 27px; line-height: 1.22; font-weight: 800; letter-spacing: -0.045em; }
 .lsSub { margin: 0 0 4px; font-size: 15px; font-weight: 600; color: #3D3D3B; }
-.lsLater { border: 0; background: transparent; padding: 8px; font-size: 14px; font-weight: 800; color: #5A5A58; text-decoration: underline; cursor: pointer; }
+.lsLater { align-self: center; padding: 8px; font-size: 13px; font-weight: 700; color: #5A5A58; text-decoration: underline; }
 @media (min-width: 1024px) { .lsWrap { align-items: center; } .lsSheet { border-radius: 30px; padding-bottom: 26px; } }
 
 /* ===== 내 주식 분석하기 ===== */
@@ -421,3 +421,16 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .anzAdd b { font-size: 24px; line-height: 1; }
 .anzAdd small { font-size: 11px; font-weight: 700; color: #5A5A58; }
 @media (min-width: 1024px) { .anz { max-width: 760px; } }
+
+/* ===== 관리자 ===== */
+.adm { padding: 32px 24px 60px; display: flex; flex-direction: column; gap: 18px; }
+.adm code { background: #fff; padding: 2px 6px; border-radius: 6px; font-size: 14px; }
+.admStats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.admStats div { background: #fff; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+.admStats b { font-size: 26px; letter-spacing: -0.04em; }
+.admStats span { font-size: 13px; font-weight: 700; color: #5A5A58; }
+.admTable { background: #fff; border-radius: 18px; overflow-x: auto; }
+.admRow { display: grid; grid-template-columns: 1.6fr 1.6fr 1fr .8fr .8fr .5fr .5fr; gap: 10px; padding: 12px 16px; border-top: 1px solid #ECECEA; font-size: 14px; align-items: center; min-width: 760px; }
+.admRow.head { border-top: 0; font-weight: 800; font-size: 12px; color: #6B6B69; }
+.admRow span { display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow-wrap: anywhere; }
+.admRow small { font-size: 11px; color: #8A8A88; }

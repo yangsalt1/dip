@@ -1,4 +1,5 @@
 'use client';
+import { useLive } from '@/lib/live';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { ETFS, etfById, type Etf } from '@/lib/data';
@@ -63,6 +64,7 @@ async function wipe() {
 }
 
 export default function JupPage() {
+  useLive();
   const s = useJup();
   const list = s.ids.map((id) => ETFS.find((e) => e.id === id)).filter(Boolean) as Etf[];
   list.sort((a, b) => a.q.dd - b.q.dd);

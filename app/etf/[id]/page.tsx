@@ -6,6 +6,7 @@ import { BRIEF, ETFS, FX_RATE, etfById } from '@/lib/data';
 import { pct, priceText, tempLabel } from '@/lib/format';
 import { stickerStyle } from '@/lib/sticker';
 import { JupButton } from '@/components/Jup';
+import LivePrice from '@/components/LivePrice';
 
 export const dynamicParams = false;
 
@@ -47,25 +48,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
       <div className="stack">
         <section className="card" style={{ background: '#B1A6FF' }}>
-          {stickerStyle() === 'b' ? (
-            <>
-              <div className="row"><span className="small soft" style={{ fontWeight: 700 }}>최고가 {hiText}</span><StatusChip kind={e.kind} /></div>
-              <div className="row" style={{ alignItems: 'center' }}>
-                <span className="big" style={{ fontSize: 56 }}>{priceText(e, native)}</span>
-                <Sticker kind={e.kind} dd={q.dd} d1={q.d1} />
-              </div>
-              <span className="small soft">오늘 <b style={{ color: q.d1 >= 0 ? '#A3200F' : '#1A3FA8' }}>{pct(q.d1)}</b> · ≈ {priceText(e, other)} (1달러 = {Math.round(FX_RATE).toLocaleString('ko-KR')}원) · 이번 주 {pct(q.wk)}</span>
-            </>
-          ) : (
-            <>
-              <div className="row"><Sticker kind={e.kind} dd={q.dd} d1={q.d1} label={e.kind === 'mega' || e.kind === 'sale' ? `최고가 ${hiText} 대비` : undefined} /><StatusChip kind={e.kind} /></div>
-              <div className="rowEnd">
-                <span className="big" style={{ fontSize: 56 }}>{priceText(e, native)}</span>
-                <span style={{ paddingBottom: 6, fontSize: 15, fontWeight: 800, color: q.d1 >= 0 ? '#A3200F' : '#1A3FA8' }}>오늘 {pct(q.d1)}</span>
-              </div>
-              <span className="small soft">≈ {priceText(e, other)} (1달러 = {Math.round(FX_RATE).toLocaleString('ko-KR')}원) · 이번 주 {pct(q.wk)}</span>
-            </>
-          )}
+          <LivePrice id={e.id} />
 </section>
 
         <section className="card" aria-label="1년 차트" style={{ background: '#F7F7F5', padding: '20px 14px 48px' }}>
