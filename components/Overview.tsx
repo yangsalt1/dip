@@ -1,7 +1,7 @@
 import { ETFS } from '@/lib/data';
 import { overview } from '@/lib/overview';
 
-const DOT: Record<string, string> = { falling: '#FF5A3C', bottom: '#F2F28E', rising: '#9CC3FF' };
+const DOT: Record<string, string> = { mega: '#FF5A3C', sale: '#B1A6FF', bottom: '#F2F28E', rising: '#9CC3FF' };
 
 /** 배너: 왼쪽 라벨(세일중/줍줍준비/상승중) + 섹터 이름, 아래 비율 막대 */
 export default function Overview({ size = 'web' }: { size?: 'web' | 'app' }) {
