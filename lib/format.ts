@@ -43,3 +43,8 @@ export function tempLabel(buy: number): string {
   if (buy >= 35) return '지켜보기';
   return '쉬어가기';
 }
+
+/** 화면 큰 이름: 미국은 티커(VOO), 한국은 진짜 상품명(TIGER 미국나스닥100) */
+export const etfTitle = (e: Etf) => (e.market === 'us' ? e.code : e.name);
+/** 큰 이름 밑 작은 글씨: 미국은 정식 이름, 한국은 쉬운 설명 */
+export const etfSubtitle = (e: Etf) => (e.market === 'us' ? e.name : e.kw);

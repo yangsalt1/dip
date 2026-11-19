@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { etfTitle } from '@/lib/format';
 import { notFound } from 'next/navigation';
 import Chart from '@/components/Chart';
 import { BottomNav, Back, StatusChip, Arrow, Sticker } from '@/components/ui';
@@ -18,7 +19,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const e = etfById(id);
-  return { title: e ? `JUP · ${e.code} ${e.kw}` : 'JUP' };
+  return { title: e ? `JUP · ${etfTitle(e)} ${e.kw}` : 'JUP' };
 }
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
@@ -42,9 +43,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     <main className="app">
       <header style={{ padding: '28px 24px 0' }}>
         <Back href="/etf/" label="ETF 목록으로" />
-        <h1 className="title">{e.code}<br /><span>{e.kw}</span></h1>
+        <h1 className="title" style={e.market === 'kr' ? { wordBreak: 'keep-all' } : undefined}>{etfTitle(e)}<br /><span>{e.kw}</span></h1>
         <p className="diffTag" style={{ marginTop: 10 }}>{e.diff}</p>
-        <p className="meta" style={{ margin: '8px 0 0' }}>{e.name}</p>
+        {e.market === 'us' && <p className="meta" style={{ margin: '8px 0 0' }}>{e.name}</p>}
       </header>
 
       <div className="stack">
@@ -54,7 +55,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
         <section className="card" aria-label="1년 차트" style={{ background: '#F7F7F5', padding: '20px 14px 48px' }}>
           <div className="row" style={{ padding: '0 8px' }}><span className="label">1년 차트</span><span className="meta">주간 종가</span></div>
-          <Chart points={q.chart.points} start={q.chart.start} label={`${e.code} 1년 주간 종가 차트. 최고가 ${hiText}, 지금 ${priceText(e, native)}`} />
+          <Chart points={q.chart.points} start={q.chart.start} label={`${etfTitle(e)} 1년 주간 종가 차트. 최고가 ${hiText}, 지금 ${priceText(e, native)}`} />
         </section>
 
         <section className="card dark" style={{ gap: 14 }}>

@@ -1,5 +1,6 @@
 'use client';
 import { useLive } from '@/lib/live';
+import { etfTitle } from '@/lib/format';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { ETFS, etfById, type Etf } from '@/lib/data';
@@ -49,7 +50,7 @@ function Row({ e }: { e: Etf }) {
   return (
     <div className="jupRow">
       <Link href={`/etf/${e.id}/`} className="jupMain">
-        <span className="jupName"><b>{e.code}</b><small>{e.kw}</small></span>
+        <span className="jupName"><b>{etfTitle(e)}</b><small>{e.kw}</small></span>
         <span className="jupSide"><Sticker kind={e.kind} dd={e.q.dd} d1={e.q.d1} /><b className="jupPrice">{priceText(e, native)}</b></span>
       </Link>
       <JupMini id={e.id} />

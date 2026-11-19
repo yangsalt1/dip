@@ -1,5 +1,6 @@
 'use client';
 import { useLive } from '@/lib/live';
+import { etfTitle, etfSubtitle } from '@/lib/format';
 import LiveStamp from './LiveStamp';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -60,7 +61,7 @@ export default function EtfList() {
             return (
               <Link key={e.id} href={`/etf/${e.id}/`} className="wListRow" role="listitem">
                 <b className="wRank">{i + 1}</b>
-                <span className="wListName"><b>{e.code}</b><small>{e.name}</small></span>
+                <span className="wListName"><b>{etfTitle(e)}</b><small>{etfSubtitle(e)}</small></span>
                 <span className="wListKw"><i style={{ background: sc?.color }} /><span style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}><span>{e.kw}</span><small className="wDiff">{e.diff}</small></span></span>
                 <span><Sticker kind={e.kind} dd={e.q.dd} d1={e.q.d1} /></span>
                 <b className="wListPrice">{priceText(e, cur)}</b>
@@ -86,10 +87,10 @@ function Card({ e, cur, hero, tag, rank, bg }: { e: Etf; cur: Cur; hero?: boolea
       <span className="row">
         {hero
           ? <span className="chip" style={{ background: '#F2F28E', color: '#111', fontSize: 12, padding: '5px 11px' }}>{tag}</span>
-          : <span style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}><b style={{ fontSize: 13, color: '#3A3A38' }}>{rank}위</b><b style={{ fontSize: e.code.length > 5 ? 24 : 30, letterSpacing: '-0.045em' }}>{e.code}</b></span>}
+          : <span style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}><b style={{ fontSize: 13, color: '#3A3A38' }}>{rank}위</b><b style={{ fontSize: etfTitle(e).length > 12 ? 19 : etfTitle(e).length > 5 ? 24 : 30, letterSpacing: '-0.045em' }}>{etfTitle(e)}</b></span>}
         {stickerStyle() === 'b' ? <Sticker kind={e.kind} dd={e.q.dd} d1={e.q.d1} /> : <StatusChip kind={e.kind} />}
       </span>
-      {hero && <span style={{ fontSize: 64, fontWeight: 800, lineHeight: 0.9, letterSpacing: '-0.05em' }}>{e.code}</span>}
+      {hero && <span style={{ fontSize: etfTitle(e).length > 6 ? 38 : 64, fontWeight: 800, lineHeight: 1, letterSpacing: '-0.05em', wordBreak: 'keep-all' }}>{etfTitle(e)}</span>}
       <span style={{ display: 'flex', flexDirection: 'column', gap: hero ? 6 : 3 }}>
         <b style={{ fontSize: hero ? 22 : 18, letterSpacing: '-0.035em' }}>{e.kw}</b>
         <span className="diffTag">{e.diff}</span>
