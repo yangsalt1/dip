@@ -66,8 +66,8 @@ export function signal(mkt: 'us' | 'kr'): Signal {
   if (usDrop) chips.push('밤새 미국 급락');
   if (share < 0.3) chips.push('최고가 근처');
 
-  const SLOW = '빅세일 시작. 근데 왕짱빅세일 할지도 모름.';
-  if (share < 0.3) return { tone: 'wait', text: '대부분 최고가. 구경만 하자. 계좌 구경.', chips };
+  const SLOW = '떨어지는 중. 한 번에 말고 조금씩 줍자.';
+  if (share < 0.3) return { tone: 'wait', text: '다 비싸. 오늘은 줍지 말고 쉬자.', chips };
   if (usDrop || (falling && !rebound)) return { tone: 'slow', text: SLOW, chips };
-  return { tone: 'go', text: '반등 시작. 슬슬 줍기 좋은 날.', chips };
+  return { tone: 'go', text: '바닥 찍고 반등! 지금이 줍줍 타이밍.', chips };
 }
