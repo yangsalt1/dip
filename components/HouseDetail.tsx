@@ -8,7 +8,7 @@ import { daysLeft, moneySteps, pyeongOf, roomsOf, won } from '@/lib/house/calc';
 function checks(n: Notice): string[] {
   const out: string[] = [];
   const sum = (k: 'newlywed' | 'youth' | 'family' | 'first') => n.units.reduce((s, u) => s + (u.sp?.[k] ?? 0), 0);
-  if (n.src === 'applyhome' || n.src === 'remndr') {
+  if (n.src === 'applyhome') {
     out.push('청약통장이 있어야 해요');
     out.push('보통 집이 없어야(무주택) 유리해요');
     if (sum('newlywed')) out.push(`신혼부부 특별공급 ${sum('newlywed')}세대`);
