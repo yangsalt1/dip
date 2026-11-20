@@ -33,8 +33,8 @@ export async function removeJup(uid: string, id: string) {
   (mem.get(key(uid)) as Set<string> | undefined)?.delete(id);
 }
 export async function clearJup(uid: string) {
-  if (redis) { await redis.del(key(uid), pkey(uid)); await redis.hdel('users', uid); return; }
-  mem.delete(key(uid)); mem.delete(pkey(uid)); mem.delete('u:' + uid); (mem.get('users') as Set<string> | undefined)?.delete(uid);
+  if (redis) { await redis.del(key(uid), pkey(uid), `my:${uid}`, `hpref:${uid}`, `push:${uid}`, `hseen:${uid}`); await redis.hdel('users', uid); return; }
+  mem.delete(key(uid)); mem.delete(pkey(uid)); mem.delete(`my:${uid}`); mem.delete('u:' + uid); (mem.get('users') as Set<string> | undefined)?.delete(uid);
 }
 
 export async function getPort<T>(uid: string): Promise<T | null> {
@@ -48,6 +48,16 @@ export async function setPort(uid: string, v: unknown) {
 export async function delPort(uid: string) {
   if (redis) { await redis.del(pkey(uid)); return; }
   mem.delete(pkey(uid));
+}
+
+/** 아무 값이나 저장/읽기 (ttl 초가 있으면 그만큼만) */
+export async function kvGet<T>(k: string): Promise<T | null> {
+  if (redis) return ((await redis.get(k)) as T) ?? null;
+  return (mem.get(k) as T) ?? null;
+}
+export async function kvSet(k: string, v: unknown, ttl?: number) {
+  if (redis) { if (ttl) await redis.set(k, v, { ex: ttl }); else await redis.set(k, v); return; }
+  mem.set(k, v);
 }
 
 /** 하루 분석 횟수 +1 하고 지금 횟수 돌려줘요 */

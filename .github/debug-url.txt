@@ -1,1 +1,1 @@
-https://jup-rosy.vercel.app/api/hcheck/?v=20
+https://jup-rosy.vercel.app/api/my/search/?q=%EC%82%BC%EC%84%B1%EC%A0%84%EC%9E%90

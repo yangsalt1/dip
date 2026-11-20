@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { PLANS, pensionCalc, type Goal } from '@/lib/plans';
 import { won } from '@/lib/format';
 import { BottomNav, Disclaimer } from './ui';
-import Analyze from './Analyze';
+import MyStocks from './MyStocks';
 
 const ORDER: Goal[] = ['grow', 'dividend', 'balance', 'pension'];
 
@@ -40,7 +40,10 @@ export default function Money() {
           <Link href="/" className="brand">JUP<small>떨어질 때 줍는다</small></Link>
           <h1 className="title">포트폴리오<br /><span>짜보기</span></h1>
         </div>
-        <Link href="/jup/" className="pill outline" style={{ marginTop: 34, fontSize: 13, minHeight: 36, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', whiteSpace: 'nowrap' }}>내 줍줍리스트 →</Link>
+        <div style={{ marginTop: 34, display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-end' }}>
+          <a href="#my" className="pill" style={{ fontSize: 13, minHeight: 36, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', whiteSpace: 'nowrap', background: '#111', color: '#fff' }}>내 주식 ↓</a>
+          <Link href="/jup/" className="pill outline" style={{ fontSize: 13, minHeight: 36, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', whiteSpace: 'nowrap' }}>내 줍줍리스트 →</Link>
+        </div>
       </header>
 
       <div className="split">
@@ -116,7 +119,7 @@ export default function Money() {
       <Disclaimer><b style={{ color: '#111' }}>이건 그냥 추천이에요.</b> 목표만 보고 대략 나눈 예시라서 원금 손실이 날 수 있어요. 세금 계산도 어림값이에요. 사기 전에 꼭 직접 확인하고, 한 번에 말고 나눠서 사세요.</Disclaimer>
       </div>
       </div>
-      <Analyze goal={goal} />
+      <MyStocks goal={goal} />
       <BottomNav active="money" />
     </main>
   );
