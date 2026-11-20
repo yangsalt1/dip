@@ -1,1 +1,1 @@
-https://jup-rosy.vercel.app/api/hcheck/?v=12
+https://jup-rosy.vercel.app/api/hcheck/?v=13

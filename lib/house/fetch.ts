@@ -235,6 +235,8 @@ export async function lhDetail(n: Notice): Promise<Notice> {
   if (acp && /\d/.test(acp)) { const r = range(acp); n.start = r.start; n.end = r.end ?? n.end; }
   const win = html.match(/sta_pzwrDt">([^<]*)</)?.[1]; if (win) n.win = day(win);
   const mv = html.match(/입주예정월\s*:\s*([\d.]+)/)?.[1]; if (mv) n.move = mv;
+  const f = html.match(/fileDownLoad\('(\d+)'\);">[^<]*공고문[^<]*\.pdf/) ?? html.match(/fileDownLoad\('(\d+)'\);">[^<]*\.pdf/);
+  if (f) n.doc = `${LH}/lhapply/lhFile.do?fileid=${f[1]}`;
   const units: HUnit[] = [];
   for (const t of html.split('<table').slice(1)) {
     const body = t.split('</table>')[0];
@@ -304,24 +306,24 @@ async function socoList(): Promise<Notice[]> {
 export function parseSupply(text: string): HUnit[] {
   const out: HUnit[] = [];
   // 면적(㎡) 뒤에 오는 숫자 중 보증금·월세처럼 생긴 것 (만원이면 500~10만, 원이면 500만 이상)
-  const re = /(\d{2,3}\.\d{1,4})\s*(?:㎡|m²|m2)\s*(?:\(\s*([0-9A-Za-z\-]+)\s*\))?([\s\S]{0,200})/g;
+  const re = /(\d{2,3}(?:\.\d{1,4})?)\s*(?:㎡|m²|m2)\s*(?:\(\s*([^)\n]{1,12})\s*\))?([\s\S]{0,200})/g;
   for (const m of text.matchAll(re)) {
     const area = Number(m[1]);
     if (!(area > 10 && area < 130)) continue;
-    const tail = m[3].split(/\d{2,3}\.\d{1,4}\s*(?:㎡|m²|m2)/)[0].replace(/\d+\s*(호|층|세대|개|명|%|년|월|일)/g, ' ').replace(/\d{4}[.\-]\s*\d{1,2}[.\-]\s*\d{1,2}/g, ' ');
+    const tail = m[3].split(/\d{2,3}(?:\.\d{1,4})?\s*(?:㎡|m²|m2)/)[0].replace(/\d+\s*(호|층|세대|개|명|%|년|월|일)/g, ' ').replace(/\d{4}[.\-]\s*\d{1,2}[.\-]\s*\d{1,2}/g, ' ');
     const nums = [...tail.matchAll(/\d{1,3}(?:,\d{3})+|\d+/g)].map((x) => Number(x[0].replace(/,/g, ''))).filter((v) => v > 0);
     let dep: number | undefined, rent: number | undefined;
     const iw = nums.findIndex((v) => v >= 5e6 && v < 2e9);
     if (iw >= 0) {
       dep = Math.round(nums[iw] / 1e4);
-      const r = nums.slice(iw + 1).find((v) => v >= 1e4 && v < 5e6); rent = r ? Math.round(r / 1e4) : undefined;
+      const r = nums.slice(iw + 1).find((v) => v >= 1e4 && v < 5e6); rent = r ? Math.round(r / 1e3) / 10 : undefined;
     } else {
       const im = nums.findIndex((v) => v >= 500 && v < 100000);
       if (im < 0) continue;
       dep = nums[im]; rent = nums.slice(im + 1).find((v) => v >= 5 && v < 500);
     }
     if (!dep) continue;
-    const ty = m[2] || `${Math.round(area)}㎡`;
+    const ty = m[2] && /^[0-9A-Za-z\-]+$/.test(m[2].trim()) && !/호$/.test(m[2]) ? m[2].trim() : `${Math.round(area)}㎡`;
     if (!out.some((u) => u.ty === ty && u.area === area)) out.push({ ty, area, deposit: dep, rent });
     if (out.length >= 12) break;
   }
