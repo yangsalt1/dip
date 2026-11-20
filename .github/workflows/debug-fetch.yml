@@ -1,0 +1,18 @@
+name: 임시 점검 (서버 응답 받아오기)
+on:
+  push:
+    branches: [main]
+    paths: ['.github/debug-url.txt']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          sleep 110
+          mkdir -p .debug
+          curl -s -m 60 "$(cat .github/debug-url.txt)" > .debug/out.json || true
+          git config user.name "DIP"; git config user.email "dip@users.noreply.github.com"
+          git add .debug/out.json && git commit -m "debug: 점검 결과" && git pull --rebase origin main && git push || true
