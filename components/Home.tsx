@@ -133,10 +133,10 @@ export default function Home() {
       <div className="stack keep" aria-label="세일 현황">
         <section className="card reboundCard" style={{ gap: 6 }}>
           <div className="row"><span className="chip" style={{ background: '#111', color: '#fff' }}>줍줍리스트</span><span style={{ fontSize: 15, fontWeight: 800 }}>{rebs.length}개</span></div>
-          <p style={{ margin: '8px 0 0', fontSize: 30, lineHeight: 1.12, fontWeight: 800, letterSpacing: '-0.045em' }}>반등이 시작됐다 줍자.</p>
-          <p className="nShort" style={{ margin: '0 0 4px', color: '#123' }}>슬슬 오를 기미 보인다. 주울 준비 완.</p>
-          {rebs.length ? rebs.map((e) => <Row key={e.id} e={e} />)
-            : <p className="small" style={{ margin: '6px 0 0', fontWeight: 700 }}>아직 반등시작 종목은 0개</p>}
+          <p style={{ margin: '8px 0 0', fontSize: 30, lineHeight: 1.12, fontWeight: 800, letterSpacing: '-0.045em' }}>반등 시작됐다 줍자.</p>
+          <p className="nShort" style={{ margin: '0 0 4px', color: '#123' }}>슬슬 오를 기미가 보이는 녀석들만 모아보기</p>
+          <p className="small" style={{ margin: '6px 0 0', fontWeight: 800, fontSize: 16 }}>{rebs.length ? `${rebs.length}개` : '아직은 0개'}</p>
+          {rebs.map((e) => <Row key={e.id} e={e} />)}
         </section>
         <section className="card dark" style={{ gap: 6 }}>
           <div className="row"><span className="live">특급세일 리스트</span><span style={{ fontSize: 15, fontWeight: 800 }}>{megas.length}개</span></div>
