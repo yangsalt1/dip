@@ -397,7 +397,7 @@ export async function collect(old: Record<string, Notice> = {}): Promise<Notice[
   const need: Notice[] = [];
   all = all.map((n) => {
     const o = old[n.id];
-    if (o && o.units.length) return { ...n, ...o, end: n.end ?? o.end };
+    if (o && o.units.length && !(o.src === 'lh' && o.kind === 'rent' && !o.doc)) return { ...n, ...o, end: n.end ?? o.end };
     if (o && o.doc && n.src === 'soco') return { ...n, ...o };
     need.push(n);
     return n;

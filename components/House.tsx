@@ -9,15 +9,16 @@ import { goLogin, useJup } from '@/lib/useJup';
 const SIDO = ['서울', '경기', '인천', '부산', '대구', '대전', '광주', '울산', '세종', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
 const SEOUL_GU = ['강남구', '강동구', '강북구', '강서구', '관악구', '광진구', '구로구', '금천구', '노원구', '도봉구', '동대문구', '동작구', '마포구', '서대문구', '서초구', '성동구', '성북구', '송파구', '양천구', '영등포구', '용산구', '은평구', '종로구', '중구', '중랑구'];
 const MONEY: [number, string][] = [[3000, '3천 이하'], [5000, '5천 이하'], [10000, '1억 이하'], [20000, '2억 이하'], [0, '상관없음']];
-/** 카드 색: 처음 톤(부드러운 파스텔 + 검정 글씨)으로 돌아가며 */
-const K = '#111111';
+/** 카드 색: 파스텔 톤에 검정 하나 섞어서 돌아가며 [배경, 글자] */
+const K = '#111111', W = '#FFFFFF';
 const MIX: [string, string][] = [
   ['#9CC3FF', K], // 하늘
-  ['#F2F28E', K], // 버터
+  ['#F2F28E', K], // 노랑
+  ['#FFFFFF', K], // 흰색
+  ['#B1A6FF', K], // 보라
+  ['#B8E8C6', K], // 초록
+  ['#111111', W], // 검정
   ['#D8D0C4', K], // 베이지
-  ['#B8E8C6', K], // 민트
-  ['#FFC4AE', K], // 피치
-  ['#FFFFFF', K], // 화이트
 ];
 
 function toggle<T>(arr: T[], v: T) { return arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]; }
@@ -109,7 +110,7 @@ function Card({ n, p, i }: { n: Notice; p: Pref; i: number }) {
   const sp = spLine(n, p);
   const [bg, fg] = MIX[i % MIX.length];
   return (
-    <Link href={`/house/${n.id}/`} className="hCard" style={{ background: bg, color: fg }}>
+    <Link href={`/house/${n.id}/`} className={`hCard${fg === W ? ' dark' : ''}`} style={{ background: bg, color: fg }}>
       <span className="hTop">
         {notYet ? <span className="hSt w">접수 {n.start!.slice(5).replace('-', '/')} 시작</span>
           : dl != null ? <span className={`hSt ${dl <= 3 ? 'r' : 'k'}`}>{dl <= 0 ? '오늘 마감' : `마감 D-${dl}`}</span> : <span className="hSt w">접수 중</span>}
