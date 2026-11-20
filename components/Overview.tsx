@@ -1,5 +1,5 @@
 import { ETFS } from '@/lib/data';
-import { overview } from '@/lib/overview';
+import { overview, signal } from '@/lib/overview';
 
 const DOT: Record<string, string> = { mega: '#FF5A3C', sale: '#B1A6FF', bottom: '#F2F28E', rising: '#9CC3FF' };
 export type Mkt = 'us' | 'kr';
@@ -21,8 +21,10 @@ export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; 
   const mega = list.filter((e) => e.kind === 'mega').length;
   const sale = list.filter((e) => e.kind === 'sale').length;
   const up = list.length - mega - sale;
+  const sig = signal(mkt);
   return (
     <div className={`ov ov-${size}`}>
+      <p className={`ovSig ${sig.tone}`}><i aria-hidden="true" />{sig.text}</p>
       <div className="ovGrid">
         {groups.map((g) => (
           <div key={g.key} className="ovItem">

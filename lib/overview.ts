@@ -41,3 +41,28 @@ export function overview(mkt: 'us' | 'kr'): OvGroup[] {
   add('rising', rising, '상승중');
   return out;
 }
+
+/** 오늘의 한 줄: 세일 폭 + 대표 ETF 흐름으로 '줍기 / 조금씩 / 구경' 판단 (투자 권유 아님) */
+export type Signal = { tone: 'go' | 'slow' | 'wait'; text: string };
+export function signal(mkt: 'us' | 'kr'): Signal {
+  const list = ETFS.filter((e) => e.market === mkt);
+  const idx = ETFS.find((e) => e.id === (mkt === 'us' ? 'voo' : 'kodex-200'));
+  const mega = list.filter((e) => e.kind === 'mega').length;
+  const sale = list.filter((e) => e.kind === 'sale').length;
+  const share = list.length ? (mega + sale) / list.length : 0;
+  const big = list.length ? mega / list.length >= 0.4 : false;
+  const q = idx?.q as { d1: number; wk: number; rsi?: number } | undefined;
+  const d1 = q?.d1 ?? 0, wk = q?.wk ?? 0, rsi = q?.rsi ?? 50;
+  const falling = d1 <= -0.5 || (wk <= -2 && d1 <= 0.3);
+  const rebound = d1 >= 0.5 || (rsi <= 30 && d1 > 0);
+  // 한국: 밤사이 미국이 크게 빠졌으면 오늘 아침엔 조심
+  const us = ETFS.find((e) => e.id === 'voo')?.q.d1 ?? 0;
+  if (mkt === 'kr' && us <= -1.5 && share >= 0.3) return { tone: 'slow', text: '밤새 미국이 크게 빠졌어. 오늘은 지켜보면서 조금씩.' };
+  if (share < 0.3) return { tone: 'wait', text: '대부분 최고가 근처라 아직 비싸. 오늘은 구경만.' };
+  if (falling && !rebound) return big
+    ? { tone: 'slow', text: '세일 크게 하는 중. 아직 떨어지는 중이라 3번에 나눠서.' }
+    : { tone: 'slow', text: '세일 시작. 더 싸질 수 있어서 지켜보면서 아주 조금만.' };
+  return big
+    ? { tone: 'go', text: '많이 싸졌고 떨어지는 게 멈췄어. 줍기 좋은 날.' }
+    : { tone: 'go', text: '조금 싸졌고 흐름은 괜찮아. 천천히 담아도 돼.' };
+}
