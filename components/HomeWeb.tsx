@@ -72,8 +72,8 @@ export default function HomeWeb() {
             <section className="wCard reboundCard" style={{ gridColumn: '1 / -1' }}>
               <div className="row"><h3 className="wListTitle">줍줍시작</h3><b className="wCnt">{rebs.length}개</b></div>
               <p className="wMid">세일 중인데 반등 시작</p>
-              <p className="nShort">싸진 상태에서 다시 오르기 시작한 종목들</p>
-              <div>{rebs.length ? rebs.map((e) => <Row key={e.id} e={e} />) : <p className="wBody">아직 반등한 세일 종목은 0개. 서두르지 말자.</p>}</div>
+              <p className="nShort">떨어졌다가 이제 슬슬 오르기 시작한 종목</p>
+              <div>{rebs.length ? rebs.map((e) => <Row key={e.id} e={e} />) : <p className="wBody">아직 반등시작 종목은 0개</p>}</div>
             </section>
             <section className="wCard dark">
               <div className="row"><h3 className="wListTitle">특급세일 리스트</h3><b className="wCnt">{megas.length}개</b></div>

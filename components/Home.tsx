@@ -134,9 +134,9 @@ export default function Home() {
         <section className="card reboundCard" style={{ gap: 6 }}>
           <div className="row"><span className="chip" style={{ background: '#111', color: '#fff' }}>줍줍시작</span><span style={{ fontSize: 15, fontWeight: 800 }}>{rebs.length}개</span></div>
           <p style={{ margin: '8px 0 0', fontSize: 30, lineHeight: 1.12, fontWeight: 800, letterSpacing: '-0.045em' }}>세일 중인데<br />반등 시작</p>
-          <p className="nShort" style={{ margin: '0 0 4px', color: '#123' }}>싸진 상태에서 다시 오르기 시작한 종목들</p>
+          <p className="nShort" style={{ margin: '0 0 4px', color: '#123' }}>떨어졌다가 이제 슬슬 오르기 시작한 종목</p>
           {rebs.length ? rebs.map((e) => <Row key={e.id} e={e} />)
-            : <p className="small" style={{ margin: '6px 0 0', fontWeight: 700 }}>아직 반등한 세일 종목은 0개. 서두르지 말자.</p>}
+            : <p className="small" style={{ margin: '6px 0 0', fontWeight: 700 }}>아직 반등시작 종목은 0개</p>}
         </section>
         <section className="card dark" style={{ gap: 6 }}>
           <div className="row"><span className="live">특급세일 리스트</span><span style={{ fontSize: 15, fontWeight: 800 }}>{megas.length}개</span></div>
