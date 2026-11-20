@@ -501,8 +501,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .hCard .hWhere { color: inherit; }
 .hTop { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; }
 .hSt { font-size: 12.5px; font-weight: 800; padding: 6px 11px; border-radius: 999px; white-space: nowrap; }
-.hSt.r { background: #282828; color: #FFE459; box-shadow: 0 0 0 2px rgba(255,255,255,0.6); } .hSt.k { background: #fff; color: #282828; } .hSt.w { background: #fff; color: #111; }
-.hCat { font-size: 12px; font-weight: 800; color: inherit; text-align: right; border: 1.5px solid currentColor; padding: 4px 10px; border-radius: 999px; }
+.hSt.r { background: #FF5A3C; color: #111; } .hSt.k { background: #111; color: #fff; } .hSt.w { background: #fff; color: #111; }
+.hCat { font-size: 12px; font-weight: 800; color: #2A2A28; text-align: right; }
 .hName { font-size: 21px; font-weight: 900; letter-spacing: -0.045em; line-height: 1.25; word-break: keep-all; }
 .hWhere { font-size: 13px; font-weight: 700; color: inherit; opacity: 0.8; }
 .hMoney { font-size: 27px; font-weight: 900; letter-spacing: -0.05em; line-height: 1.15; margin-top: 12px; }

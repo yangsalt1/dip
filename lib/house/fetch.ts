@@ -329,6 +329,43 @@ export function parseSupply(text: string): HUnit[] {
   }
   return out;
 }
+/** LH 공고문 PDF '임대조건' 표에서 주택형별 보증금·월세 */
+async function pdfTextOf(url: string) {
+  const r = await fetch(url, { headers: { 'user-agent': UA }, cache: 'no-store', signal: AbortSignal.timeout(20000) });
+  if (!r.ok) throw new Error('pdf ' + r.status);
+  const { text } = await extractText(await getDocumentProxy(new Uint8Array(await r.arrayBuffer())), { mergePages: true });
+  return String(text);
+}
+export function parseLhRent(text: string, units: HUnit[]) {
+  const at = text.search(/임대\s*조건/);
+  if (at < 0) return;
+  const sec = text.slice(at, at + 8000);
+  const chun = /\(\s*천원\s*\)/.test(sec);
+  for (const u of units) {
+    const key = u.ty.split('/')[0].replace(/[^0-9A-Za-z]/g, '');
+    if (!key) continue;
+    const m = sec.match(new RegExp(`(?:^|[\\s,(])${key}(?=[\\s,/)])`));
+    if (!m || m.index == null) continue;
+    const nums = [...sec.slice(m.index + m[0].length, m.index + 400).matchAll(/\d{1,3}(?:,\d{3})+|\d+/g)].map((x) => Number(x[0].replace(/,/g, '')));
+    if (chun) {
+      const i = nums.findIndex((v) => v >= 1000 && v < 500000);
+      if (i < 0) continue;
+      const dep = nums[i];
+      const rent = nums.slice(i + 1).find((v) => v > dep && v >= 10000 && v < 3e6);
+      u.deposit = Math.round(dep / 10); if (rent) u.rent = Math.round(rent / 1000) / 10;
+    } else {
+      const i = nums.findIndex((v) => v >= 1e6 && v < 2e9);
+      if (i < 0) continue;
+      const rent = nums.slice(i + 1).find((v) => v >= 1e4 && v < 3e6);
+      u.deposit = Math.round(nums[i] / 1e4); if (rent) u.rent = Math.round(rent / 1000) / 10;
+    }
+  }
+}
+async function lhMoney(n: Notice) {
+  if (n.kind !== 'rent' || !n.doc || !n.units.length || n.units.some((u) => u.deposit) || /매입|전세/.test(n.cat)) return;
+  parseLhRent(await pdfTextOf(n.doc), n.units);
+}
+
 async function socoUnits(n: Notice) {
   const html = await get(n.url);
   const files = [...html.matchAll(/href="(\/coHouse\/cmmn\/file\/fileDown\.do\?atchFileId=[^"&]+&(?:amp;)?fileSn=\d+)"\s*>([^<]+)</g)];
@@ -361,15 +398,21 @@ export async function collect(old: Record<string, Notice> = {}): Promise<Notice[
   all = all.map((n) => {
     const o = old[n.id];
     if (o && o.units.length) return { ...n, ...o, end: n.end ?? o.end };
+    if (o && o.doc && n.src === 'soco') return { ...n, ...o };
     need.push(n);
     return n;
   });
+  const t0 = Date.now();
   await pool(need, 5, async (n) => {
+    if (Date.now() - t0 > 35000) return; // 시간 다 쓰면 다음 번에 이어서
     if (n.src === 'applyhome') await applyhomeDetail(n);
     else if (n.src === 'remndr') await remndrUnits(n);
     else if (n.src === 'pvt') await pvtUnits(n);
     else if (n.src === 'lh') await lhDetail(n);
     else if (n.src === 'soco') await socoUnits(n);
   });
+  // LH 임대: 금액이 공고문 PDF에만 있어서 따로 (남은 시간 안에서만)
+  const lhNeed = all.filter((n) => n.src === 'lh' && n.kind === 'rent' && n.doc && n.units.length && !n.units.some((u) => u.deposit) && !/매입|전세/.test(n.cat));
+  await pool(lhNeed, 4, async (n) => { if (Date.now() - t0 > 45000) return; await lhMoney(n); });
   return all.filter((n) => !n.end || n.end >= today).sort((a, b) => (a.end ?? '9999').localeCompare(b.end ?? '9999'));
 }

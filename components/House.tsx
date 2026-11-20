@@ -9,16 +9,15 @@ import { goLogin, useJup } from '@/lib/useJup';
 const SIDO = ['서울', '경기', '인천', '부산', '대구', '대전', '광주', '울산', '세종', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
 const SEOUL_GU = ['강남구', '강동구', '강북구', '강서구', '관악구', '광진구', '구로구', '금천구', '노원구', '도봉구', '동대문구', '동작구', '마포구', '서대문구', '서초구', '성동구', '성북구', '송파구', '양천구', '영등포구', '용산구', '은평구', '종로구', '중구', '중랑구'];
 const MONEY: [number, string][] = [[3000, '3천 이하'], [5000, '5천 이하'], [10000, '1억 이하'], [20000, '2억 이하'], [0, '상관없음']];
-/** 컬러 가이드: 카드마다 돌아가며 섞어서 [배경, 글자] */
-const W = '#FFFFFF', K = '#282828';
+/** 카드 색: 처음 톤(부드러운 파스텔 + 검정 글씨)으로 돌아가며 */
+const K = '#111111';
 const MIX: [string, string][] = [
-  ['#1283EB', W], // Azure Cornflower
-  ['#FFE459', K], // Lemon and Banana
-  ['#7B61FF', W], // Amethyst Bellflower
-  ['#F8F3EC', K], // Creamy Milk
-  ['#2BBF5D', W], // Light Malachite
-  ['#FF5E54', W], // Watermelon with Carrot
-  ['#282828', W], // Signal Black
+  ['#9CC3FF', K], // 하늘
+  ['#F2F28E', K], // 버터
+  ['#D8D0C4', K], // 베이지
+  ['#B8E8C6', K], // 민트
+  ['#FFC4AE', K], // 피치
+  ['#FFFFFF', K], // 화이트
 ];
 
 function toggle<T>(arr: T[], v: T) { return arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]; }

@@ -1,16 +1,12 @@
 import { NextResponse } from 'next/server';
-import { extractText, getDocumentProxy } from 'unpdf';
-import { parseSupply } from '@/lib/house/fetch';
+import { getNotices } from '@/lib/house/store';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
-const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36';
+/** 임시: 평수·금액이 채워졌는지 요약 */
 export async function GET() {
-  const r = await fetch('https://apply.lh.or.kr/lhapply/lhFile.do?fileid=69502007', { headers: { 'user-agent': UA }, signal: AbortSignal.timeout(25000) });
-  const buf = new Uint8Array(await r.arrayBuffer());
-  const t0 = Date.now();
-  const { text, totalPages } = await extractText(await getDocumentProxy(buf), { mergePages: true });
-  const t = String(text);
-  const hits: string[] = []; let i = 0;
-  while (hits.length < 4) { i = t.indexOf('임대보증금', i); if (i < 0) break; hits.push(t.slice(Math.max(0, i - 300), i + 1200)); i += 1200; }
-  return NextResponse.json({ s: r.status, ct: r.headers.get('content-type'), bytes: buf.length, totalPages, ms: Date.now() - t0, len: t.length, parsed: parseSupply(t), hits });
+  const c = await getNotices(true);
+  const by: Record<string, { n: number; units: number; money: number }> = {};
+  for (const x of c.list) { const b = (by[x.src] ??= { n: 0, units: 0, money: 0 }); b.n++; if (x.units.length) b.units++; if (x.units.some((u) => u.price || u.deposit)) b.money++; }
+  const lhRent = c.list.filter((x) => x.src === 'lh' && x.kind === 'rent' && !/매입|전세/.test(x.cat));
+  return NextResponse.json({ total: c.list.length, by, lhRent: lhRent.length, lhRentMoney: lhRent.filter((x) => x.units.some((u) => u.deposit)).length, sample: lhRent.filter((x) => x.units.some((u) => u.deposit)).slice(0, 3).map((x) => ({ name: x.name, units: x.units.slice(0, 2) })) });
 }

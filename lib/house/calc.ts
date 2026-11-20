@@ -26,6 +26,7 @@ export function pyeongOf(u: HUnit) {
 /** 만원 → "1억 2,300만" */
 export function won(man?: number) {
   if (man == null || !Number.isFinite(man)) return '';
+  if (man < 100) return `${Math.round(man * 10) / 10}만`;
   const m = Math.round(man);
   const eok = Math.floor(m / 10000), rest = m % 10000;
   if (eok && rest) return `${eok}억 ${rest.toLocaleString('ko-KR')}만`;
