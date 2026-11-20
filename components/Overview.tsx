@@ -1,7 +1,8 @@
 import { ETFS, isRebound } from '@/lib/data';
+import { etfTitle } from '@/lib/format';
 import { overview, signal } from '@/lib/overview';
 
-const DOT: Record<string, string> = { mega: '#FF5A3C', sale: '#B1A6FF', bottom: '#F2F28E', rising: '#9CC3FF' };
+const DOT: Record<string, string> = { reb: '#5BD47E', mega: '#FF5A3C', sale: '#B1A6FF', bottom: '#F2F28E', rising: '#9CC3FF' };
 export type Mkt = 'us' | 'kr';
 
 /** 검은 배너 안 작은 미국/한국 토글 */
@@ -28,6 +29,15 @@ export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; 
     <div className={`ov ov-${size}`}>
       <div className="ovSigBox"><p className={`ovSig ${sig.tone}`}><i aria-hidden="true" />{sig.text}</p>{sig.chips.length > 0 && <div className="ovChips">{sig.chips.map((c) => <span key={c}>{c}</span>)}</div>}</div>
       <div className="ovGrid">
+        {(() => {
+          const rebNames = list.filter(isRebound).sort((a, b) => b.q.buy - a.q.buy).map(etfTitle);
+          return (
+            <div className="ovItem">
+              <span className="ovLab" style={{ color: DOT.reb }}>● 줍줍시작</span>
+              <span className="ovNames">{rebNames.length ? rebNames.slice(0, 4).join(', ') + (rebNames.length > 4 ? ` 외 ${rebNames.length - 4}` : '') : '아직 없음'}</span>
+            </div>
+          );
+        })()}
         {groups.map((g) => (
           <div key={g.key} className="ovItem">
             <span className="ovLab" style={{ color: DOT[g.key] }}>● {g.word}</span>

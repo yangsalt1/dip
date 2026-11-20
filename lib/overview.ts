@@ -45,7 +45,7 @@ export function overview(mkt: 'us' | 'kr'): OvGroup[] {
 /** 오늘의 한 줄: 세일 폭 + 대표 ETF 흐름으로 '줍기 / 조금씩 / 구경' 판단 (투자 권유 아님) */
 export type Signal = { tone: 'go' | 'slow' | 'dip' | 'top'; text: string; chips: string[] };
 export const SIGNAL_TEXT = {
-  slow: '세일 시작했다. 현금 들고 조금만 더 기다리자.',
+  slow: '세일 시작. 현금 들고 있어. 들어가야지.',
   go: '세일 바닥 다진다. 슬슬 들어가자.',
   dip: '오르다 첫 눌림목. 계획대로 조금씩 줍자.',
   top: '매우 비쌈. 고점임. 포모 금지.',
