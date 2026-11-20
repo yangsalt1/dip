@@ -30,11 +30,13 @@ export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; 
       <div className="ovSigBox"><p className={`ovSig ${sig.tone}`}><i aria-hidden="true" />{sig.text}</p>{sig.chips.length > 0 && <div className="ovChips">{sig.chips.map((c) => <span key={c}>{c}</span>)}</div>}</div>
       <div className="ovGrid">
         {(() => {
-          const rebNames = list.filter(isRebound).sort((a, b) => b.q.buy - a.q.buy).map(etfTitle);
+          const rebs = list.filter(isRebound).sort((a, b) => b.q.buy - a.q.buy);
           return (
             <div className="ovItem">
               <span className="ovLab" style={{ color: DOT.reb }}>● 줍줍시작</span>
-              <span className="ovNames">{rebNames.length ? rebNames.slice(0, 4).join(', ') + (rebNames.length > 4 ? ` 외 ${rebNames.length - 4}` : '') : '아직 없음'}</span>
+              <span className="ovNames">{rebs.length ? <>{rebs.slice(0, 4).map((e, i) => (
+                <span key={e.id}>{i > 0 && ', '}{e.kw}<small className="ovCode"> {etfTitle(e)}</small></span>
+              ))}{rebs.length > 4 && ` 외 ${rebs.length - 4}`}</> : '아직 없음'}</span>
             </div>
           );
         })()}
