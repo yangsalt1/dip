@@ -3,13 +3,14 @@ import type { Kind } from '@/lib/data';
 import { KIND_CHIP } from '@/lib/format';
 import { stickerStyle } from '@/lib/sticker';
 
-export function BottomNav({ active }: { active: 'news' | 'etf' | 'jup' | 'money' }) {
+export function BottomNav({ active }: { active: 'news' | 'etf' | 'jup' | 'money' | 'house' }) {
   return (
     <nav className="nav" aria-label="메뉴">
       <Link href="/" className="navBrand">JUP<small>떨어질 때 줍는다</small></Link>
       <Link href="/" aria-current={active === 'news' ? 'page' : undefined}>오늘</Link>
       <Link href="/etf/" aria-current={active === 'etf' ? 'page' : undefined}>ETF</Link>
       <Link href="/money/" aria-current={active === 'money' || active === 'jup' ? 'page' : undefined}>포트폴리오</Link>
+      <Link href="/house/" aria-current={active === 'house' ? 'page' : undefined}>청약</Link>
     </nav>
   );
 }
