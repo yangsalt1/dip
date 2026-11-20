@@ -78,7 +78,7 @@ export function matchNotice(n: Notice, p: Pref): HUnit[] | null {
   if (!n.units.length) return [];
   const units = n.units.filter((u) => {
     if (p.rooms.length) {
-      const r = roomsOf(u.area, n.src === 'applyhome');
+      const r = roomsOf(u.area, n.src === 'applyhome' || n.src === 'remndr');
       const want = p.rooms.some((x) => (x === '3' ? r >= 3 : r === Number(x)));
       if (!want) return false;
     }

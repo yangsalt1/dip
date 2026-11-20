@@ -319,7 +319,7 @@ export async function collect(old: Record<string, Notice> = {}): Promise<Notice[
     return n;
   });
   await pool(need, 5, async (n) => {
-    if (n.src === 'applyhome') await applyhomeDetail(n);
+    if (n.src === 'applyhome' || n.src === 'remndr') await applyhomeDetail(n);
     else if (n.src === 'remndr') await remndrUnits(n);
     else if (n.src === 'pvt') await pvtUnits(n);
     else if (n.src === 'lh') await lhDetail(n);

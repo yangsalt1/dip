@@ -9,7 +9,19 @@ import { goLogin, useJup } from '@/lib/useJup';
 const SIDO = ['서울', '경기', '인천', '부산', '대구', '대전', '광주', '울산', '세종', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
 const SEOUL_GU = ['강남구', '강동구', '강북구', '강서구', '관악구', '광진구', '구로구', '금천구', '노원구', '도봉구', '동대문구', '동작구', '마포구', '서대문구', '서초구', '성동구', '성북구', '송파구', '양천구', '영등포구', '용산구', '은평구', '종로구', '중구', '중랑구'];
 const MONEY: [number, string][] = [[3000, '3천 이하'], [5000, '5천 이하'], [10000, '1억 이하'], [20000, '2억 이하'], [0, '상관없음']];
-const COLORS = ['#B1A6FF', '#D8D0C4', '#F2F28E', '#9CC3FF', '#FFFFFF'];
+/** 공고 종류마다 색 하나 (컬러 가이드) */
+function colorOf(n: Notice) {
+  const c = n.cat;
+  if (/청년안심/.test(c)) return '#CEF932';        // Lime
+  if (/행복주택/.test(c)) return '#0381ED';        // Blue
+  if (/민간임대/.test(c)) return '#FF9FF3';        // Plum Web
+  if (/줍줍|무순위|임의/.test(c)) return '#FC7B00'; // Safety Orange
+  if (/신혼희망/.test(c)) return '#FF0C31';        // Imperial Red
+  if (/아파트|분양/.test(c)) return '#FBD12C';     // Mango
+  if (/매입|전세임대/.test(c)) return '#009640';   // Pigment Green
+  if (/국민|공공|영구|장기/.test(c)) return '#AE78D2'; // Lavender Floral
+  return '#D5D4CE';                               // Cream
+}
 
 function toggle<T>(arr: T[], v: T) { return arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]; }
 
@@ -92,13 +104,13 @@ function summary(p: Pref) {
   return a.join(' · ');
 }
 
-function Card({ n, i, p }: { n: Notice; i: number; p: Pref }) {
+function Card({ n, p }: { n: Notice; p: Pref }) {
   const units = matchNotice(n, p) ?? [];
   const u = pickUnit(n, units);
   const dl = daysLeft(n.end);
   const notYet = n.start && daysLeft(n.start)! > 0;
   const sp = spLine(n, p);
-  const bg = COLORS[i % COLORS.length];
+  const bg = colorOf(n);
   return (
     <Link href={`/house/${n.id}/`} className="hCard" style={{ background: bg }}>
       <span className="hTop">
@@ -112,7 +124,7 @@ function Card({ n, i, p }: { n: Notice; i: number; p: Pref }) {
         <span className="hMoney">{n.kind === 'sale' ? <>분양가 {won(u.price)}원부터</> : <>보증금 {won(u.deposit)}{u.rent ? <><br />월 {won(u.rent)}원</> : '원'}</>}</span>
       ) : <span className="hMoney sm">금액은 공고문에서 확인</span>}
       <span className="hMeta">
-        {u ? `방 약 ${roomsOf(u.area, n.src === 'applyhome')}개 · ${pyeongOf(u)}평` : ''}
+        {u ? `방 약 ${roomsOf(u.area, n.src === 'applyhome' || n.src === 'remndr')}개 · ${pyeongOf(u)}평` : ''}
         {sp ? `${u ? ' · ' : ''}${sp}` : ''}
       </span>
     </Link>
@@ -171,7 +183,7 @@ export default function House() {
             {list && hits.length === 0 && (
               <div className="hEmpty"><b>지금은 딱 맞는 공고가 없어요</b><span>새로 뜨면 바로 알려줄게요. 조건을 조금 넓혀봐도 좋아요.</span></div>
             )}
-            <div className="hList">{hits.map((n, i) => <Card key={n.id} n={n} i={i} p={pref} />)}</div>
+            <div className="hList">{hits.map((n) => <Card key={n.id} n={n} p={pref} />)}</div>
             {list && <p className="note" style={{ marginTop: 18 }}>청약홈 · LH청약플러스 · 서울 청년안심주택 공고를 모았어요. 방 개수는 면적으로 어림한 값이고, 정확한 자격·금액은 꼭 공고문에서 확인하세요.</p>}
           </>
         )}

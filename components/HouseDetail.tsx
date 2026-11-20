@@ -8,7 +8,7 @@ import { daysLeft, moneySteps, pyeongOf, roomsOf, won } from '@/lib/house/calc';
 function checks(n: Notice): string[] {
   const out: string[] = [];
   const sum = (k: 'newlywed' | 'youth' | 'family' | 'first') => n.units.reduce((s, u) => s + (u.sp?.[k] ?? 0), 0);
-  if (n.src === 'applyhome') {
+  if (n.src === 'applyhome' || n.src === 'remndr') {
     out.push('청약통장이 있어야 해요');
     out.push('보통 집이 없어야(무주택) 유리해요');
     if (sum('newlywed')) out.push(`신혼부부 특별공급 ${sum('newlywed')}세대`);
@@ -63,7 +63,7 @@ export default function HouseDetail({ id }: { id: string }) {
             {u ? (
               <section className="hBox dark">
                 <span className="hLab y">되면 이런 집</span>
-                <b className="hBig">{pyeongOf(u)}평 · 방 약 {roomsOf(u.area, n.src === 'applyhome')}개</b>
+                <b className="hBig">{pyeongOf(u)}평 · 방 약 {roomsOf(u.area, n.src === 'applyhome' || n.src === 'remndr')}개</b>
                 <span className="hSmall">전용 {u.area}㎡{u.count ? ` · 이번에 ${u.count}세대` : ''}{n.move ? ` · ${n.move.replace('.', '년 ')}월 입주` : ''}</span>
               </section>
             ) : (
