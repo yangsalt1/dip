@@ -18,10 +18,11 @@ export function MktToggle({ mkt, onChange }: { mkt: Mkt; onChange: (m: Mkt) => v
 export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; mkt: Mkt }) {
   const groups = overview(mkt);
   const list = ETFS.filter((e) => e.market === mkt);
-  const mega = list.filter((e) => e.kind === 'mega').length;
-  const sale = list.filter((e) => e.kind === 'sale').length;
-  const up = list.length - mega - sale;
+  // 줍줍시작(반등)은 세일 중 일부라서 막대에서 따로 떼어 맨 앞에 둬요 (홈 리스트와 같은 숫자)
   const reb = list.filter(isRebound).length;
+  const mega = list.filter((e) => e.kind === 'mega' && !isRebound(e)).length;
+  const sale = list.filter((e) => e.kind === 'sale' && !isRebound(e)).length;
+  const up = list.length - reb - mega - sale;
   const sig = signal(mkt);
   return (
     <div className={`ov ov-${size}`}>
@@ -36,6 +37,7 @@ export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; 
       </div>
       <div className="ovBarWrap">
         <div className="ovBar" aria-hidden="true">
+          {reb > 0 && <span style={{ flex: reb, background: '#5BD47E' }} />}
           {mega > 0 && <span style={{ flex: mega, background: '#FF4D2E' }} />}
           {sale > 0 && <span style={{ flex: sale, background: '#B1A6FF' }} />}
           {up > 0 && <span style={{ flex: up, background: '#9CC3FF' }} />}
