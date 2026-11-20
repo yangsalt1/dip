@@ -70,8 +70,8 @@ export default function HomeWeb() {
           </div>
           <div className="wSale2">
             <section className="wCard reboundCard" style={{ gridColumn: '1 / -1' }}>
-              <div className="row"><h3 className="wListTitle">줍줍시작</h3><b className="wCnt">{rebs.length}개</b></div>
-              <p className="wMid">반등 시작했다</p>
+              <div className="row"><h3 className="wListTitle">줍줍리스트</h3><b className="wCnt">{rebs.length}개</b></div>
+              <p className="wMid">반등이 시작됐다 줍자.</p>
               <p className="nShort">슬슬 오를 기미 보인다. 주울 준비 완.</p>
               <div>{rebs.length ? rebs.map((e) => <Row key={e.id} e={e} />) : <p className="wBody">아직 반등시작 종목은 0개</p>}</div>
             </section>
