@@ -56,9 +56,16 @@ export function kindOf(q: Quote): Kind {
 }
 /** 아직 떨어지는 중(200일선 아래 + 하락 추세) — 칼날 조심, 나눠서 */
 export const isKnife = (q: Quote) => q.factors.trend < 0;
-/** 줍줍 시작: 세일 중인데 반등이 보이는 것 (2일 연속 상승, 오늘 +1% 이상, 또는 많이 식은 뒤 오름) */
+/**
+ * 줍줍시작 = 아래 3개를 모두 만족
+ *  1) 세일 중 (특급/일반 세일)
+ *  2) 매수 온도 50 이상
+ *  3) 진짜 반등: 오늘 +1% 이상 & RSI 40 미만(많이 식은 데서 튀어오름)
+ *              또는 2일 이상 연속 상승 & 이번 주 +2% 이상(흐름이 돌아섬)
+ */
 export const isRebound = (e: { kind: string; q: Quote & { streak?: number } }) =>
-  (e.kind === 'mega' || e.kind === 'sale') && ((e.q.streak ?? 0) >= 2 || e.q.d1 >= 1 || (e.q.rsi < 35 && e.q.d1 > 0));
+  (e.kind === 'mega' || e.kind === 'sale') && e.q.buy >= 50 &&
+  ((e.q.d1 >= 1 && e.q.rsi < 40) || ((e.q.streak ?? 0) >= 2 && e.q.wk >= 2));
 
 // 시세가 아직 없는 ETF(새로 추가했는데 데이터가 안 들어온 경우)는 화면에서 빼기
 export const ETFS: Etf[] = cfg.etfs.filter((e) => quotes[e.yahoo]).map((e) => {
