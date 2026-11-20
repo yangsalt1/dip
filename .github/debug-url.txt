@@ -1,1 +1,0 @@
-https://jup-rosy.vercel.app/api/house/

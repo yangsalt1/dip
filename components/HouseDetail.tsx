@@ -56,7 +56,7 @@ export default function HouseDetail({ id }: { id: string }) {
             {units.length > 1 && (
               <div className="hChips" role="group" aria-label="주택형 고르기">
                 {units.map((x, i) => (
-                  <button key={x.ty + i} type="button" className={`hChip${i === sel ? ' on' : ''}`} aria-pressed={i === sel} onClick={() => setSel(i)}>{pyeongOf(x)}평 · {x.ty}</button>
+                  <button key={x.ty + i} type="button" className={`hChip${i === sel ? ' on' : ''}`} aria-pressed={i === sel} onClick={() => setSel(i)}>{pyeongOf(x)}평 · {x.ty.replace(/^0*(\d+)\.\d+/, '$1')}</button>
                 ))}
               </div>
             )}

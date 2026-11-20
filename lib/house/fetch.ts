@@ -186,7 +186,7 @@ export async function lhDetail(n: Notice): Promise<Notice> {
     for (const r of [...body.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map((x) => x[1])) {
       const c = tds(r); if (c.length < 4 || !num(c[1])) continue;
       const won2man = (s?: string) => { const v = num(s); return v ? Math.round(v / 10000) : undefined; };
-      const u: HUnit = { ty: c[0].replace(/\(.*\)/, '').trim(), area: num(c[1])!, count: num(c[2]) };
+      const u: HUnit = { ty: c[0].replace(/\(.*\)/, '').trim().replace(/^0*(\d+)\.\d+/, '$1'), area: num(c[1])!, count: num(c[2]) };
       if (n.kind === 'sale') u.price = won2man(c[iDep]); else { u.deposit = won2man(c[iDep]); u.rent = iRent >= 0 ? won2man(c[iRent]) : undefined; }
       if (!units.some((x) => x.ty === u.ty && x.area === u.area)) units.push(u);
       n.who = whoByWords(c[0], n.who);
