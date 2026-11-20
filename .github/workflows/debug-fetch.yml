@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          sleep 150
+          sleep 20
           mkdir -p .debug
           curl -s -m 60 "$(cat .github/debug-url.txt)" > .debug/out.json || true
           git config user.name "DIP"; git config user.email "dip@users.noreply.github.com"
