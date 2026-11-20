@@ -468,3 +468,9 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .ov-app .ovNames { font-size: 15px; font-weight: 700; color: #D8D8D4; }
 .ov-web .ovItem { grid-template-columns: 110px minmax(0, 1fr); align-items: baseline; }
 .ov-app .ovItem { grid-template-columns: 74px minmax(0, 1fr); align-items: baseline; }
+
+.ovSigBox { display: flex; flex-direction: column; gap: 10px; }
+.ovChips { display: flex; flex-wrap: wrap; gap: 6px; }
+.ovChips span { font-size: 12.5px; font-weight: 700; padding: 5px 11px; border-radius: 99px; background: #2A2A28; color: #F4F4F2; letter-spacing: -0.02em; }
+.ovChips span:first-child { background: #FF5A3C; color: #111; }
+.ov-web .ovChips span { font-size: 14px; padding: 6px 13px; }

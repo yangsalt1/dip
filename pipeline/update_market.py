@@ -29,6 +29,17 @@ def fetch(ticker: str):
     return [d.strftime("%Y-%m-%d") for d in s.index], [float(x) for x in s.values]
 
 
+def streak(closes):
+    """끝에서부터 연속 하락(음수) 또는 연속 상승(양수) 일수"""
+    n = 0
+    for i in range(len(closes) - 1, 0, -1):
+        ch = closes[i] - closes[i - 1]
+        if ch == 0 or (n > 0 and ch < 0) or (n < 0 and ch > 0):
+            break
+        n += 1 if ch > 0 else -1
+    return n
+
+
 def main() -> int:
     old = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {"quotes": {}}
     quotes = dict(old.get("quotes", {}))
@@ -40,6 +51,7 @@ def main() -> int:
             if len(closes) < 260:
                 raise ValueError(f"데이터 부족 {len(closes)}일")
             quotes[t] = analyze(dates, closes)
+            quotes[t]["streak"] = streak(closes)
             print(f"ok  {t:12s} {quotes[t]['last']:>12} 매수 {quotes[t]['buy']}%")
         except Exception as e:  # 한 종목이 실패해도 나머지는 갱신하고, 실패한 건 어제 값 유지
             failed.append(t)
