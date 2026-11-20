@@ -43,6 +43,64 @@ function whoByWords(text: string, base: Who[]): Who[] {
   return [...w];
 }
 
+/* ───────── 청약홈 공식 데이터 (공공데이터포털 키가 있을 때) ───────── */
+const ODC = 'https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1/';
+async function odc(op: string, cond: Record<string, string>, perPage = 100): Promise<Record<string, unknown>[]> {
+  const key = process.env.DATA_GO_KR_KEY;
+  if (!key) return [];
+  const q = new URLSearchParams({ page: '1', perPage: String(perPage), serviceKey: key });
+  for (const [k, v] of Object.entries(cond)) q.set(`cond[${k}]`, v);
+  const j = JSON.parse(await get(`${ODC}${op}?${q}`));
+  return (j?.data ?? []) as Record<string, unknown>[];
+}
+const str = (v: unknown) => (v == null ? '' : String(v));
+const ymd = (v: unknown) => { const t = str(v).replace(/\D/g, ''); return t.length >= 8 ? `${t.slice(0, 4)}-${t.slice(4, 6)}-${t.slice(6, 8)}` : undefined; };
+const ym = (v: unknown) => { const t = str(v).replace(/\D/g, ''); return t.length >= 6 ? `${t.slice(0, 4)}.${t.slice(4, 6)}` : undefined; };
+
+/** 무순위(줍줍) 주택형별 면적·분양가 */
+async function remndrUnits(n: Notice) {
+  const hm = n.id.split('-')[1];
+  const [d] = await odc('getRemndrLttotPblancDetail', { 'HOUSE_MANAGE_NO::EQ': hm }, 1);
+  if (d) {
+    n.addr = str(d.HSSPLY_ADRES) || n.addr; n.gu = guOf(n.addr);
+    n.move = ym(d.MVN_PREARNGE_YM) ?? n.move; n.win = ymd(d.PRZWNER_PRESNATN_DE) ?? n.win;
+    if (d.PBLANC_URL) n.url = str(d.PBLANC_URL);
+    if (d.MDHS_TELNO) n.tel = str(d.MDHS_TELNO);
+  }
+  const rows = await odc('getRemndrLttotPblancMdl', { 'HOUSE_MANAGE_NO::EQ': hm });
+  n.units = rows.map((r) => ({
+    ty: str(r.HOUSE_TY).replace(/^0*(\d+)\.\d+/, '$1'), area: Number(str(r.HOUSE_TY).match(/^[\d.]+/)?.[0] ?? 0),
+    supply: num(str(r.SUPLY_AR)), count: num(str(r.SUPLY_HSHLDCO)), price: num(str(r.LTTOT_TOP_AMOUNT)),
+  })).filter((u) => u.area > 0);
+}
+
+/** 공공지원 민간임대 (청약홈) */
+async function pvtList(): Promise<Notice[]> {
+  const today = todayKst().replace(/-/g, '');
+  const rows = await odc('getPblPvtRentLttotPblancDetail', { 'SUBSCRPT_RCEPT_ENDDE::GTE': today });
+  return rows.map((r) => {
+    const addr = str(r.HSSPLY_ADRES);
+    return {
+      id: `pv-${r.HOUSE_MANAGE_NO}-${r.PBLANC_NO}`, src: 'pvt', kind: 'rent', cat: '공공지원 민간임대',
+      name: str(r.HOUSE_NM).replace(/\(공공지원민간임대\)/, '').trim(), sido: sidoOf(str(r.SUBSCRPT_AREA_CODE_NM) || addr.split(' ')[0]), addr, gu: guOf(addr),
+      posted: ymd(r.RCRIT_PBLANC_DE), start: ymd(r.SUBSCRPT_RCEPT_BGNDE), end: ymd(r.SUBSCRPT_RCEPT_ENDDE), win: ymd(r.PRZWNER_PRESNATN_DE), move: ym(r.MVN_PREARNGE_YM),
+      url: str(r.PBLANC_URL) || `${AH}`, tel: str(r.MDHS_TELNO) || undefined, who: ['general'], units: [],
+      note: '일반공급은 소득·자산 기준이 없는 경우가 많아요 · 금액은 보증금(최대) 기준, 월세는 공고문 확인',
+    } as Notice;
+  });
+}
+async function pvtUnits(n: Notice) {
+  const hm = n.id.split('-')[1];
+  const rows = await odc('getPblPvtRentLttotPblancMdl', { 'HOUSE_MANAGE_NO::EQ': hm });
+  n.units = rows.map((r) => ({
+    ty: str(r.TP), area: num(str(r.EXCLUSE_AR)) ?? 0, supply: num(str(r.SUPLY_AR)), count: num(str(r.SUPLY_HSHLDCO)), deposit: num(str(r.SUPLY_AMOUNT)),
+    sp: { newlywed: Number(r.SPSPLY_NEW_MRRG_HSHLDCO) || 0, youth: Number(r.SPSPLY_YGMN_HSHLDCO) || 0 },
+  })).filter((u) => u.area > 0);
+  const who = new Set<Who>(['general']);
+  for (const u of n.units) { if (u.sp?.newlywed) who.add('newlywed'); if (u.sp?.youth) who.add('youth'); }
+  n.who = [...who];
+}
+
 /* ───────── 청약홈 (아파트 분양) ───────── */
 async function applyhomeList(): Promise<Notice[]> {
   const out: Notice[] = [];
@@ -74,7 +132,7 @@ async function remndrList(): Promise<Notice[]> {
     out.push({
       id: `rm-${m[2]}-${m[1]}`, src: 'remndr', kind: 'sale', cat: c[1] ? `${c[1]} (줍줍)` : '무순위 (줍줍)',
       name: m[4] || c[2], sido: sidoOf(c[0]), posted: day(c[4]), start, end, win: day(c[6]),
-      url: `${AH}/ai/aia/selectAPTRemndrLttotPblancDetail.do?houseManageNo=${m[2]}&pblancNo=${m[1]}`, who: ['general'], units: [],
+      url: `${AH}/ai/aia/selectAPTRemndrLttotPblancDetailView.do?houseManageNo=${m[2]}&pblancNo=${m[1]}`, who: ['general'], units: [],
       note: '청약통장·자격 상관없이 누구나 신청하는 경우가 많아요 (공고문 확인)',
     });
   }
@@ -249,7 +307,7 @@ async function pool<T>(items: T[], n: number, fn: (x: T) => Promise<void>) {
 /** 전체 모으기. old = 지난번 결과 (상세는 다시 안 불러요) */
 export async function collect(old: Record<string, Notice> = {}): Promise<Notice[]> {
   const today = todayKst();
-  const lists = await Promise.allSettled([applyhomeList(), remndrList(), lhList(), socoList()]);
+  const lists = await Promise.allSettled([applyhomeList(), remndrList(), lhList(), socoList(), pvtList()]);
   let all = lists.flatMap((r) => (r.status === 'fulfilled' ? r.value : []));
   // 아직 접수가 안 끝난 것만 (마감일 모르면 최근 30일 공고)
   all = all.filter((n) => (n.end ? n.end >= today : (n.posted ?? '') >= todayKst(new Date(Date.now() - 30 * 864e5))));
@@ -261,7 +319,9 @@ export async function collect(old: Record<string, Notice> = {}): Promise<Notice[
     return n;
   });
   await pool(need, 5, async (n) => {
-    if (n.src === 'applyhome' || n.src === 'remndr') await applyhomeDetail(n);
+    if (n.src === 'applyhome') await applyhomeDetail(n);
+    else if (n.src === 'remndr') await remndrUnits(n);
+    else if (n.src === 'pvt') await pvtUnits(n);
     else if (n.src === 'lh') await lhDetail(n);
   });
   return all.filter((n) => !n.end || n.end >= today).sort((a, b) => (a.end ?? '9999').localeCompare(b.end ?? '9999'));

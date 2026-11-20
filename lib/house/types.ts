@@ -15,7 +15,7 @@ export type HUnit = {
 
 export type Notice = {
   id: string;
-  src: 'applyhome' | 'remndr' | 'lh' | 'soco';
+  src: 'applyhome' | 'remndr' | 'lh' | 'soco' | 'pvt';
   kind: HKind;
   cat: string;          // 아파트 분양 · 행복주택 · 청년안심주택 …
   name: string;

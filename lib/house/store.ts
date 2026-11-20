@@ -29,7 +29,7 @@ export async function getNotices(force = false): Promise<Cache> {
   // 로컬 화면 테스트 전용 (배포에서는 절대 안 켜져요)
   if (process.env.HOUSE_MOCK === '1' && !process.env.VERCEL) return { at: Date.now(), list: (await import('./mock')).MOCK };
   if (!force && local && Date.now() - local.at < 60e3) return local;
-  const c = await rget<Cache>('house:all');
+  const c = await rget<Cache>('house:v2');
   if (!force && c && Date.now() - c.at < TTL_MS) { local = c; return c; }
   // 한 번에 한 서버만 새로 모으기
   if (redis) {
@@ -41,7 +41,7 @@ export async function getNotices(force = false): Promise<Cache> {
     for (const n of c?.list ?? []) old[n.id] = n;
     const list = await collect(old);
     const v = { at: Date.now(), list: list.length ? list : c?.list ?? [] };
-    await rset('house:all', v);
+    await rset('house:v2', v);
     local = v;
     return v;
   } finally {
