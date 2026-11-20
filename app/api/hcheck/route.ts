@@ -6,7 +6,7 @@ const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (
 export async function GET() {
   const key = encodeURIComponent(process.env.DATA_GO_KR_KEY ?? '');
   const out: Record<string, unknown> = {};
-  for (const [pan, spl, upp, ais] of [['2015122300021121', '063', '06', '10'], ['2015122300021118', '136', '13', '26'], ['2015122300021119', '063', '06', '10']]) {
+  for (const [pan, spl, upp, ais] of [] as string[][]) {
     try {
       const r = await fetch(`https://apis.data.go.kr/B552555/lhLeaseNoticeSplInfo1/getLeaseNoticeSplInfo1?serviceKey=${key}&PAN_ID=${pan}&CCR_CNNT_SYS_DS_CD=03&SPL_INF_TP_CD=${spl}&UPP_AIS_TP_CD=${upp}&AIS_TP_CD=${ais}`, { cache: 'no-store' });
       out['spl' + pan] = (await r.text()).slice(0, 3500);
@@ -19,7 +19,7 @@ export async function GET() {
     const { text, totalPages } = await extractText(pdf, { mergePages: true });
     const t = String(text);
     const i = t.indexOf('보증금');
-    out.pdf = { s: r.status, bytes: buf.length, totalPages, len: t.length, head: t.slice(0, 1500), around: t.slice(Math.max(0, i - 800), i + 3000) };
+    out.pdf = { totalPages, len: t.length, i, full: t.slice(3500, 8800) };
   } catch (e) { out.pdf = String(e); }
   return NextResponse.json(out);
 }
