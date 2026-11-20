@@ -1,4 +1,5 @@
 'use client';
+import { etfTitle } from '@/lib/format';
 import { useLive } from '@/lib/live';
 import Rich from './Rich';
 import { useState } from 'react';
@@ -28,7 +29,7 @@ export default function Home() {
   const sales = list.filter((e) => e.kind === 'sale').sort(byScore);
   const ups = list.filter((e) => e.kind === 'up');
   const wows = list.filter((e) => e.kind === 'wow');
-  const nameOf = (e: Etf) => (e.market === 'us' ? e.code : e.name);
+  const nameOf = (e: Etf) => etfTitle(e);
   const priceOf = (e: Etf) => (e.market === 'us' ? '$' + e.q.last.toFixed(2) : Math.round(e.q.last).toLocaleString('ko-KR') + '원');
   const Row = ({ e }: { e: Etf }) => (
     <Link href={`/etf/${e.id}/`} className="saleRow">

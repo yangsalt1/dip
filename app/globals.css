@@ -274,8 +274,11 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .nShort { margin: 0; font-size: 14px; font-weight: 600; color: #3D3D3B; line-height: 1.45; }
 .nx { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 6px; }
 .nxEtfs { display: flex; flex-direction: column; gap: 6px; }
-.nxEtf { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 14px; background: rgba(255,255,255,0.6); text-decoration: none; color: var(--ink); }
+.nxEtf { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; padding: 9px 12px; border-radius: 14px; background: rgba(255,255,255,0.6); text-decoration: none; color: var(--ink); }
 .nxEtf b { font-size: 14px; line-height: 1.2; min-width: 0; overflow-wrap: anywhere; }
+.nxNm { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.nxNm b { word-break: keep-all; }
+.nxNm small { font-size: 12px; font-weight: 600; color: #4A4A47; line-height: 1.25; word-break: keep-all; }
 .nxEtf .pilltag { font-size: 11px; padding: 3px 8px; }
 .nxBuy { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; align-items: center; gap: 2px 10px; padding: 11px 14px; border-radius: 14px; background: var(--ink); color: #F4F4F2; text-decoration: none; }
 .nxBuy span { font-size: 12px; font-weight: 800; color: var(--yellow); white-space: nowrap; }
@@ -447,3 +450,9 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 /* 할인 스티커: 작게, 칸 안에 딱 */
 .fxSt { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
 .fxSt.fxOff { font-size: 10.5px; padding: 3px 7px; }
+
+/* ETF '이게 뭐야?' : 짧은 줄 3개 */
+.aboutList { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.aboutList li { position: relative; padding-left: 22px; font-size: 18px; line-height: 1.45; font-weight: 500; letter-spacing: -0.03em; word-break: keep-all; color: #2A2A28; }
+.aboutList li::before { content: ''; position: absolute; left: 2px; top: 0.55em; width: 9px; height: 9px; border-radius: 50%; background: #111; }
+.aboutList li .kw, .aboutList li b { font-weight: 800; color: #111; }

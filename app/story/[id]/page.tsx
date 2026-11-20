@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { etfTitle } from '@/lib/format';
 import { notFound } from 'next/navigation';
 import { BottomNav, Back, StatusChip } from '@/components/ui';
 import { BRIEF, etfById } from '@/lib/data';
@@ -56,7 +57,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             const e = etfById(id2)!;
             return (
               <Link key={id2} href={`/etf/${id2}/`} className="box row" style={{ background: 'rgba(255,255,255,0.55)', textDecoration: 'none' }}>
-                <span style={{ display: 'flex', flexDirection: 'column' }}><b style={{ fontSize: 17 }}>{e.market === 'us' ? e.code : e.name}</b><span style={{ fontSize: 12, fontWeight: 700, color: '#2E2E2C' }}>{e.kw} · {priceText(e, e.market === 'us' ? 'usd' : 'krw')}</span></span>
+                <span style={{ display: 'flex', flexDirection: 'column' }}><b style={{ fontSize: 17 }}>{etfTitle(e)}</b><span style={{ fontSize: 12, fontWeight: 700, color: '#2E2E2C' }}>{e.kw} · {priceText(e, e.market === 'us' ? 'usd' : 'krw')}</span></span>
                 <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}><StatusChip kind={e.kind} /><b style={{ fontSize: 15, color: '#1A3FA8' }}>최고가보다 {e.q.dd.toFixed(1)}%</b></span>
               </Link>
             );

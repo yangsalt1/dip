@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Rich from '@/components/Rich';
 import { etfTitle } from '@/lib/format';
 import { notFound } from 'next/navigation';
 import Chart from '@/components/Chart';
@@ -70,7 +71,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
         <section className="card" style={{ background: '#D8D0C4', gap: 8 }}>
           <span className="label">이게 뭐야?</span>
-          <p style={{ margin: 0, fontSize: 18, lineHeight: 1.45, fontWeight: 700, letterSpacing: '-0.03em' }}>{e.about}</p>
+          {(e as { points?: string[] }).points
+            ? <ul className="aboutList">{(e as { points?: string[] }).points!.map((t, i) => <li key={i}><Rich t={t} /></li>)}</ul>
+            : <p style={{ margin: 0, fontSize: 18, lineHeight: 1.45, fontWeight: 700, letterSpacing: '-0.03em' }}>{e.about}</p>}
         </section>
 
         {insights.length > 0 && (

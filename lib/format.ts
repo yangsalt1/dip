@@ -46,5 +46,5 @@ export function tempLabel(buy: number): string {
 
 /** 화면 큰 이름: 미국은 티커(VOO), 한국은 진짜 상품명(TIGER 미국나스닥100) */
 export const etfTitle = (e: Etf) => (e.market === 'us' ? e.code : e.name);
-/** 큰 이름 밑 작은 글씨: 미국은 정식 이름, 한국은 쉬운 설명 */
-export const etfSubtitle = (e: Etf) => (e.market === 'us' ? e.name : e.kw);
+/** 이름 옆(밑) 작은 글씨: 어떤 ETF인지 한 줄 설명. 이름과 항상 세트로 */
+export const etfSubtitle = (e: Etf) => e.kw;

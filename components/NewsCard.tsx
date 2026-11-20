@@ -3,6 +3,7 @@ import Rich from './Rich';
 import Link from 'next/link';
 import { BRIEF, etfById } from '@/lib/data';
 import { Arrow, Sticker } from './ui';
+import { etfTitle, etfSubtitle } from '@/lib/format';
 
 type Card = (typeof BRIEF.cards)[number] & { short?: string; etfs?: string[]; buy?: string; story?: string };
 
@@ -14,7 +15,7 @@ export function NewsExtra({ c }: { c: Card }) {
       <div className="nxEtfs">
         {etfs.map((e) => (
           <Link key={e!.id} href={`/etf/${e!.id}/`} className="nxEtf">
-            <b>{e!.market === 'us' ? e!.code : e!.name.replace(/^(TIGER|KODEX|ACE) /, '')}</b>
+            <span className="nxNm"><b>{etfTitle(e!)}</b><small>{etfSubtitle(e!)}</small></span>
             <Sticker kind={e!.kind} dd={e!.q.dd} d1={e!.q.d1} />
           </Link>
         ))}

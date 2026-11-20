@@ -1,4 +1,5 @@
 'use client';
+import { etfTitle, etfSubtitle } from '@/lib/format';
 import { useLive } from '@/lib/live';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -120,7 +121,7 @@ export default function Analyze({ goal }: { goal: Goal }) {
                   <b style={{ fontSize: 15 }}>{i + 1}. {BUCKETS[l.b].label} <span style={{ color: '#1A3FA8' }}>{Math.round(l.diff)}%</span></b>
                   {l.picks.map((e) => (
                     <Link key={e.id} href={`/etf/${e.id}/`} className="anzPick">
-                      <span style={{ minWidth: 0 }}><b>{e.market === 'us' ? e.code : e.name}</b><small>{e.diff ?? e.kw}</small></span>
+                      <span style={{ minWidth: 0 }}><b>{etfTitle(e)}</b><small>{etfSubtitle(e)}</small></span>
                       <Sticker kind={e.kind} dd={e.q.dd} d1={e.q.d1} />
                     </Link>
                   ))}
