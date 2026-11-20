@@ -6,4 +6,5 @@ export const MOCK: Notice[] = [
   { id: 'ah-1', src: 'applyhome', kind: 'sale', cat: '아파트 분양', name: '고양 한신더휴 퍼스트원', sido: '경기', gu: '고양시', start: '2026-11-30', end: '2026-12-02', win: '2026-12-09', move: '2028.05', who: ['general', 'newlywed', 'family'], url: '#', units: [{ ty: '59A', area: 59.99, supply: 80.3, count: 9, price: 55932, sp: { newlywed: 1, family: 2, first: 1 } }, { ty: '84A', area: 84.6, supply: 112, count: 12, price: 78307, sp: { newlywed: 2 } }] },
   { id: 'pv-1', src: 'pvt', kind: 'rent', cat: '공공지원 민간임대', name: '힐스테이트 회룡역파크뷰', sido: '경기', gu: '의정부시', end: '2026-11-28', who: ['general', 'newlywed'], url: '#', units: [{ ty: '49B', area: 49.5, supply: 75, deposit: 21120 }] },
   { id: 'rm-1', src: 'remndr', kind: 'sale', cat: '무순위 (줍줍)', name: '산곡역자이힐스테이트앤하늘채', sido: '인천', gu: '부평구', end: '2026-11-24', who: ['general'], url: '#', units: [{ ty: '59A', area: 59.8, supply: 79.4, price: 41668 }] },
+  { id: 'lh-2', src: 'lh', kind: 'rent', cat: '국민임대', name: '파주운정 국민임대 예비입주자 모집', sido: '경기', gu: '파주시', end: '2026-12-01', who: ['general', 'family'], url: '#', units: [{ ty: '51', area: 51.9, deposit: 6214, rent: 36 }] },
 ];

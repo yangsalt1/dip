@@ -1,25 +1,14 @@
 import { NextResponse } from 'next/server';
-import { extractText, getDocumentProxy } from 'unpdf';
+import { getNotices } from '@/lib/house/store';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
-const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36';
+/** 임시: 공고별로 평수·금액이 채워졌는지 요약 */
 export async function GET() {
-  const key = encodeURIComponent(process.env.DATA_GO_KR_KEY ?? '');
-  const out: Record<string, unknown> = {};
-  for (const [pan, spl, upp, ais] of [] as string[][]) {
-    try {
-      const r = await fetch(`https://apis.data.go.kr/B552555/lhLeaseNoticeSplInfo1/getLeaseNoticeSplInfo1?serviceKey=${key}&PAN_ID=${pan}&CCR_CNNT_SYS_DS_CD=03&SPL_INF_TP_CD=${spl}&UPP_AIS_TP_CD=${upp}&AIS_TP_CD=${ais}`, { cache: 'no-store' });
-      out['spl' + pan] = (await r.text()).slice(0, 3500);
-    } catch (e) { out['spl' + pan] = String(e); }
+  const c = await getNotices(true);
+  const by: Record<string, { n: number; units: number; money: number }> = {};
+  for (const x of c.list) {
+    const b = (by[x.src] ??= { n: 0, units: 0, money: 0 });
+    b.n++; if (x.units.length) b.units++; if (x.units.some((u) => u.price || u.deposit)) b.money++;
   }
-  try {
-    const r = await fetch('https://soco.seoul.go.kr/coHouse/cmmn/file/fileDown.do?atchFileId=78f3aa6df7454dad8367131ca942b47b&fileSn=1', { headers: { 'user-agent': UA }, cache: 'no-store' });
-    const buf = new Uint8Array(await r.arrayBuffer());
-    const pdf = await getDocumentProxy(buf);
-    const { text, totalPages } = await extractText(pdf, { mergePages: true });
-    const t = String(text);
-    const i = t.indexOf('보증금');
-    out.pdf = { totalPages, len: t.length, i, full: t.slice(3500, 8800) };
-  } catch (e) { out.pdf = String(e); }
-  return NextResponse.json(out);
+  return NextResponse.json({ total: c.list.length, by, soco: c.list.filter((x) => x.src === 'soco').map((x) => ({ name: x.name, units: x.units })) });
 }

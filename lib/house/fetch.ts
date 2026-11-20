@@ -1,6 +1,7 @@
 import 'server-only';
 import type { HUnit, Notice, Who } from './types';
 import { todayKst } from './calc';
+import { extractText, getDocumentProxy } from 'unpdf';
 
 /**
  * 공고 모으기 (키 필요 없음: 각 사이트의 공개 목록 페이지를 읽어요)
@@ -299,6 +300,50 @@ async function socoList(): Promise<Notice[]> {
   return out;
 }
 
+/** 청년안심주택: 공고문 PDF에서 면적·보증금·월세 읽기 */
+export function parseSupply(text: string): HUnit[] {
+  const at = Math.max(text.search(/\[?\s*공급\s*현황|임대\s*조건|공급\s*내역|임대보증금\s*및\s*임대료/), 0);
+  const sec = text.slice(at, at + 6000);
+  const unitMan = /단위\s*[:：]\s*만\s*원|\(만원\)|만원\)/.test(sec);
+  const out: HUnit[] = [];
+  const re = /(\d{2,3}\.\d{1,4})\s*㎡\s*(?:\(\s*([0-9A-Za-z\-]+)\s*\))?([\s\S]{0,160})/g;
+  for (const m of sec.matchAll(re)) {
+    const area = Number(m[1]);
+    if (!(area > 10 && area < 130)) continue;
+    const tail = m[3].split(/\d{2,3}\.\d{1,4}\s*㎡/)[0].replace(/\d+\s*호/g, ' ').replace(/\d+(\.\d+)?\s*%/g, ' ');
+    const nums = [...tail.matchAll(/\d{1,3}(?:,\d{3})+|\d+/g)].map((x) => Number(x[0].replace(/,/g, ''))).filter((v) => v > 0);
+    if (nums.length < 2) continue;
+    let dep: number | undefined, rent: number | undefined;
+    if (unitMan) {
+      const i = nums.findIndex((v) => v >= 500 && v < 100000);
+      if (i < 0) continue;
+      dep = nums[i]; rent = nums.slice(i + 1).find((v) => v > 0 && v < 500);
+    } else {
+      const i = nums.findIndex((v) => v >= 5e6);
+      if (i < 0) continue;
+      dep = Math.round(nums[i] / 1e4); const r = nums.slice(i + 1).find((v) => v >= 1e4 && v < 5e6); rent = r ? Math.round(r / 1e4) : undefined;
+    }
+    const ty = m[2] || `${Math.round(area)}㎡`;
+    if (!out.some((u) => u.ty === ty && u.deposit === dep)) out.push({ ty, area, deposit: dep, rent });
+  }
+  return out;
+}
+async function socoUnits(n: Notice) {
+  const html = await get(n.url);
+  const files = [...html.matchAll(/href="(\/coHouse\/cmmn\/file\/fileDown\.do\?atchFileId=[^"&]+&(?:amp;)?fileSn=\d+)"\s*>([^<]+)</g)];
+  const pick = files.find((f) => /\.pdf/i.test(f[2]) && /공고/.test(f[2])) ?? files.find((f) => /\.pdf/i.test(f[2]));
+  if (!pick) return;
+  n.doc = `${SOCO}${pick[1].replace(/&amp;/g, '&')}`;
+  const r = await fetch(n.doc, { headers: { 'user-agent': UA }, cache: 'no-store', signal: AbortSignal.timeout(15000) });
+  if (!r.ok) return;
+  const pdf = await getDocumentProxy(new Uint8Array(await r.arrayBuffer()));
+  const { text } = await extractText(pdf, { mergePages: true });
+  const t = String(text);
+  n.units = parseSupply(t);
+  if (!n.addr) { const a = t.match(/주택\s*위치\s*[:：]\s*(서울[^\n(]+)/)?.[1]?.trim(); if (a) { n.addr = a; n.gu = guOf(a); } }
+  const mv = t.match(/입주\s*(?:지정|예정)[^\n]{0,10}?(\d{4})\.\s*(\d{1,2})\./); if (mv && !n.move) n.move = `${mv[1]}.${mv[2].padStart(2, '0')}`;
+}
+
 async function pool<T>(items: T[], n: number, fn: (x: T) => Promise<void>) {
   let i = 0;
   await Promise.all(Array.from({ length: n }, async () => { while (i < items.length) { const x = items[i++]; try { await fn(x); } catch { /* 이 공고는 목록 정보만 */ } } }));
@@ -315,7 +360,7 @@ export async function collect(old: Record<string, Notice> = {}): Promise<Notice[
   all = all.map((n) => {
     const o = old[n.id];
     if (o && o.units.length) return { ...n, ...o, end: n.end ?? o.end };
-    if (n.src !== 'soco') need.push(n);
+    need.push(n);
     return n;
   });
   await pool(need, 5, async (n) => {
@@ -323,6 +368,7 @@ export async function collect(old: Record<string, Notice> = {}): Promise<Notice[
     else if (n.src === 'remndr') await remndrUnits(n);
     else if (n.src === 'pvt') await pvtUnits(n);
     else if (n.src === 'lh') await lhDetail(n);
+    else if (n.src === 'soco') await socoUnits(n);
   });
   return all.filter((n) => !n.end || n.end >= today).sort((a, b) => (a.end ?? '9999').localeCompare(b.end ?? '9999'));
 }

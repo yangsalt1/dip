@@ -9,19 +9,17 @@ import { goLogin, useJup } from '@/lib/useJup';
 const SIDO = ['서울', '경기', '인천', '부산', '대구', '대전', '광주', '울산', '세종', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
 const SEOUL_GU = ['강남구', '강동구', '강북구', '강서구', '관악구', '광진구', '구로구', '금천구', '노원구', '도봉구', '동대문구', '동작구', '마포구', '서대문구', '서초구', '성동구', '성북구', '송파구', '양천구', '영등포구', '용산구', '은평구', '종로구', '중구', '중랑구'];
 const MONEY: [number, string][] = [[3000, '3천 이하'], [5000, '5천 이하'], [10000, '1억 이하'], [20000, '2억 이하'], [0, '상관없음']];
-/** 공고 종류마다 색 하나 (컬러 가이드) */
-function colorOf(n: Notice) {
-  const c = n.cat;
-  if (/청년안심/.test(c)) return '#CEF932';        // Lime
-  if (/행복주택/.test(c)) return '#0381ED';        // Blue
-  if (/민간임대/.test(c)) return '#FF9FF3';        // Plum Web
-  if (/줍줍|무순위|임의/.test(c)) return '#FC7B00'; // Safety Orange
-  if (/신혼희망/.test(c)) return '#FF0C31';        // Imperial Red
-  if (/아파트|분양/.test(c)) return '#FBD12C';     // Mango
-  if (/매입|전세임대/.test(c)) return '#009640';   // Pigment Green
-  if (/국민|공공|영구|장기/.test(c)) return '#AE78D2'; // Lavender Floral
-  return '#D5D4CE';                               // Cream
-}
+/** 컬러 가이드: 카드마다 돌아가며 섞어서 [배경, 글자] */
+const W = '#FFFFFF', K = '#282828';
+const MIX: [string, string][] = [
+  ['#1283EB', W], // Azure Cornflower
+  ['#FFE459', K], // Lemon and Banana
+  ['#7B61FF', W], // Amethyst Bellflower
+  ['#F8F3EC', K], // Creamy Milk
+  ['#2BBF5D', W], // Light Malachite
+  ['#FF5E54', W], // Watermelon with Carrot
+  ['#282828', W], // Signal Black
+];
 
 function toggle<T>(arr: T[], v: T) { return arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]; }
 
@@ -104,15 +102,15 @@ function summary(p: Pref) {
   return a.join(' · ');
 }
 
-function Card({ n, p }: { n: Notice; p: Pref }) {
+function Card({ n, p, i }: { n: Notice; p: Pref; i: number }) {
   const units = matchNotice(n, p) ?? [];
   const u = pickUnit(n, units);
   const dl = daysLeft(n.end);
   const notYet = n.start && daysLeft(n.start)! > 0;
   const sp = spLine(n, p);
-  const bg = colorOf(n);
+  const [bg, fg] = MIX[i % MIX.length];
   return (
-    <Link href={`/house/${n.id}/`} className="hCard" style={{ background: bg }}>
+    <Link href={`/house/${n.id}/`} className="hCard" style={{ background: bg, color: fg }}>
       <span className="hTop">
         {notYet ? <span className="hSt w">접수 {n.start!.slice(5).replace('-', '/')} 시작</span>
           : dl != null ? <span className={`hSt ${dl <= 3 ? 'r' : 'k'}`}>{dl <= 0 ? '오늘 마감' : `마감 D-${dl}`}</span> : <span className="hSt w">접수 중</span>}
@@ -183,7 +181,7 @@ export default function House() {
             {list && hits.length === 0 && (
               <div className="hEmpty"><b>지금은 딱 맞는 공고가 없어요</b><span>새로 뜨면 바로 알려줄게요. 조건을 조금 넓혀봐도 좋아요.</span></div>
             )}
-            <div className="hList">{hits.map((n) => <Card key={n.id} n={n} p={pref} />)}</div>
+            <div className="hList">{hits.map((n, i) => <Card key={n.id} n={n} p={pref} i={i} />)}</div>
             {list && <p className="note" style={{ marginTop: 18 }}>청약홈 · LH청약플러스 · 서울 청년안심주택 공고를 모았어요. 방 개수는 면적으로 어림한 값이고, 정확한 자격·금액은 꼭 공고문에서 확인하세요.</p>}
           </>
         )}
