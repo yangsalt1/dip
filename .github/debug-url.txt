@@ -1,0 +1,1 @@
+https://jup-rosy.vercel.app/api/hcheck/
