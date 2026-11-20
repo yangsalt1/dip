@@ -43,18 +43,30 @@ export function overview(mkt: 'us' | 'kr'): OvGroup[] {
 }
 
 /** 오늘의 한 줄: 세일 폭 + 대표 ETF 흐름으로 '줍기 / 조금씩 / 구경' 판단 (투자 권유 아님) */
-export type Signal = { tone: 'go' | 'slow' | 'wait'; text: string; chips: string[] };
+export type Signal = { tone: 'go' | 'slow' | 'dip' | 'top'; text: string; chips: string[] };
+export const SIGNAL_TEXT = {
+  slow: '세일 시작했다. 현금 들고 조금만 더 기다리자.',
+  go: '세일 바닥 다진다. 슬슬 들어가자.',
+  dip: '오르다 첫 눌림목. 계획대로 조금씩 줍자.',
+  top: '매우 비쌈. 고점임. 포모 금지.',
+};
+/**
+ * 대표 ETF(미국 VOO · 한국 KODEX 200) 흐름으로 오늘의 한 줄
+ *   고점 근처 + 오르는 중        → top
+ *   오르다 3~10% 눌림 + 멈춤     → dip
+ *   눌림 뒤 다시 빠지는 중 / 세일 중 아직 하락 → slow
+ *   10% 넘게 빠졌는데 바닥 신호  → go
+ */
 export function signal(mkt: 'us' | 'kr'): Signal {
   const list = ETFS.filter((e) => e.market === mkt);
   const idx = ETFS.find((e) => e.id === (mkt === 'us' ? 'voo' : 'kodex-200'));
   const mega = list.filter((e) => e.kind === 'mega').length;
   const sale = list.filter((e) => e.kind === 'sale').length;
-  const share = list.length ? (mega + sale) / list.length : 0;
-  const q = idx?.q as { d1: number; wk: number; rsi?: number; streak?: number } | undefined;
-  const d1 = q?.d1 ?? 0, wk = q?.wk ?? 0, rsi = q?.rsi ?? 50, st = q?.streak ?? 0;
-  const falling = d1 <= -0.5 || (wk <= -2 && d1 <= 0.3);
-  const rebound = d1 >= 0.5 || (rsi <= 30 && d1 > 0);
+  const q = idx?.q as { d1: number; wk: number; dd: number; rsi?: number; streak?: number; factors?: { trend: number } } | undefined;
+  const d1 = q?.d1 ?? 0, wk = q?.wk ?? 0, dd = q?.dd ?? 0, rsi = q?.rsi ?? 50, st = q?.streak ?? 0, trend = q?.factors?.trend ?? 0;
   const usDrop = mkt === 'kr' && (ETFS.find((e) => e.id === 'voo')?.q.d1 ?? 0) <= -1.5;
+  const bottoming = st >= 2 || (rsi < 35 && d1 > 0) || d1 >= 1;
+  const fallingAgain = st <= -2 || d1 <= -0.5;
 
   const chips: string[] = [];
   if (mega > 0) chips.push(`특급세일 ${mega}개`);
@@ -63,10 +75,10 @@ export function signal(mkt: 'us' | 'kr'): Signal {
   else if (st >= 2) chips.push(`${st}일 연속 상승`);
   if (d1 >= 0.5) chips.push('오늘 반등');
   if (usDrop) chips.push('밤새 미국 급락');
-  if (share < 0.3) chips.push('최고가 근처');
+  if (dd > -3) chips.push('최고가 근처');
 
-  const SLOW = '세일 시작! 근데 더 싸질 수도 있어.';
-  if (share < 0.3) return { tone: 'wait', text: '최고가 근처. 줍는 날 아님.', chips };
-  if (usDrop || (falling && !rebound)) return { tone: 'slow', text: SLOW, chips };
-  return { tone: 'go', text: '바닥 찍고 반등! 지금이 줍줍 타이밍.', chips };
+  if (usDrop) return { tone: 'slow', text: SIGNAL_TEXT.slow, chips };
+  if (dd > -3 && (trend > 0 || wk > 0)) return { tone: 'top', text: SIGNAL_TEXT.top, chips };
+  if (dd > -10) return fallingAgain || trend < 0 ? { tone: 'slow', text: SIGNAL_TEXT.slow, chips } : { tone: 'dip', text: SIGNAL_TEXT.dip, chips };
+  return bottoming ? { tone: 'go', text: SIGNAL_TEXT.go, chips } : { tone: 'slow', text: SIGNAL_TEXT.slow, chips };
 }

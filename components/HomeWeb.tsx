@@ -3,7 +3,8 @@ import { etfTitle } from '@/lib/format';
 import { useLive } from '@/lib/live';
 import { useState } from 'react';
 import Link from 'next/link';
-import { BRIEF, ETFS, FX, PRICE_DATE, isKnife, type Etf } from '@/lib/data';
+import { BRIEF, ETFS, FX, PRICE_DATE, isKnife, isRebound, type Etf } from '@/lib/data';
+import { useJup, goLogin } from '@/lib/useJup';
 import { fxVerdict } from '@/lib/fx';
 import { Arrow, BottomNav, HandIcon, Sticker } from './ui';
 import NewsCard from './NewsCard';
@@ -18,15 +19,18 @@ export default function HomeWeb() {
   const [mkt, setMkt] = useState<'us' | 'kr'>('us');
   const list = ETFS.filter((e) => e.market === mkt);
   const byScore = (a: Etf, b: Etf) => b.q.buy - a.q.buy;
-  const megas = list.filter((e) => e.kind === 'mega').sort(byScore);
-  const sales = list.filter((e) => e.kind === 'sale').sort(byScore);
+  const rebs = list.filter(isRebound).sort(byScore);
+  const megas = list.filter((e) => e.kind === 'mega' && !isRebound(e)).sort(byScore);
+  const sales = list.filter((e) => e.kind === 'sale' && !isRebound(e)).sort(byScore);
+  const jup = useJup();
+  const mine = ETFS.filter((e) => jup.ids.includes(e.id));
   const wows = list.filter((e) => e.kind === 'wow');
   const nameOf = (e: Etf) => etfTitle(e);
   const priceOf = (e: Etf) => (e.market === 'us' ? '$' + e.q.last.toFixed(2) : Math.round(e.q.last).toLocaleString('ko-KR') + '원');
 
   const Row = ({ e }: { e: Etf }) => (
     <Link href={`/etf/${e.id}/`} className="wRow">
-      <span className="wRowName"><b>{nameOf(e)}</b><small>{e.kw}{e.kind === 'mega' && isKnife(e.q) ? ' · 나눠서 줍기' : ''}</small></span>
+      <span className="wRowName"><b>{nameOf(e)}</b><small>{e.kw}{isRebound(e) ? ' · 반등 시작' : e.kind === 'mega' && isKnife(e.q) ? ' · 나눠서 줍기' : ''}</small></span>
       <Sticker kind={e.kind} dd={e.q.dd} d1={e.q.d1} />
       <span className="wRowPrice">{priceOf(e)}</span>
     </Link>
@@ -65,6 +69,12 @@ export default function HomeWeb() {
             </div>
           </div>
           <div className="wSale2">
+            <section className="wCard reboundCard" style={{ gridColumn: '1 / -1' }}>
+              <div className="row"><h3 className="wListTitle">줍줍시작</h3><b className="wCnt">{rebs.length}개</b></div>
+              <p className="wMid">세일 중인데 반등 시작</p>
+              <p className="nShort">싸진 상태에서 다시 오르기 시작한 종목들</p>
+              <div>{rebs.length ? rebs.map((e) => <Row key={e.id} e={e} />) : <p className="wBody">아직 반등한 세일 종목은 0개. 서두르지 말자.</p>}</div>
+            </section>
             <section className="wCard dark">
               <div className="row"><h3 className="wListTitle">특급세일 리스트</h3><b className="wCnt">{megas.length}개</b></div>
               <p className="wMid" style={{ color: '#F4F4F2' }}>최고가대비 특급할인</p>
@@ -82,6 +92,12 @@ export default function HomeWeb() {
             <Link key={e.id} href={`/etf/${e.id}/`} className="wWow"><HandIcon /><span><b>워워! {nameOf(e)}는 최고가 바로 근처</b> · 많이 들어가지 않기</span></Link>
           ))}
           <Link href="/etf/" className="cta" style={{ alignSelf: 'flex-start', width: 'auto', gap: 16 }}>ETF 전체 보기<Arrow /></Link>
+          <section className="wCard" style={{ background: '#fff', border: '2px solid #111' }} id="myjup">
+            <div className="row"><h3 className="wListTitle">내 줍줍리스트</h3><b className="wCnt">{mine.length}개</b></div>
+            <div>{jup.status === 'out'
+              ? <button type="button" className="cta" onClick={goLogin} style={{ width: 'auto' }}>로그인하고 내 리스트 보기<Arrow /></button>
+              : mine.length ? mine.map((e) => <Row key={e.id} e={e} />) : <p className="wBody">아직 비어 있어요. ETF에서 ♥ 줍줍을 눌러 담아보세요.</p>}</div>
+          </section>
         </div>
 
         <aside className="wSide">

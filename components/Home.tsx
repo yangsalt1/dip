@@ -4,7 +4,8 @@ import { useLive } from '@/lib/live';
 import Rich from './Rich';
 import { useState } from 'react';
 import Link from 'next/link';
-import { BRIEF, ETFS, FX, isKnife, type Etf } from '@/lib/data';
+import { BRIEF, ETFS, FX, isKnife, isRebound, type Etf } from '@/lib/data';
+import { useJup, goLogin } from '@/lib/useJup';
 import { stickerStyle } from '@/lib/sticker';
 import { fxVerdict } from '@/lib/fx';
 import { Arrow, BottomNav, HandIcon, Sticker } from './ui';
@@ -25,8 +26,11 @@ export default function Home() {
   const cards = mkt === 'us' ? BRIEF.cards : BRIEF.cardsKr;
   const list = ETFS.filter((e) => e.market === mkt);
   const byScore = (a: Etf, b: Etf) => b.q.buy - a.q.buy;
-  const megas = list.filter((e) => e.kind === 'mega').sort(byScore);
-  const sales = list.filter((e) => e.kind === 'sale').sort(byScore);
+  const rebs = list.filter(isRebound).sort(byScore);
+  const megas = list.filter((e) => e.kind === 'mega' && !isRebound(e)).sort(byScore);
+  const sales = list.filter((e) => e.kind === 'sale' && !isRebound(e)).sort(byScore);
+  const jup = useJup();
+  const mine = ETFS.filter((e) => jup.ids.includes(e.id));
   const ups = list.filter((e) => e.kind === 'up');
   const wows = list.filter((e) => e.kind === 'wow');
   const nameOf = (e: Etf) => etfTitle(e);
@@ -35,7 +39,7 @@ export default function Home() {
     <Link href={`/etf/${e.id}/`} className="saleRow">
       <span style={{ minWidth: 0, display: 'flex', flexDirection: 'column', gap: 2 }}>
         <span className="nm">{nameOf(e)}</span>
-        <span className="kw">{e.kw}{e.kind === 'mega' && isKnife(e.q) ? ' · 아직 떨어지는 중, 나눠서 줍기' : ''}</span>
+        <span className="kw">{e.kw}{isRebound(e) ? ' · 반등 시작' : e.kind === 'mega' && isKnife(e.q) ? ' · 아직 떨어지는 중, 나눠서 줍기' : ''}</span>
       </span>
       {stickerStyle() === 'b' ? (
         <span style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -127,6 +131,13 @@ export default function Home() {
         </div>
       </div>
       <div className="stack keep" aria-label="세일 현황">
+        <section className="card reboundCard" style={{ gap: 6 }}>
+          <div className="row"><span className="chip" style={{ background: '#111', color: '#fff' }}>줍줍시작</span><span style={{ fontSize: 15, fontWeight: 800 }}>{rebs.length}개</span></div>
+          <p style={{ margin: '8px 0 0', fontSize: 30, lineHeight: 1.12, fontWeight: 800, letterSpacing: '-0.045em' }}>세일 중인데<br />반등 시작</p>
+          <p className="nShort" style={{ margin: '0 0 4px', color: '#123' }}>싸진 상태에서 다시 오르기 시작한 종목들</p>
+          {rebs.length ? rebs.map((e) => <Row key={e.id} e={e} />)
+            : <p className="small" style={{ margin: '6px 0 0', fontWeight: 700 }}>아직 반등한 세일 종목은 0개. 서두르지 말자.</p>}
+        </section>
         <section className="card dark" style={{ gap: 6 }}>
           <div className="row"><span className="live">특급세일 리스트</span><span style={{ fontSize: 15, fontWeight: 800 }}>{megas.length}개</span></div>
           <p style={{ margin: '8px 0 4px', fontSize: 30, lineHeight: 1.12, fontWeight: 800, letterSpacing: '-0.045em' }}>최고가대비<br />특급할인</p>
@@ -154,6 +165,13 @@ export default function Home() {
           )) : <p className="small" style={{ margin: 0 }}>고점에서 과열된 건 없어요.</p>}
           {ups.length > 0 && <p className="small" style={{ margin: 0, color: '#3D3D3B' }}>상승 중: {ups.map(nameOf).join(', ')} — 잘 가고 있어요. 쫓아 사지 말고 원래 계획대로.</p>}
           <Link href="/etf/" className="cta" style={{ marginTop: 4 }}>ETF 전체 보기<Arrow /></Link>
+        </section>
+        <section className="card" style={{ background: '#fff', border: '2px solid #111', gap: 6 }} id="myjup">
+          <div className="row"><b style={{ fontSize: 18 }}>내 줍줍리스트</b><span style={{ fontSize: 15, fontWeight: 800 }}>{mine.length}개</span></div>
+          {jup.status === 'out' ? (
+            <button type="button" className="cta" onClick={goLogin} style={{ marginTop: 4 }}>로그인하고 내 리스트 보기<Arrow /></button>
+          ) : mine.length ? mine.map((e) => <Row key={e.id} e={e} />)
+            : <p className="small" style={{ margin: '6px 0 0', fontWeight: 700 }}>아직 비어 있어요. ETF에서 ♥ 줍줍을 눌러 담아보세요.</p>}
         </section>
       </div>
       </div>

@@ -1,4 +1,4 @@
-import { ETFS } from '@/lib/data';
+import { ETFS, isRebound } from '@/lib/data';
 import { overview, signal } from '@/lib/overview';
 
 const DOT: Record<string, string> = { mega: '#FF5A3C', sale: '#B1A6FF', bottom: '#F2F28E', rising: '#9CC3FF' };
@@ -21,6 +21,7 @@ export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; 
   const mega = list.filter((e) => e.kind === 'mega').length;
   const sale = list.filter((e) => e.kind === 'sale').length;
   const up = list.length - mega - sale;
+  const reb = list.filter(isRebound).length;
   const sig = signal(mkt);
   return (
     <div className={`ov ov-${size}`}>
@@ -40,6 +41,7 @@ export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; 
           {up > 0 && <span style={{ flex: up, background: '#9CC3FF' }} />}
         </div>
         <div className="ovLegend">
+          <span><b style={{ color: '#5BD47E' }}>{reb}</b> 줍줍시작</span>
           {mega > 0 && <span><b style={{ color: '#FF5A3C' }}>{mega}</b> 특급세일</span>}
           {sale > 0 && <span><b style={{ color: '#B1A6FF' }}>{sale}</b> 일반 세일</span>}
           {up > 0 && <span><b style={{ color: '#9CC3FF' }}>{up}</b> 세일 아님</span>}

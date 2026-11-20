@@ -4,7 +4,7 @@ import { etfTitle, etfSubtitle } from '@/lib/format';
 import LiveStamp from './LiveStamp';
 import { useState } from 'react';
 import Link from 'next/link';
-import { ETFS, FX_RATE, PALETTE, PRICE_DATE, SECTORS, type Etf, type Market } from '@/lib/data';
+import { ETFS, FX_RATE, PALETTE, PRICE_DATE, SECTORS, type Etf, type Market, isRebound } from '@/lib/data';
 import { priceText, statusLine, type Cur } from '@/lib/format';
 import { BottomNav, StatusChip, Sticker } from './ui';
 import { stickerStyle } from '@/lib/sticker';
@@ -15,7 +15,8 @@ export default function EtfList() {
   const [sector, setSector] = useState<string>('all');
   const [cur, setCur] = useState<Cur>('usd');
 
-  const list = ETFS.filter((e) => e.market === market && (sector === 'all' || e.sector === sector)).sort((a, b) => a.rank - b.rank);
+  const list = ETFS.filter((e) => e.market === market && (sector === 'all' || e.sector === sector)).sort((a, b) => (isRebound(b) ? 1 : 0) - (isRebound(a) ? 1 : 0) || a.rank - b.rank);
+  const rebs = ETFS.filter((e) => e.market === market && isRebound(e)).sort((a, b) => b.q.buy - a.q.buy);
   const [hero, ...rest] = list;
 
   const pickMarket = (m: Market) => { setMarket(m); setSector('all'); setCur(m === 'us' ? 'usd' : 'krw'); };
@@ -44,12 +45,22 @@ export default function EtfList() {
             style={{ background: s.color, color: s.id === 'all' ? '#F4F4F2' : '#111' }}>{s.label}</button>
         ))}
       </div>
-      <p className="note" style={{ margin: '12px 24px 0', fontSize: 13 }}>요즘 사람들이 제일 많이 보는 순서 · {PRICE_DATE.slice(5).replace('-', '/')} 종가</p>
+      <section className="jupNow" aria-label="지금 줍줍타이밍">
+        <div className="row"><span className="jupNowTag">지금 줍줍타이밍</span><b style={{ fontSize: 15 }}>{rebs.length}개</b></div>
+        <p className="jupNowLead">{rebs.length ? '세일 중인데 다시 오르기 시작했어요' : '아직 반등한 세일 종목은 0개. 서두르지 말자.'}</p>
+        {rebs.map((e) => (
+          <Link key={e.id} href={`/etf/${e.id}/`} className="jupNowRow">
+            <span><b>{etfTitle(e)}</b><small>{etfSubtitle(e)}</small></span>
+            <span className="jupNowNum"><b>{e.q.dd.toFixed(1)}%</b><small style={{ color: e.q.d1 >= 0 ? '#0B5A2A' : '#1A3FA8' }}>오늘 {e.q.d1 >= 0 ? '+' : ''}{e.q.d1.toFixed(2)}%</small></span>
+          </Link>
+        ))}
+      </section>
+      <p className="note" style={{ margin: '12px 24px 0', fontSize: 13 }}>줍줍타이밍 먼저, 그다음 많이 보는 순서 · {PRICE_DATE.slice(5).replace('-', '/')} 종가</p>
 
       {hero && (
         <div className="stack etfGrid mOnlyB" style={{ paddingTop: 16 }}>
-          <Card e={hero} cur={cur} hero tag={sector === 'all' ? '인기 1위' : '이 섹터 1위'} />
-          {rest.map((e, i) => <Card key={e.id} e={e} cur={cur} rank={i + 2} bg={PALETTE[i % PALETTE.length]} />)}
+          <Card e={hero} cur={cur} hero tag={isRebound(hero) ? '줍줍타이밍' : sector === 'all' ? '인기 1위' : '이 섹터 1위'} />
+          {rest.map((e, i) => <Card key={e.id} e={e} cur={cur} rank={i + 2} bg={isRebound(e) ? '#B8E8C6' : PALETTE[i % PALETTE.length]} />)}
         </div>
       )}
 
@@ -60,7 +71,7 @@ export default function EtfList() {
             const sc = SECTORS.find((x) => x.id === e.sector);
             return (
               <Link key={e.id} href={`/etf/${e.id}/`} className="wListRow" role="listitem">
-                <b className="wRank">{i + 1}</b>
+                <b className="wRank">{isRebound(e) ? '줍' : i + 1}</b>
                 <span className="wListName"><b>{etfTitle(e)}</b><small>{etfSubtitle(e)}</small></span>
                 <span className="wListKw"><i style={{ background: sc?.color }} /><span style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}><span>{e.diff}</span>{e.market === 'us' && <small className="wDiff">{e.name}</small>}</span></span>
                 <span><Sticker kind={e.kind} dd={e.q.dd} d1={e.q.d1} /></span>
