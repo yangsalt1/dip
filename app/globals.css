@@ -603,3 +603,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .ovSub { margin: 0; padding-left: calc(0.62em + 10px); color: #BDBDBA; font-weight: 700; letter-spacing: -0.03em; }
 .ov-app .ovSub { font-size: 15px; padding-left: 23px; }
 .ov-web .ovSub { font-size: 20px; padding-left: 31px; }
+.ovBarLite .ovBar { height: 5px; }
+.ovBarLite .ovLegend { font-size: 12px; opacity: 1; }
+.ovBarLite .ovLegend b { font-size: 14px; }

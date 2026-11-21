@@ -45,10 +45,22 @@ export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; 
         })()}
         {groups.filter((g) => g.key === 'mega').map((g) => (
           <div key={g.key} className="ovItem">
-            <span className="ovLab" style={{ color: DOT[g.key] }}>● {g.word}</span>
+            <span className="ovLab" style={{ color: DOT[g.key] }}>● {g.key === 'mega' ? '특급 세일' : g.word}</span>
             <span className="ovNames">{g.names.join(', ')}</span>
           </div>
         ))}
+      </div>
+      <div className="ovBarWrap ovBarLite">
+        <div className="ovBar" aria-hidden="true">
+          {reb > 0 && <span style={{ flex: reb, background: '#5BD47E' }} />}
+          {mega > 0 && <span style={{ flex: mega, background: '#FF4D2E' }} />}
+          {list.length - reb - mega > 0 && <span style={{ flex: list.length - reb - mega, background: '#3A3A38' }} />}
+        </div>
+        <div className="ovLegend">
+          <span><b style={{ color: '#5BD47E' }}>{reb}</b> 반등 시작</span>
+          <span><b style={{ color: '#FF5A3C' }}>{mega}</b> 특급 세일</span>
+          <span className="dim total">{mkt === 'us' ? '미국' : '한국'} ETF {list.length}개</span>
+        </div>
       </div>
     </div>
   );
