@@ -72,7 +72,7 @@ export default function HomeWeb() {
           </div>
           <div className="wSale2">
             <section className="wCard reboundCard" style={{ gridColumn: '1 / -1' }}>
-              <div className="row"><h3 className="wListTitle">줍줍리스트</h3><b className="wCnt">{rebs.length}개</b></div>
+              <div className="row"><h3 className="wListTitle">반등리스트</h3><b className="wCnt">{rebs.length}개</b></div>
               <p className="wMid">반등 시작됐다 줍자.</p>
               <p className="nShort">슬슬 오를 기미가 보이는 녀석들만 모아보기</p>
               <p className="wBody" style={{ fontWeight: 800 }}>{rebs.length ? `${rebs.length}개` : '아직은 0개'}</p>
