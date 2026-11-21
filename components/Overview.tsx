@@ -29,7 +29,7 @@ export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; 
   const sig = signal(mkt);
   return (
     <div className={`ov ov-${size}`}>
-      <div className="ovSigBox"><div className="ovSigRow"><p className={`ovSig ${sig.tone}`}><i aria-hidden="true" />{sig.text}</p>
+      <div className="ovSigBox"><div className="ovSigRow"><div className="ovSigTxt"><p className={`ovSig ${sig.tone}`}><i aria-hidden="true" />{sig.text}</p>{sig.sub && <p className="ovSub">{sig.sub}</p>}</div>
         {FNG && <span className="ovMan" title={`CNN 공포지수 ${FNG.score}`}><Stickman part={partOf(FNG.score)} color="#F4F4F2" width={size === 'web' ? 40 : 30} dot={14} /><span>지금 {partOf(FNG.score).ko}</span></span>}</div>{sig.chips.length > 0 && <div className="ovChips">{sig.chips.map((c) => <span key={c}>{c}</span>)}</div>}</div>
       <div className="ovGrid">
         {(() => {

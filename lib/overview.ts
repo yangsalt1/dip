@@ -43,7 +43,8 @@ export function overview(mkt: 'us' | 'kr'): OvGroup[] {
 }
 
 /** 오늘의 한 줄: 세일 폭 + 대표 ETF 흐름으로 '줍기 / 조금씩 / 구경' 판단 (투자 권유 아님) */
-export type Signal = { tone: 'go' | 'slow' | 'dip' | 'top'; text: string; chips: string[] };
+export type Signal = { tone: 'go' | 'slow' | 'dip' | 'top'; text: string; chips: string[]; sub?: string };
+export const SIGNAL_SUB: Partial<Record<Signal['tone'], string>> = { slow: '현금 딱 들고 있어' };
 export const SIGNAL_TEXT = {
   slow: '왕세일 시작!',
   go: '세일 바닥 다진다. 슬슬 들어가자.',
@@ -58,6 +59,10 @@ export const SIGNAL_TEXT = {
  *   10% 넘게 빠졌는데 바닥 신호  → go
  */
 export function signal(mkt: 'us' | 'kr'): Signal {
+  const s = signalRaw(mkt);
+  return { ...s, sub: SIGNAL_SUB[s.tone] };
+}
+function signalRaw(mkt: 'us' | 'kr'): Signal {
   const list = ETFS.filter((e) => e.market === mkt);
   const idx = ETFS.find((e) => e.id === (mkt === 'us' ? 'voo' : 'kodex-200'));
   const mega = list.filter((e) => e.kind === 'mega').length;
