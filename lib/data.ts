@@ -100,3 +100,7 @@ export const SECTORS: { id: Sector | 'all'; label: string; color: string }[] = [
 ];
 
 export const PALETTE = ['#B1A6FF', '#D8D0C4', '#F06C3C', '#F2F28E', '#2DB866', '#C9DDF7'];
+
+/** CNN 공포·탐욕 지수 (0 극단적 공포 ~ 100 극단적 탐욕) */
+export type Fng = { score: number; rating: string; date: string; prev?: number | null; week?: number | null; month?: number | null; year?: number | null };
+export const FNG = ((market as unknown as { fng?: Fng }).fng ?? null) as Fng | null;

@@ -12,6 +12,7 @@ import { Arrow, BottomNav, HandIcon, Sticker } from './ui';
 import { NewsExtra } from './NewsCard';
 import Overview, { MktToggle } from './Overview';
 import LiveStamp from './LiveStamp';
+import Fng from './Fng';
 
 const CARD_BG = ['#B1A6FF', '#D8D0C4', '#F2F28E'];
 // 시안 A: 빨강 · 노랑 · 인디고 (글씨·스티커는 모두 검정)
@@ -72,6 +73,7 @@ export default function Home() {
           <MktToggle mkt={mkt} onChange={setMkt} />
           <Overview size="app" mkt={mkt} />
         </section>
+        <Fng />
 
         {cards.map((c, i) => {
           const isOpen = open === i;

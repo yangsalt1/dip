@@ -8,6 +8,7 @@ import { useJup, goLogin } from '@/lib/useJup';
 import { fxVerdict } from '@/lib/fx';
 import { Arrow, BottomNav, HandIcon, Sticker } from './ui';
 import NewsCard from './NewsCard';
+import Fng from './Fng';
 import Overview, { MktToggle } from './Overview';
 import { FX_COLORS } from './Home';
 
@@ -57,6 +58,7 @@ export default function HomeWeb() {
           <div className="wSecHead">
             <h2 style={{ margin: 0 }}>오늘 {mkt === 'us' ? '미국' : '한국'} 뉴스</h2>
           </div>
+          <Fng web />
           <div className="wNews3">
             {(mkt === 'us' ? BRIEF.cards : BRIEF.cardsKr).map((c, i) => <NewsCard key={mkt + i} c={c} i={i} bg={NEWS_BG[i]} />)}
           </div>
