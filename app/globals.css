@@ -584,17 +584,18 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 
 .ovCode { font-size: 0.72em; font-weight: 600; color: #8C8C88; letter-spacing: 0; }
 
-/* 시장 기분 (CNN Fear & Greed) */
-.fng { background: #111; color: #F4F4F2; border-radius: 28px; padding: 18px 20px 16px; display: flex; flex-direction: column; gap: 10px; }
-.fngTag { background: #F4F4F2; color: #111; font-size: 13px; font-weight: 800; padding: 5px 11px; border-radius: 999px; }
-.fngSrc { font-size: 12px; color: #8C8C88; font-weight: 600; }
-.fngMain { display: flex; align-items: center; gap: 14px; }
-.fngNum { font-size: 56px; line-height: 1; font-weight: 800; letter-spacing: -0.05em; }
-.fngTxt { display: flex; flex-direction: column; gap: 3px; font-size: 15px; font-weight: 700; color: #CFCFCB; word-break: keep-all; }
-.fngTxt b { font-size: 22px; letter-spacing: -0.04em; }
-.fngBar { position: relative; height: 10px; border-radius: 999px; background: linear-gradient(90deg, #FF5A3C 0 25%, #F2A93B 25% 45%, #F2F28E 45% 55%, #9CC3FF 55% 75%, #B1A6FF 75%); }
-.fngBar i { position: absolute; top: -5px; width: 6px; height: 20px; margin-left: -3px; border-radius: 3px; background: #fff; box-shadow: 0 0 0 2px #111; }
-.fngEnds { display: flex; justify-content: space-between; font-size: 12px; color: #8C8C88; font-weight: 700; margin-top: -4px; }
-.fngPast { display: flex; gap: 14px; font-size: 13px; color: #BDBDBA; font-weight: 600; }
-.fngPast b { font-weight: 800; }
-.fngWeb { margin-bottom: 4px; }
+/* 공포지수 졸라맨 */
+.fngCard { background: #fff !important; gap: 10px; }
+.fngH { font-size: 18px; letter-spacing: -0.035em; }
+.fngSrc { font-size: 12px; color: #777; font-weight: 600; }
+.fngBody { display: flex; gap: 16px; align-items: stretch; }
+.fngParts { list-style: none; margin: 0; padding: 4px 0; flex: 1; display: flex; flex-direction: column; justify-content: space-between; font-size: 14px; font-weight: 600; color: #999; }
+.fngParts small { font-size: 11px; }
+.fngParts .on { align-self: flex-start; background: #FF5A3C; color: #111; font-weight: 800; border-radius: 999px; padding: 4px 10px; }
+.fngSay { margin: 0; font-size: 15px; font-weight: 700; color: #111; word-break: keep-all; }
+.fngPast { margin: 0; font-size: 12px; font-weight: 600; color: #777; }
+.ovSigRow { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.ovMan { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: none; }
+.ovMan span { font-size: 12px; font-weight: 800; color: #FF5A3C; white-space: nowrap; }
+.ovSigRow .ovSig { flex: 1; min-width: 0; }
+.ovMan { padding-right: 2px; }

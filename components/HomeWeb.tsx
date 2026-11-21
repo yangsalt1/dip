@@ -58,7 +58,6 @@ export default function HomeWeb() {
           <div className="wSecHead">
             <h2 style={{ margin: 0 }}>오늘 {mkt === 'us' ? '미국' : '한국'} 뉴스</h2>
           </div>
-          <Fng web />
           <div className="wNews3">
             {(mkt === 'us' ? BRIEF.cards : BRIEF.cardsKr).map((c, i) => <NewsCard key={mkt + i} c={c} i={i} bg={NEWS_BG[i]} />)}
           </div>
@@ -84,6 +83,7 @@ export default function HomeWeb() {
               <p className="nShort" style={{ color: '#BDBDBA' }}>최고가보다 15% 넘게 빠진 종목들</p>
               <div>{megas.length ? megas.map((e) => <Row key={e.id} e={e} />) : <p className="wBody" style={{ color: '#CFCFCB' }}>지금 특급세일은 없어요. 기다리는 것도 실력!</p>}</div>
             </section>
+            <Fng web />
           </div>
           {wows.map((e) => (
             <Link key={e.id} href={`/etf/${e.id}/`} className="wWow"><HandIcon /><span><b>워워! {nameOf(e)}는 최고가 바로 근처</b> · 많이 들어가지 않기</span></Link>

@@ -73,7 +73,6 @@ export default function Home() {
           <MktToggle mkt={mkt} onChange={setMkt} />
           <Overview size="app" mkt={mkt} />
         </section>
-        <Fng />
 
         {cards.map((c, i) => {
           const isOpen = open === i;
@@ -147,6 +146,7 @@ export default function Home() {
           {megas.length ? megas.map((e) => <Row key={e.id} e={e} />)
             : <p className="small" style={{ margin: '6px 0 0', fontWeight: 700 }}>지금 특급세일은 없어요. 기다리는 것도 실력!</p>}
         </section>
+        <Fng />
         <section className="card" style={{ background: '#F4F4F2', gap: 10 }}>
           <div className="row"><b style={{ fontSize: 15 }}>올랐을 땐 평정심</b><span style={{ fontSize: 13, fontWeight: 700, color: '#5A5A58' }}>상승 중 {ups.length} · 워워 {wows.length}</span></div>
           {wows.length ? wows.map((e) => (

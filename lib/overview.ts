@@ -1,4 +1,3 @@
-import { FNG } from './data';
 import { ETFS, type Sector } from './data';
 
 /** 오늘 시장 한눈에: 섹터별로 '지금 떨어지는 중 / 바닥 다지는 중 / 오르는 중' 자동 분류 */
@@ -70,13 +69,13 @@ export function signal(mkt: 'us' | 'kr'): Signal {
   const fallingAgain = st <= -2 || d1 <= -0.5;
 
   const chips: string[] = [];
-  if (mega > 0) chips.push(`특급세일 ${mega}개`);
-  else if (sale > 0) chips.push(`세일 ${sale}개`);
+  if (mega > 0) chips.push('특급세일 시작');
+  else if (sale > 0) chips.push('세일 시작');
+  if (st <= -2) chips.push(`${-st}일 연속 하락`);
+  else if (st >= 2) chips.push(`${st}일 연속 상승`);
   if (d1 >= 0.5) chips.push('오늘 반등');
   if (usDrop) chips.push('밤새 미국 급락');
   if (dd > -3) chips.push('최고가 근처');
-  if (FNG && FNG.score < 10) chips.push(`공포지수 ${FNG.score} 한 자리`);
-  else if (FNG && FNG.score > 75) chips.push(`탐욕지수 ${FNG.score}`);
 
   if (usDrop) return { tone: 'slow', text: SIGNAL_TEXT.slow, chips };
   if (dd > -3 && (trend > 0 || wk > 0)) return { tone: 'top', text: SIGNAL_TEXT.top, chips };
