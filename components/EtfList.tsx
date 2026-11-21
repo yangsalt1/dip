@@ -123,5 +123,5 @@ function Card({ e, cur, hero, tag, rank, bg }: { e: Etf; cur: Cur; hero?: boolea
 function PartTag({ e, dark }: { e: Etf; dark?: boolean }) {
   const p = etfPart(e.q);
   const en = useLang() === 'en';
-  return <span className="partTag" style={{ background: p.color }} title={en ? '1-year low = sole, high = head' : '1년 최저가=발바닥, 최고가=정수리'}>{en ? p.en : p.ko}</span>;
+  return <span className="partTag" title={en ? '1-year low = sole, high = head' : '1년 최저가=발바닥, 최고가=정수리'}><i style={{ background: p.color }} />{en ? p.en : p.ko}</span>;
 }

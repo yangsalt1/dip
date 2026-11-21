@@ -607,7 +607,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .ovBarLite .ovLegend { font-size: 12px; opacity: 1; }
 .ovBarLite .ovLegend b { font-size: 14px; }
 .chipCol { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
-.partTag { display: inline-flex; align-items: center; font-size: 12px; font-weight: 800; color: #111; white-space: nowrap; padding: 4px 10px; border-radius: 999px; border: 2px solid #111; transform: rotate(-3deg); }
+.partTag { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: inherit; opacity: 0.75; white-space: nowrap; background: none !important; padding: 0; }
+.partTag i { width: 7px; height: 7px; border-radius: 50%; flex: none; }
 
 /* 한 / EN 스위치 */
 .langSw { display: inline-flex; background: #DEDEDA; border-radius: 999px; padding: 3px; gap: 2px; flex: none; }
