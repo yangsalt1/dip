@@ -114,5 +114,5 @@ function Card({ e, cur, hero, tag, rank, bg }: { e: Etf; cur: Cur; hero?: boolea
 /** 1년 최저(발바닥)~최고(정수리) 중 지금 위치 */
 function PartTag({ e, dark }: { e: Etf; dark?: boolean }) {
   const p = etfPart(e.q);
-  return <span className={`partTag${dark ? ' dark' : ''}`} title="1년 최저가=발바닥, 최고가=정수리"><i />지금 {p.ko}</span>;
+  return <span className="partTag" style={{ background: p.color }} title="1년 최저가=발바닥, 최고가=정수리">{p.ko}</span>;
 }
