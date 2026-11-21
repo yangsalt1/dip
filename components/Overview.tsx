@@ -40,7 +40,7 @@ export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; 
             </div>
           );
         })()}
-        {groups.map((g) => (
+        {groups.filter((g) => g.key === 'mega').map((g) => (
           <div key={g.key} className="ovItem">
             <span className="ovLab" style={{ color: DOT[g.key] }}>● {g.word}</span>
             <span className="ovNames">{g.names.join(', ')}</span>

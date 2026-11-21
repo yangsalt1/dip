@@ -72,8 +72,6 @@ export function signal(mkt: 'us' | 'kr'): Signal {
   const chips: string[] = [];
   if (mega > 0) chips.push(`특급세일 ${mega}개`);
   else if (sale > 0) chips.push(`세일 ${sale}개`);
-  if (st <= -2) chips.push(`${-st}일 연속 하락`);
-  else if (st >= 2) chips.push(`${st}일 연속 상승`);
   if (d1 >= 0.5) chips.push('오늘 반등');
   if (usDrop) chips.push('밤새 미국 급락');
   if (dd > -3) chips.push('최고가 근처');
