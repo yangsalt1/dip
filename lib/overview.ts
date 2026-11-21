@@ -74,8 +74,8 @@ function signalRaw(mkt: 'us' | 'kr'): Signal {
   const fallingAgain = st <= -2 || d1 <= -0.5;
 
   const chips: string[] = [];
-  if (mega > 0) chips.push('특급세일 시작');
-  else if (sale > 0) chips.push('세일 시작');
+  if (mega > 0) chips.push(`특급세일 ${mega}개`);
+  else if (sale > 0) chips.push(`세일 ${sale}개`);
   if (st <= -2) chips.push(`${-st}일 연속 하락`);
   else if (st >= 2) chips.push(`${st}일 연속 상승`);
   if (d1 >= 0.5) chips.push('오늘 반등');
