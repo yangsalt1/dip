@@ -14,7 +14,7 @@ export default function LivePrice({ id }: { id: string }) {
   const q = e.q;
   const native = e.market === 'us' ? 'usd' : 'krw';
   const other = native === 'usd' ? 'krw' : 'usd';
-  const hiText = native === 'usd' ? '$' + q.hi.toFixed(2) : Math.round(q.hi).toLocaleString('ko-KR') + (en ? ' KRW' : '원');
+  const hiText = native === 'usd' ? '$' + q.hi.toFixed(2) : (en ? `₩${Math.round(q.hi).toLocaleString('en-US')}` : Math.round(q.hi).toLocaleString('ko-KR') + '원');
   return (
     <>
       <div className="row"><Sticker kind={e.kind} dd={q.dd} d1={q.d1} label={e.kind === 'mega' || e.kind === 'sale' ? (en ? `vs high ${hiText}` : `최고가 ${hiText} 대비`) : undefined} /><StatusChip kind={e.kind} /></div>

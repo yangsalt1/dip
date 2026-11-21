@@ -1,15 +1,16 @@
 import { headers } from 'next/headers';
+import { getLang } from '@/lib/i18n-server';
 import Link from 'next/link';
 import { signIn } from '@/auth';
 import { BottomNav } from '@/components/ui';
 
-export const metadata = { title: 'JUP · 시작하기' };
+export async function generateMetadata() { return { title: (await getLang()) === 'en' ? 'DIP · Get started' : 'JUP · 시작하기' }; }
 export const dynamic = 'force-dynamic';
 
 const BTN = [
-  { id: 'kakao', env: 'AUTH_KAKAO_ID', label: '카카오로 시작하기', cls: 'kakao' },
-  { id: 'naver', env: 'AUTH_NAVER_ID', label: '네이버로 시작하기', cls: 'naver' },
-  { id: 'google', env: 'AUTH_GOOGLE_ID', label: '구글로 시작하기', cls: 'google' },
+  { id: 'kakao', env: 'AUTH_KAKAO_ID', label: '카카오로 시작하기', labelEn: 'Continue with Kakao', cls: 'kakao' },
+  { id: 'naver', env: 'AUTH_NAVER_ID', label: '네이버로 시작하기', labelEn: 'Continue with Naver', cls: 'naver' },
+  { id: 'google', env: 'AUTH_GOOGLE_ID', label: '구글로 시작하기', labelEn: 'Continue with Google', cls: 'google' },
 ] as const;
 
 function Mark({ id }: { id: string }) {
@@ -21,6 +22,7 @@ function Mark({ id }: { id: string }) {
 export default async function Login({ searchParams }: { searchParams: Promise<{ next?: string; error?: string }> }) {
   const sp = await searchParams;
   const next = sp.next && sp.next.startsWith('/') && !sp.next.startsWith('//') ? sp.next : '/jup/';
+  const en = (await getLang()) === 'en';
   const inApp = ((await headers()).get('user-agent') ?? '').includes('JUPApp');
   const on = BTN.filter((b) => process.env[b.env] && !(inApp && b.id === 'google'));
   const dev = process.env.AUTH_DEV_LOGIN === '1' && !process.env.VERCEL;
@@ -28,23 +30,23 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
     <main className="app">
       <header className="hdr">
         <div>
-          <Link href="/" className="brand">JUP<small>떨어질 때 줍는다</small></Link>
-          <h1 className="title">JUP<br /><span>시작하기</span></h1>
+          <Link href="/" className="brand">{en ? 'DIP' : 'JUP'}<small>{en ? 'Buy the dip' : '떨어질 때 줍는다'}</small></Link>
+          <h1 className="title">{en ? 'DIP' : 'JUP'}<br /><span>{en ? 'Get started' : '시작하기'}</span></h1>
         </div>
       </header>
       <div className="stack keep">
         <section className="card" style={{ background: '#F2F28E', gap: 8 }}>
-          <p style={{ margin: 0, fontSize: 24, lineHeight: 1.3, fontWeight: 800, letterSpacing: '-0.035em' }}>특급 세일 주식,<br />절대 안 놓칠 거야.</p>
-          <p className="small" style={{ margin: 0 }}>떨어질 때 주울 용기</p>
+          <p style={{ margin: 0, fontSize: 24, lineHeight: 1.3, fontWeight: 800, letterSpacing: '-0.035em' }}>{en ? <>Never miss<br />a mega sale again.</> : <>특급 세일 주식,<br />절대 안 놓칠 거야.</>}</p>
+          <p className="small" style={{ margin: 0 }}>{en ? 'The guts to buy when it drops' : '떨어질 때 주울 용기'}</p>
         </section>
-        {sp.error && <p role="alert" className="small" style={{ margin: '0 8px', color: '#A3200F', fontWeight: 700 }}>로그인하지 못했어요. 다시 한 번 눌러봐요.</p>}
+        {sp.error && <p role="alert" className="small" style={{ margin: '0 8px', color: '#A3200F', fontWeight: 700 }}>{en ? 'Couldn’t log in. Please try again.' : '로그인하지 못했어요. 다시 한 번 눌러봐요.'}</p>}
         <div className="loginBtns">
           {BTN.map((b) => {
             const ready = on.some((x) => x.id === b.id);
             return (
               <form key={b.id} action={async () => { 'use server'; await signIn(b.id, { redirectTo: next }); }}>
                 <button type="submit" className={`loginBtn ${b.cls}`} disabled={!ready}>
-                  <Mark id={b.id} /><span>{b.label}</span>{!ready && <small>준비 중</small>}
+                  <Mark id={b.id} /><span>{en ? b.labelEn : b.label}</span>{!ready && <small>{en ? 'Coming soon' : '준비 중'}</small>}
                 </button>
               </form>
             );
@@ -56,7 +58,7 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
           )}
         </div>
         <p className="small" style={{ margin: '0 8px', color: '#5A5A58' }}>
-          처음이면 바로 가입돼요. 시작하면 <Link href="/privacy/" style={{ fontWeight: 800 }}>개인정보처리방침</Link>에 동의하는 걸로 봐요.
+          {en ? <>First time? You’re signed up instantly. By continuing you agree to the <Link href="/privacy/" style={{ fontWeight: 800 }}>privacy policy</Link>.</> : <>처음이면 바로 가입돼요. 시작하면 <Link href="/privacy/" style={{ fontWeight: 800 }}>개인정보처리방침</Link>에 동의하는 걸로 봐요.</>}
         </p>
       </div>
       <BottomNav active="money" />

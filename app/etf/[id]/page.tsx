@@ -38,7 +38,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const q = e.q;
   const native = e.market === 'us' ? 'usd' : 'krw';
   const other = native === 'usd' ? 'krw' : 'usd';
-  const hiText = native === 'usd' ? '$' + q.hi.toFixed(2) : Math.round(q.hi).toLocaleString('ko-KR') + t('원', ' KRW');
+  const hiText = native === 'usd' ? '$' + q.hi.toFixed(2) : (en ? `₩${Math.round(q.hi).toLocaleString('en-US')}` : Math.round(q.hi).toLocaleString('ko-KR') + '원');
   const f = q.factors;
   const chips: [string, boolean][] = [];
   if (f.sale >= 0.5) chips.push([t('세일 많이 함', 'Deep discount'), true]);

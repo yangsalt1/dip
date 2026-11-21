@@ -33,7 +33,7 @@ export default function HomeWeb() {
   const mine = ETFS.filter((e) => jup.ids.includes(e.id));
   const wows = list.filter((e) => e.kind === 'wow');
   const nameOf = (e: Etf) => etfTitle(e, lang);
-  const priceOf = (e: Etf) => (e.market === 'us' ? '$' + e.q.last.toFixed(2) : Math.round(e.q.last).toLocaleString('ko-KR') + t('원', ' KRW'));
+  const priceOf = (e: Etf) => (e.market === 'us' ? '$' + e.q.last.toFixed(2) : (en ? `₩${Math.round(e.q.last).toLocaleString('en-US')}` : Math.round(e.q.last).toLocaleString('ko-KR') + '원'));
 
   const Row = ({ e }: { e: Etf }) => (
     <Link href={`/etf/${e.id}/`} className="wRow">

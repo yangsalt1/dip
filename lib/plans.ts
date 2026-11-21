@@ -66,3 +66,28 @@ export function pensionCalc(yearlyMan: number, lowPay: boolean) {
   else if (yearlyMan < PENSION.creditCap) note = `900만원까지 채우면 최대 ${Math.round(PENSION.creditCap * 10000 * rate).toLocaleString('ko-KR')}원까지 돌려받을 수 있어요.`;
   return { rate, credit, saving, irp, refund: credit * 10000 * rate, monthly: (yearlyMan * 10000) / 12, note };
 }
+
+/** 영어 (DIP) */
+export const PLAN_EN: Record<Goal, { label: string; desc: string }> = {
+  grow: { label: 'Grow it fast', desc: 'Can rise a lot, but can fall just as hard. Only for money you won\'t need for years.' },
+  dividend: { label: 'Dividends for living', desc: 'Steady dividends and interest to cover living costs after retirement. Won\'t rocket.' },
+  balance: { label: 'A bit of everything', desc: 'Keeps up when markets rise, hurts less when they fall. Start here if you\'re new.' },
+  pension: { label: 'Korean pension account', desc: 'For Korean pension savings / IRP. Get tax back on what you put in, collect it as a pension after 55.' },
+};
+export const ROW_EN: Record<string, string> = {
+  '빅테크 몰빵쟁이': 'Big Tech all-in', '미국 대표 500짱': "America's top 500", '반도체': 'Chips', '전기짱': 'Power company boss',
+  '한국 대표 200짱': "Korea's top 200", '배당 꼬박꼬박': 'Steady dividends', '나라에 빌려주기': 'Lend to the government', '금덩이': 'Gold bar',
+};
+export const ETFNAME_EN: Record<string, string> = {
+  'TIGER 미국나스닥100': 'TIGER US Nasdaq100', 'TIGER 미국S&P500': 'TIGER US S&P500', 'TIGER 반도체TOP10': 'TIGER Semiconductor TOP10',
+  'KODEX AI전력핵심설비': 'KODEX AI Power Core Equipment', 'TIGER 미국배당다우존스': 'TIGER US Dividend Dow Jones',
+  'ACE 미국30년국채액티브': 'ACE US 30Y Treasury Active', 'ACE KRX금현물': 'ACE KRX Gold Spot',
+};
+export const etfLineEn = (s: string) => Object.entries(ETFNAME_EN).reduce((a, [k, v]) => a.replace(k, v), s);
+export function pensionNoteEn(yearlyMan: number, lowPay: boolean) {
+  const rate = lowPay ? PENSION.rateLow : PENSION.rateHigh;
+  if (yearlyMan > PENSION.totalCap) return 'Pension accounts take at most ₩18M a year.';
+  if (yearlyMan > PENSION.creditCap) return 'Money above ₩9M gets no tax refund, but tax on the gains is pushed to later.';
+  if (yearlyMan < PENSION.creditCap) return `Fill it up to ₩9M and you can get back up to ₩${Math.round(PENSION.creditCap * 10000 * rate).toLocaleString('en-US')}.`;
+  return '';
+}

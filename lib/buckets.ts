@@ -3,16 +3,16 @@ import { PLANS, type Goal } from './plans';
 
 /** 내 주식을 나누는 칸. 추천 포트폴리오(PLANS)의 칸과 1:1로 맞춰요. */
 export const BUCKETS = {
-  us_broad: { label: '미국 대표', color: '#F06C3C', etfs: ['voo', 'tiger-sp500', 'spy'] },
-  us_tech: { label: '빅테크', color: '#B1A6FF', etfs: ['qqq', 'tiger-nasdaq100', 'kodex-nasdaq100'] },
-  semi: { label: '반도체', color: '#FF5A3C', etfs: ['soxx', 'smh', 'tiger-semi-top10'] },
-  power: { label: '전기·원전', color: '#F2F28E', etfs: ['xlu', 'kodex-ai-power', 'ura'] },
-  kr_broad: { label: '한국 대표', color: '#2DB866', etfs: ['kodex-200', 'tiger-200'] },
-  dividend: { label: '배당', color: '#9FE0B0', etfs: ['schd', 'tiger-us-dividend'] },
-  bond: { label: '채권', color: '#D8D0C4', etfs: ['tlt', 'ace-us30y'] },
-  gold: { label: '금', color: '#FFC85C', etfs: ['gld', 'ace-gold'] },
-  other: { label: '기타 개별주·테마', color: '#8A8A88', etfs: [] as string[] },
-  cash: { label: '현금', color: '#555555', etfs: [] as string[] },
+  us_broad: { label: '미국 대표', labelEn: 'US index', color: '#F06C3C', etfs: ['voo', 'tiger-sp500', 'spy'] },
+  us_tech: { label: '빅테크', labelEn: 'Big Tech', color: '#B1A6FF', etfs: ['qqq', 'tiger-nasdaq100', 'kodex-nasdaq100'] },
+  semi: { label: '반도체', labelEn: 'Chips', color: '#FF5A3C', etfs: ['soxx', 'smh', 'tiger-semi-top10'] },
+  power: { label: '전기·원전', labelEn: 'Power·Nuclear', color: '#F2F28E', etfs: ['xlu', 'kodex-ai-power', 'ura'] },
+  kr_broad: { label: '한국 대표', labelEn: 'Korea index', color: '#2DB866', etfs: ['kodex-200', 'tiger-200'] },
+  dividend: { label: '배당', labelEn: 'Dividend', color: '#9FE0B0', etfs: ['schd', 'tiger-us-dividend'] },
+  bond: { label: '채권', labelEn: 'Bonds', color: '#D8D0C4', etfs: ['tlt', 'ace-us30y'] },
+  gold: { label: '금', labelEn: 'Gold', color: '#FFC85C', etfs: ['gld', 'ace-gold'] },
+  other: { label: '기타 개별주·테마', labelEn: 'Other stocks·themes', color: '#8A8A88', etfs: [] as string[] },
+  cash: { label: '현금', labelEn: 'Cash', color: '#555555', etfs: [] as string[] },
 } as const;
 export type Bucket = keyof typeof BUCKETS;
 export const BUCKET_KEYS = Object.keys(BUCKETS) as Bucket[];

@@ -38,32 +38,34 @@ export function makeInfo(closesIn: number[], last: number, d1: number, avg: numb
     diverge = c[i1] >= c[i0] && r[i1] < r[i0] - 3;
   }
   const checks: Check[] = [
-    { key: 'dd', label: '최고점에서 10~15% 밀렸다', on: dd <= -0.1 && dd >= -0.2 },
-    { key: 'rsi', label: '주가는 오르는데 힘(RSI)은 약해진다', on: diverge },
-    { key: 'ma', label: '20일 평균선 아래로 내려왔다', on: last < ma20 },
-    { key: 'goal', label: `내 목표수익(+${Math.round(target * 100)}%) 달성했다`, on: pnl != null && pnl >= target },
+    { key: 'dd', label: '최고점에서 10~15% 밀렸다', labelEn: 'Down 10–15% from the peak', on: dd <= -0.1 && dd >= -0.2 },
+    { key: 'rsi', label: '주가는 오르는데 힘(RSI)은 약해진다', labelEn: 'Price rising but momentum (RSI) weakening', on: diverge },
+    { key: 'ma', label: '20일 평균선 아래로 내려왔다', labelEn: 'Fell below the 20-day average', on: last < ma20 },
+    { key: 'goal', label: `내 목표수익(+${Math.round(target * 100)}%) 달성했다`, labelEn: `Hit my profit goal (+${Math.round(target * 100)}%)`, on: pnl != null && pnl >= target },
   ];
   const count = checks.filter((x) => x.on).length;
 
   let signal: SignalKind = 'hold';
   let why = '특별한 신호 없음. 그대로 들고 가기';
+  let whyEn = 'No special signal. Just hold.';
   const rising = r[r.length - 1] > r[r.length - 2];
   if (pnl != null && pnl > 0 && count >= 2) {
     signal = 'take';
     why = count >= 4 ? `체크 ${count}개 · 내 규칙상 전량 정리 고려` : `체크 ${count}개 · 내 규칙상 절반 정리 고려`;
+    whyEn = count >= 4 ? `${count} checks · my rule says consider selling all` : `${count} checks · my rule says consider selling half`;
   } else if (dd <= -0.2 && (d1 >= 0.3 || (rsi < 35 && rising))) {
-    signal = 'pick'; why = '많이 싸졌고 떨어지는 게 멈췄어';
+    signal = 'pick'; why = '많이 싸졌고 떨어지는 게 멈췄어'; whyEn = 'Much cheaper, and the fall has stopped';
   } else if (dd <= -0.1 && last < ma20) {
-    signal = 'wait'; why = '싸지는 중인데 아직 떨어지는 중';
+    signal = 'wait'; why = '싸지는 중인데 아직 떨어지는 중'; whyEn = 'Getting cheaper, but still falling';
   } else if (dd <= -0.2) {
-    signal = 'pick'; why = '1년 중 많이 싼 편';
+    signal = 'pick'; why = '1년 중 많이 싼 편'; whyEn = 'Quite cheap for the year';
   }
-  return { last, d1, hi, lo, dd, pos, rsi, ma20, pnl, checks, count, signal, why };
+  return { last, d1, hi, lo, dd, pos, rsi, ma20, pnl, checks, count, signal, why, whyEn };
 }
 
-export const SIGNAL: Record<SignalKind, { label: string; bg: string; fg: string }> = {
-  pick: { label: '줍줍', bg: '#2DB866', fg: '#111' },
-  wait: { label: '기다림', bg: '#F2F28E', fg: '#111' },
-  hold: { label: '보유', bg: '#E2E2DE', fg: '#111' },
-  take: { label: '챙기기', bg: '#FF5A3C', fg: '#111' },
+export const SIGNAL: Record<SignalKind, { label: string; labelEn: string; bg: string; fg: string }> = {
+  pick: { label: '줍줍', labelEn: 'Pick up', bg: '#2DB866', fg: '#111' },
+  wait: { label: '기다림', labelEn: 'Wait', bg: '#F2F28E', fg: '#111' },
+  hold: { label: '보유', labelEn: 'Hold', bg: '#E2E2DE', fg: '#111' },
+  take: { label: '챙기기', labelEn: 'Take profit', bg: '#FF5A3C', fg: '#111' },
 };

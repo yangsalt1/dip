@@ -806,6 +806,11 @@
           "DIP"
         ]
       ]
+    },
+    "fxCare": {
+      "usd": "It got 1.9% cheaper this week alone. If the won keeps strengthening, it could fall further.",
+      "jpy": "The yen is weakening against the dollar too (heading to 160, Reuters). No bottom yet, so buy in pieces.",
+      "eur": "Down 3.2% this week. Still falling, so don’t exchange it all at once."
     }
   }
 }

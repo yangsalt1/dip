@@ -12,13 +12,18 @@ export function priceText(e: Etf, cur: Cur, lang: Lang = 'ko'): string {
     return '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
   if (native === 'usd') v = v * FX_RATE;
-  return Math.round(v).toLocaleString('ko-KR') + (lang === 'en' ? ' KRW' : '원');
+  return lang === 'en' ? `₩${Math.round(v).toLocaleString('en-US')}` : Math.round(v).toLocaleString('ko-KR') + '원';
 }
 
 export function pct(v: number, digits = 2): string {
   return (v > 0 ? '+' : '') + v.toFixed(digits) + '%';
 }
 
+/** 영어: ₩1.2M / ₩850,000 */
+export function wonEn(n: number): string {
+  return n >= 1e6 ? `₩${(n / 1e6).toFixed(n >= 1e7 ? 0 : 1)}M` : `₩${Math.round(n).toLocaleString('en-US')}`;
+}
+export const wonL = (n: number, lang: Lang = 'ko') => (lang === 'en' ? wonEn(n) : won(n));
 export function won(n: number): string {
   if (n >= 10000) return Math.round(n / 10000).toLocaleString('ko-KR') + '만원';
   return Math.round(n).toLocaleString('ko-KR') + '원';

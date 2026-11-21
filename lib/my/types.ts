@@ -14,12 +14,12 @@ export type Pos = {
 export type MySaved = { list: Pos[]; target: number; at: string };
 
 export type SignalKind = 'pick' | 'wait' | 'hold' | 'take';
-export type Check = { key: string; label: string; on: boolean };
+export type Check = { key: string; label: string; labelEn?: string; on: boolean };
 export type Info = {
   last: number; d1: number;
   hi: number; lo: number; dd: number; pos: number; rsi: number; ma20: number;
   pnl: number | null;      // 내 수익률
   checks: Check[]; count: number;
-  signal: SignalKind; why: string;
+  signal: SignalKind; why: string; whyEn?: string;
 };
 export type Row = Pos & { info: Info | null; valueKrw: number | null };
