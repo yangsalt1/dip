@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths: ['mobile/**', '.github/workflows/app.yml']
 
+permissions:
+  contents: write
+
 jobs:
   android:
     runs-on: ubuntu-latest
@@ -23,8 +26,13 @@ jobs:
       - name: Debug APK (테스트 설치용)
         working-directory: mobile/android
         run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
-      - uses: actions/upload-artifact@v4
-        with: { name: jup-android-test-apk, path: mobile/android/app/build/outputs/apk/debug/app-debug.apk }
+      - name: Publish test APK (폰에서 바로 받기)
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          cp mobile/android/app/build/outputs/apk/debug/app-debug.apk JUP-test.apk
+          gh release delete app-test -y --cleanup-tag || true
+          gh release create app-test JUP-test.apk --prerelease --title "JUP 안드로이드 테스트 앱" \
+            --notes "폰에서 JUP-test.apk 를 눌러 받고 설치하세요. (테스트용, 스토어 버전 아님)"
 
       - name: Release AAB (플레이스토어용)
         if: ${{ env.KS != '' }}
