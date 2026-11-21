@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import Link from 'next/link';
 import { signIn } from '@/auth';
 import { BottomNav } from '@/components/ui';
@@ -20,7 +21,8 @@ function Mark({ id }: { id: string }) {
 export default async function Login({ searchParams }: { searchParams: Promise<{ next?: string; error?: string }> }) {
   const sp = await searchParams;
   const next = sp.next && sp.next.startsWith('/') && !sp.next.startsWith('//') ? sp.next : '/jup/';
-  const on = BTN.filter((b) => process.env[b.env]);
+  const inApp = ((await headers()).get('user-agent') ?? '').includes('JUPApp');
+  const on = BTN.filter((b) => process.env[b.env] && !(inApp && b.id === 'google'));
   const dev = process.env.AUTH_DEV_LOGIN === '1' && !process.env.VERCEL;
   return (
     <main className="app">

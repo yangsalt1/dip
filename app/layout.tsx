@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import SwRegister from '@/components/SwRegister';
+import AppBridge from '@/components/AppBridge';
 import LoginSheet from '@/components/LoginSheet';
 
 export const metadata: Metadata = {
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
         <SwRegister />
+        <AppBridge />
         <LoginSheet />
       </body>
     </html>
