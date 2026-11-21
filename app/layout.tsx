@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     images: ['/og-jup.png'],
   },
   manifest: '/manifest.webmanifest',
-  icons: { icon: '/icon.svg', apple: '/icon-192.png' },
+  icons: { icon: '/icon.svg', apple: '/apple-touch-icon.png' },
   appleWebApp: { capable: true, title: 'JUP', statusBarStyle: 'default' },
 };
 
