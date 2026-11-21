@@ -36,7 +36,7 @@ export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; 
           const rebs = list.filter(isRebound).sort((a, b) => b.q.buy - a.q.buy);
           return (
             <div className="ovItem">
-              <span className="ovLab" style={{ color: DOT.reb }}>● 반등리스트</span>
+              <span className="ovLab" style={{ color: DOT.reb }}>● 반등 시작</span>
               <span className="ovNames">{rebs.length ? <>{rebs.slice(0, 4).map((e, i) => (
                 <span key={e.id}>{i > 0 && ', '}{e.kw}<small className="ovCode"> {etfTitle(e)}</small></span>
               ))}{rebs.length > 4 && ` 외 ${rebs.length - 4}`}</> : '아직 없음'}</span>
@@ -49,21 +49,6 @@ export default function Overview({ size = 'web', mkt }: { size?: 'web' | 'app'; 
             <span className="ovNames">{g.names.join(', ')}</span>
           </div>
         ))}
-      </div>
-      <div className="ovBarWrap">
-        <div className="ovBar" aria-hidden="true">
-          {reb > 0 && <span style={{ flex: reb, background: '#5BD47E' }} />}
-          {mega > 0 && <span style={{ flex: mega, background: '#FF4D2E' }} />}
-          {sale > 0 && <span style={{ flex: sale, background: '#B1A6FF' }} />}
-          {up > 0 && <span style={{ flex: up, background: '#9CC3FF' }} />}
-        </div>
-        <div className="ovLegend">
-          <span><b style={{ color: '#5BD47E' }}>{reb}</b> 반등리스트</span>
-          {mega > 0 && <span><b style={{ color: '#FF5A3C' }}>{mega}</b> 특급세일</span>}
-          {sale > 0 && <span><b style={{ color: '#B1A6FF' }}>{sale}</b> 일반 세일</span>}
-          {up > 0 && <span><b style={{ color: '#9CC3FF' }}>{up}</b> 세일 아님</span>}
-          <span className="dim total">{mkt === 'us' ? '미국' : '한국'} ETF {list.length}개</span>
-        </div>
       </div>
     </div>
   );
