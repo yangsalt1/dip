@@ -1,661 +1,993 @@
 {
- "_note": "DIP에서 다루는 ETF 목록. rank = 화면에 보이는 인기 순서(지금은 수동, 나중에 거래대금·조회수로 자동화). 순서를 바꾸려면 rank만 고치면 돼요.",
- "etfs": [
-  {
-   "id": "voo",
-   "yahoo": "VOO",
-   "market": "us",
-   "code": "VOO",
-   "name": "Vanguard S&P 500 ETF",
-   "kw": "미국 대표 500짱",
-   "sector": "idx",
-   "rank": 1,
-   "sub": "미국 큰 회사 500개를 한 번에. 처음이라면 여기부터. 지난주 미국 ETF 중 돈이 두 번째로 많이 들어왔어요.",
-   "about": "애플·마이크로소프트·엔비디아 같은 미국 대표 회사 500개를 한 번에 사는 ETF. 수수료가 아주 낮아서 장기 투자의 기본기로 많이 써요. 요즘 S&P500은 5일 연속 하락 중이라 \"세일 때 조금씩\"이 잘 맞는 구간이에요.",
-   "diff": "수수료 최저 · 묻어두기용",
-   "points": [
-    "미국 **대표 회사 500개**를 한 번에 사요",
-    "애플·마이크로소프트·엔비디아가 다 들어 있어요",
-    "**수수료가 아주 싸서** 오래 묻어두기 좋아요"
-   ]
-  },
-  {
-   "id": "qqq",
-   "yahoo": "QQQ",
-   "market": "us",
-   "code": "QQQ",
-   "name": "Invesco QQQ Trust",
-   "kw": "빅테크 몰빵쟁이",
-   "sector": "ai",
-   "rank": 2,
-   "sub": "나스닥 대표 100개. 애플·엔비디아·마이크로소프트 같은 빅테크가 절반. 지난주 미국 ETF 중 돈이 제일 많이 들어왔어요.",
-   "about": "나스닥에 있는 큰 회사 100개. 빅테크 비중이 커서 오를 땐 시원하게 오르고, 금리가 오를 땐 먼저 흔들려요.",
-   "diff": "VOO의 매운맛",
-   "points": [
-    "나스닥 **큰 회사 100개**를 한 번에 사요",
-    "**빅테크가 절반**이라 오를 땐 시원하게 올라요",
-    "대신 **금리가 오르면 먼저 흔들려요**"
-   ]
-  },
-  {
-   "id": "spy",
-   "yahoo": "SPY",
-   "market": "us",
-   "code": "SPY",
-   "name": "SPDR S&P 500 ETF",
-   "kw": "원조 S&P500",
-   "sector": "idx",
-   "rank": 3,
-   "sub": "VOO와 같은 미국 대표 500개. 세계에서 거래가 제일 많은 ETF예요.",
-   "about": "1993년에 나온 세계 첫 ETF. VOO와 담는 회사는 같고, 수수료가 조금 더 비싼 대신 거래가 아주 활발해요. 이번 주 월요일 하루에만 약 67억 달러가 들어왔어요.",
-   "diff": "거래량 1등 · 단타용",
-   "points": [
-    "세계 **첫 번째 ETF**예요 (1993년생)",
-    "**VOO랑 담은 회사가 같아요**",
-    "수수료는 조금 비싸지만 **거래가 제일 활발해요**"
-   ]
-  },
-  {
-   "id": "smh",
-   "yahoo": "SMH",
-   "market": "us",
-   "code": "SMH",
-   "name": "VanEck Semiconductor ETF",
-   "kw": "엔비디아 왕팬",
-   "sector": "semi",
-   "rank": 4,
-   "sub": "미국 반도체 25개. 이번 주 엔비디아 사장님 사임으로 제일 크게 흔들렸어요.",
-   "about": "미국 반도체 회사 25개를 한 번에 사는 ETF. 엔비디아·TSMC·ASML이 크게 들어 있어서 엔비디아 뉴스에 제일 크게 흔들려요.",
-   "diff": "엔비디아 몰빵 · 매운맛",
-   "points": [
-    "미국 **반도체 회사 25개**를 한 번에 사요",
-    "엔비디아·TSMC·ASML이 크게 들어 있어요",
-    "그래서 **엔비디아 뉴스에 제일 크게 흔들려요**"
-   ]
-  },
-  {
-   "id": "schd",
-   "yahoo": "SCHD",
-   "market": "us",
-   "code": "SCHD",
-   "name": "Schwab US Dividend Equity ETF",
-   "kw": "배당 꼬박꼬박",
-   "sector": "div",
-   "rank": 5,
-   "sub": "배당을 꾸준히 주는 미국 회사 100개. 기술주가 흔들릴 때 덜 흔들려요.",
-   "about": "배당을 오래, 꾸준히 늘려온 미국 회사 100개. 기술주가 거의 없어서 급등장엔 느리지만 흔들릴 때 덜 흔들려요.",
-   "diff": "월급처럼 배당",
-   "points": [
-    "배당을 **꾸준히 늘려온 회사 100개**예요",
-    "기술주가 거의 없어서 **급하게 오르진 않아요**",
-    "대신 **시장이 흔들릴 때 덜 흔들려요**"
-   ]
-  },
-  {
-   "id": "xlv",
-   "yahoo": "XLV",
-   "market": "us",
-   "code": "XLV",
-   "name": "Health Care Select Sector SPDR",
-   "kw": "미국 병원·제약 대표",
-   "sector": "bio",
-   "rank": 6,
-   "sub": "일라이릴리·존슨앤존슨·유나이티드헬스 같은 미국 헬스케어 대표. 경기와 상관없이 꾸준한 편.",
-   "about": "미국 S&P500 안의 헬스케어 회사만 모은 ETF. 제약사(비만약 일라이릴리)와 보험사(유나이티드헬스)가 같이 들어 있어요. 이번 주엔 메디케어 감사 강화 소식에 보험사들이 크게 빠지면서 같이 흔들렸어요.",
-   "diff": "제약 대장 · 순한맛",
-   "points": [
-    "미국 **병원·약·보험 회사**만 모았어요",
-    "비만약 회사와 보험사가 같이 들어 있어요",
-    "**경기가 나빠도 덜 흔들리는** 편이에요"
-   ]
-  },
-  {
-   "id": "gld",
-   "yahoo": "GLD",
-   "market": "us",
-   "code": "GLD",
-   "name": "SPDR Gold Shares",
-   "kw": "금덩이",
-   "sector": "safe",
-   "rank": 7,
-   "sub": "금 가격을 그대로 따라가요. 금리 인상 얘기에 요즘은 쉬어가는 중.",
-   "about": "진짜 금 가격을 따라가는 ETF. 주식이 무서울 때 피난처로 쓰지만 배당은 없어요. 금리가 오르면 약해지는 편이에요.",
-   "diff": "위기 때 피난처",
-   "points": [
-    "**진짜 금값**을 그대로 따라가요",
-    "주식이 무서울 때 **피난처**로 써요",
-    "**배당은 없고**, 금리가 오르면 약해져요"
-   ]
-  },
-  {
-   "id": "xlu",
-   "yahoo": "XLU",
-   "market": "us",
-   "code": "XLU",
-   "name": "Utilities Select Sector SPDR",
-   "kw": "전기짱",
-   "sector": "power",
-   "rank": 8,
-   "sub": "미국 전력회사들. AI 데이터센터가 전기를 많이 써서 주목받아요.",
-   "about": "미국 전력·가스 회사들. AI 데이터센터가 전기를 엄청 써서 주목받고, 배당도 꽤 줘요. 금리가 오르면 부담이에요.",
-   "diff": "전기세 받는 집주인",
-   "points": [
-    "미국 **전기·가스 회사**들이에요",
-    "**AI가 전기를 많이 써서** 주목받는 중",
-    "**배당도 꽤 줘요.** 금리가 오르면 부담"
-   ]
-  },
-  {
-   "id": "soxx",
-   "yahoo": "SOXX",
-   "market": "us",
-   "code": "SOXX",
-   "name": "iShares Semiconductor ETF",
-   "kw": "반도체 골고루쟁이",
-   "sector": "semi",
-   "rank": 9,
-   "sub": "미국 반도체 30개, 한 종목 비중을 제한해서 엔비디아 리스크를 덜 받아요.",
-   "about": "미국 반도체 30개. 한 회사가 너무 커지지 않게 비중을 제한해서, SMH보다 엔비디아 한 회사에 덜 흔들려요.",
-   "diff": "반도체 골고루 · 순한맛",
-   "points": [
-    "미국 **반도체 회사 30개**를 한 번에 사요",
-    "**한 회사가 너무 커지지 않게** 나눠 담아요",
-    "그래서 SMH보다 **엔비디아에 덜 흔들려요**"
-   ]
-  },
-  {
-   "id": "aiq",
-   "yahoo": "AIQ",
-   "market": "us",
-   "code": "AIQ",
-   "name": "Global X AI & Technology ETF",
-   "kw": "AI 관련쟁이들",
-   "sector": "ai",
-   "rank": 10,
-   "sub": "전 세계 AI·테크 회사들을 골고루 담아요.",
-   "about": "AI를 만들거나 쓰는 전 세계 테크 회사들을 골고루 담은 ETF. 빅테크와 소프트웨어, 반도체가 섞여 있어요.",
-   "diff": "AI 넓게 · 분산형",
-   "points": [
-    "**AI를 만들거나 쓰는** 세계 테크 회사들",
-    "빅테크·소프트웨어·반도체가 **골고루** 섞였어요",
-    "AI 전체에 **넓게** 걸고 싶을 때"
-   ]
-  },
-  {
-   "id": "ibit",
-   "yahoo": "IBIT",
-   "market": "us",
-   "code": "IBIT",
-   "name": "iShares Bitcoin Trust ETF",
-   "kw": "비트코인 바로 사기",
-   "sector": "crypto",
-   "rank": 11,
-   "sub": "비트코인 값을 그대로 따라가요. 지갑 없이 증권 계좌로 사는 비트코인.",
-   "about": "세계 최대 비트코인 ETF. 비트코인 가격이 곧 이 ETF 가격이에요. 11월 들어 비트코인 ETF에서는 돈이 계속 빠져나가는 중이라, 들어가도 아주 조금만.",
-   "diff": "제일 매움 · 한 스푼만",
-   "points": [
-    "세계에서 제일 큰 **비트코인 ETF**예요",
-    "**비트코인 값 = 이 ETF 값**",
-    "오르내림이 아주 커서 **아주 조금만**"
-   ]
-  },
-  {
-   "id": "dia",
-   "yahoo": "DIA",
-   "market": "us",
-   "code": "DIA",
-   "name": "SPDR Dow Jones Industrial Average ETF",
-   "kw": "다우 30 대장들",
-   "sector": "idx",
-   "rank": 12,
-   "sub": "뉴스에 나오는 \"다우지수\" 30개 회사를 그대로. 오래된 큰 회사가 많아요.",
-   "about": "보잉·골드만삭스·유나이티드헬스 같은 미국 대표 30개 회사. 기술주보다 전통 대기업 비중이 높아서, 이번 주처럼 헬스케어가 빠지면 같이 흔들려요.",
-   "diff": "올드보이 30 · 기술주 싫으면",
-   "points": [
-    "미국 **대표 대기업 30개**예요",
-    "보잉·골드만삭스 같은 **전통 대기업**이 많아요",
-    "기술주보다 **천천히 움직여요**"
-   ]
-  },
-  {
-   "id": "ita",
-   "yahoo": "ITA",
-   "market": "us",
-   "code": "ITA",
-   "name": "iShares U.S. Aerospace & Defense ETF",
-   "kw": "미국 방산 대표",
-   "sector": "defense",
-   "rank": 13,
-   "sub": "록히드마틴·RTX·보잉 같은 미국 방산·항공 회사. 방산 ETF 중 제일 커요.",
-   "about": "미국 방위산업·항공우주 회사를 모은 ETF. 전쟁·국방 예산 뉴스에 민감해요. 방산 ETF 중 가장 커서 거래가 편해요.",
-   "diff": "국방예산 따라감",
-   "points": [
-    "미국 **방위산업·항공우주** 회사들이에요",
-    "**전쟁·국방 예산 뉴스**에 크게 움직여요",
-    "방산 ETF 중 **제일 커서** 사고팔기 편해요"
-   ]
-  },
-  {
-   "id": "xbi",
-   "yahoo": "XBI",
-   "market": "us",
-   "code": "XBI",
-   "name": "SPDR S&P Biotech ETF",
-   "kw": "신약 개발 벤처들",
-   "sector": "bio",
-   "rank": 14,
-   "sub": "미국 바이오 회사들을 골고루. 임상 결과 하나에 크게 오르내려요.",
-   "about": "큰 제약사보다 신약을 개발 중인 중소형 바이오 회사가 많아요. 금리가 내려가면 강해지고, 임상 실패 뉴스에 약해요. 변동이 커서 조금만 담는 게 좋아요.",
-   "diff": "신약 로또 · 극매운맛",
-   "points": [
-    "**신약을 만드는 작은 바이오 회사**가 많아요",
-    "금리가 내리면 강해지고, **임상 실패에 약해요**",
-    "오르내림이 커서 **조금만** 담아요"
-   ]
-  },
-  {
-   "id": "ura",
-   "yahoo": "URA",
-   "market": "us",
-   "code": "URA",
-   "name": "Global X Uranium ETF",
-   "kw": "우라늄·원전짱",
-   "sector": "power",
-   "rank": 15,
-   "sub": "원전 연료인 우라늄 회사들. AI 데이터센터 전기 수요로 원전이 다시 주목받아요.",
-   "about": "카메코 같은 우라늄 채굴 회사와 원전 관련 회사를 담아요. AI가 전기를 많이 먹으면서 원전이 다시 뜨는 중. 대신 오르내림이 아주 커요.",
-   "diff": "원전 · 극매운맛",
-   "points": [
-    "**우라늄 캐는 회사**와 **원전 회사**를 담아요",
-    "AI가 전기를 많이 먹어서 **원전이 다시 뜨는 중**",
-    "대신 **오르내림이 아주 커요**"
-   ]
-  },
-  {
-   "id": "botz",
-   "yahoo": "BOTZ",
-   "market": "us",
-   "code": "BOTZ",
-   "name": "Global X Robotics & AI ETF",
-   "kw": "로봇·피지컬 AI",
-   "sector": "ai",
-   "rank": 16,
-   "sub": "엔비디아·인튜이티브서지컬 같은 로봇·자동화 회사. \"피지컬 AI\" 테마.",
-   "about": "공장 로봇, 수술 로봇, 자율주행처럼 AI가 몸을 가진 분야에 투자해요. 로봇·AI ETF에는 올해 돈이 꾸준히 들어오고 있어요.",
-   "diff": "로봇 테마 · 한 스푼만",
-   "points": [
-    "**로봇·자율주행** 회사에 투자해요",
-    "공장 로봇, 수술 로봇이 다 들어 있어요",
-    "AI가 **몸을 가진 분야**에 걸고 싶을 때"
-   ]
-  },
-  {
-   "id": "grid",
-   "yahoo": "GRID",
-   "market": "us",
-   "code": "GRID",
-   "name": "First Trust Smart Grid Infrastructure",
-   "kw": "전력망 공사짱",
-   "sector": "power",
-   "rank": 17,
-   "sub": "전력망 장비·공사 회사들. AI 데이터센터 전기 수요의 수혜주예요.",
-   "about": "전기를 보내는 전력망을 만드는 장비·공사 회사들. 전력회사(XLU)보다 성장성은 크고 배당은 적어요.",
-   "diff": "전력망 · 성장형",
-   "points": [
-    "**전기를 보내는 길(전력망)**을 만드는 회사들",
-    "장비 회사와 공사 회사가 들어 있어요",
-    "전력회사(XLU)보다 **성장은 크고 배당은 적어요**"
-   ]
-  },
-  {
-   "id": "tlt",
-   "yahoo": "TLT",
-   "market": "us",
-   "code": "TLT",
-   "name": "iShares 20+ Year Treasury Bond",
-   "kw": "미국 장기채",
-   "sector": "safe",
-   "rank": 18,
-   "sub": "미국 20년 넘는 국채. 금리가 내리면 오르고, 오르면 내려요.",
-   "about": "미국 정부에 20년 넘게 돈을 빌려주는 채권. 금리가 내리면 오르고, 오르면 내려요. 지금처럼 인상 얘기가 나올 땐 약해요.",
-   "diff": "금리 내리면 웃음",
-   "points": [
-    "미국 정부에 **20년 넘게 돈을 빌려주는 채권**",
-    "**금리가 내리면 오르고**, 오르면 내려요",
-    "주식이랑 **반대로 움직일 때가 많아요**"
-   ]
-  },
-  {
-   "id": "tiger-sp500",
-   "yahoo": "360750.KS",
-   "market": "kr",
-   "code": "S&P500",
-   "name": "TIGER 미국S&P500",
-   "kw": "원화로 사는 VOO",
-   "sector": "idx",
-   "rank": 1,
-   "sub": "연금계좌에서도 살 수 있는 미국 대표 500개.",
-   "about": "VOO와 같은 S&P500을 원화로, 한국 증권사에서 사는 ETF. 연금저축·IRP에서도 살 수 있어요. 달러가 오르면 덤으로 이득이에요.",
-   "diff": "원화 VOO · 연금 OK",
-   "points": [
-    "**VOO를 원화로** 사는 거예요",
-    "한국 증권사에서, **연금계좌에서도** 살 수 있어요",
-    "**달러가 오르면 덤으로 이득**이에요"
-   ]
-  },
-  {
-   "id": "kodex-200",
-   "yahoo": "069500.KS",
-   "market": "kr",
-   "code": "200",
-   "name": "KODEX 200",
-   "kw": "한국 대표 200짱",
-   "sector": "kidx",
-   "rank": 2,
-   "sub": "코스피 대표 200개를 한 번에. 올해 국내 ETF 중 돈이 많이 들어온 상품 중 하나예요.",
-   "about": "코스피 큰 회사 200개. 삼성전자·SK하이닉스 비중이 커서 사실상 반도체 따라 움직여요.",
-   "diff": "코스피 그 자체",
-   "points": [
-    "**코스피 큰 회사 200개**를 한 번에 사요",
-    "**삼성전자·SK하이닉스** 비중이 커요",
-    "그래서 사실상 **반도체 따라 움직여요**"
-   ]
-  },
-  {
-   "id": "tiger-semi-top10",
-   "yahoo": "396500.KS",
-   "market": "kr",
-   "code": "TOP10",
-   "name": "TIGER 반도체TOP10",
-   "kw": "삼전닉스 몰빵",
-   "sector": "semi",
-   "rank": 3,
-   "sub": "삼성전자+SK하이닉스가 절반 넘어요.",
-   "about": "한국 반도체 상위 10개. 삼성전자와 SK하이닉스가 절반 넘게 들어 있어서 두 회사 따라 크게 움직여요.",
-   "diff": "삼전닉스 몰빵",
-   "points": [
-    "**한국 반도체 상위 10개**를 담아요",
-    "**삼성전자+SK하이닉스가 절반 넘어요**",
-    "두 회사 따라 **크게 움직여요**"
-   ]
-  },
-  {
-   "id": "kodex-ai-semi-top2",
-   "yahoo": "395160.KS",
-   "market": "kr",
-   "code": "AI반도체",
-   "name": "KODEX AI반도체TOP2플러스",
-   "kw": "삼전닉스 반 + 부품 반",
-   "sector": "semi",
-   "rank": 4,
-   "sub": "삼성전자·SK하이닉스에 약 50%, 나머지는 삼성전기 같은 AI 반도체 부품 회사.",
-   "about": "삼성전자·SK하이닉스에 절반, 삼성전기·SK스퀘어 같은 AI 반도체 밸류체인에 절반. 올해 국내 반도체 집중형 ETF로 돈이 크게 몰렸어요. 대신 두 회사에 많이 쏠려 있어 흔들림도 커요.",
-   "diff": "삼전닉스 반 + 부품 반",
-   "points": [
-    "**삼성전자·SK하이닉스에 절반**을 담아요",
-    "나머지 절반은 **AI 반도체 부품 회사**",
-    "두 회사에 몰려 있어서 **흔들림이 커요**"
-   ]
-  },
-  {
-   "id": "tiger-nasdaq100",
-   "yahoo": "133690.KS",
-   "market": "kr",
-   "code": "N100",
-   "name": "TIGER 미국나스닥100",
-   "kw": "원화로 사는 QQQ",
-   "sector": "ai",
-   "rank": 5,
-   "sub": "빅테크 100개를 원화로.",
-   "about": "QQQ와 같은 나스닥100을 원화로 사는 ETF. 연금계좌에서도 살 수 있어요.",
-   "diff": "원화 QQQ · 연금 OK",
-   "points": [
-    "**QQQ를 원화로** 사는 거예요",
-    "나스닥 **큰 회사 100개**가 들어 있어요",
-    "**연금계좌에서도** 살 수 있어요"
-   ]
-  },
-  {
-   "id": "tiger-us-dividend",
-   "yahoo": "458730.KS",
-   "market": "kr",
-   "code": "배당",
-   "name": "TIGER 미국배당다우존스",
-   "kw": "원화로 사는 SCHD",
-   "sector": "div",
-   "rank": 6,
-   "sub": "배당 꾸준한 미국 회사 100개.",
-   "about": "SCHD와 같은 지수를 원화로 사는 ETF. 매달 분배금을 줘서 생활비용으로 인기가 많아요.",
-   "diff": "원화 SCHD · 연금 OK",
-   "points": [
-    "**SCHD를 원화로** 사는 거예요",
-    "**매달 분배금**을 줘요",
-    "그래서 **생활비 통장**처럼 많이 써요"
-   ]
-  },
-  {
-   "id": "tiger-phlx-semi",
-   "yahoo": "381180.KS",
-   "market": "kr",
-   "code": "SOX",
-   "name": "TIGER 미국필라델피아반도체나스닥",
-   "kw": "원조 필라델피아",
-   "sector": "semi",
-   "rank": 7,
-   "sub": "미국 반도체 30개.",
-   "about": "원조 필라델피아 반도체지수(SOX)를 원화로 따라가는 ETF. 미국 반도체 30개를 담아요.",
-   "diff": "원화 SOXX",
-   "points": [
-    "원조 **미국 반도체지수**를 원화로 따라가요",
-    "미국 **반도체 회사 30개**가 들어 있어요",
-    "**SOXX와 비슷한** 원화 버전이에요"
-   ]
-  },
-  {
-   "id": "tiger-ship-top10",
-   "yahoo": "494670.KS",
-   "market": "kr",
-   "code": "조선TOP10",
-   "name": "TIGER 조선TOP10",
-   "kw": "K조선 대장들",
-   "sector": "defense",
-   "rank": 8,
-   "sub": "HD현대중공업·한화오션·삼성중공업 같은 한국 조선 TOP10.",
-   "about": "한국 대표 조선사 10곳. 미국과 조선 협력(마스가) 기대로 크게 올랐다가, 최근엔 오르내림이 아주 커졌어요.",
-   "diff": "조선만 · 극매운맛",
-   "points": [
-    "**한국 배 만드는 회사 10곳**이에요",
-    "**미국과 조선 협력** 기대로 크게 올랐어요",
-    "요즘은 **오르내림이 아주 커요**"
-   ]
-  },
-  {
-   "id": "plus-k-defense",
-   "yahoo": "449450.KS",
-   "market": "kr",
-   "code": "K방산",
-   "name": "PLUS K방산",
-   "kw": "K방산 원조",
-   "sector": "defense",
-   "rank": 9,
-   "sub": "현대로템·한화에어로스페이스·LIG넥스원 같은 한국 방산 대표.",
-   "about": "국내 방산 ETF 중 가장 먼저, 가장 크게 큰 상품. 수출 계약 뉴스에 크게 움직여요.",
-   "diff": "수출 뉴스에 출렁",
-   "points": [
-    "**한국 방산 회사**들을 담아요",
-    "국내 방산 ETF 중 **가장 먼저 나온 큰 상품**",
-    "**수출 계약 뉴스**에 크게 움직여요"
-   ]
-  },
-  {
-   "id": "tiger-healthcare",
-   "yahoo": "143860.KS",
-   "market": "kr",
-   "code": "헬스케어",
-   "name": "TIGER 헬스케어",
-   "kw": "한국 제약·바이오 대표",
-   "sector": "bio",
-   "rank": 10,
-   "sub": "삼성바이오로직스·셀트리온 같은 한국 헬스케어 대표.",
-   "about": "국내 제약·바이오 대형주를 모아요. 올해 내내 부진했지만, 최근 실적 좋은 회사 위주로 반등 기대가 나오고 있어요.",
-   "diff": "K제약 대장 · 순한맛",
-   "points": [
-    "**한국 제약·바이오 큰 회사**들이에요",
-    "올해 내내 **쉬었어요**",
-    "실적 좋은 회사 위주로 **반등 기대** 중"
-   ]
-  },
-  {
-   "id": "tiger-200",
-   "yahoo": "102110.KS",
-   "market": "kr",
-   "code": "200",
-   "name": "TIGER 200",
-   "kw": "코스피 200 쌍둥이",
-   "sector": "kidx",
-   "rank": 11,
-   "sub": "KODEX 200과 같은 코스피 200개. 수수료만 조금 달라요.",
-   "about": "코스피 대표 200개 회사를 담아요. 삼성전자·SK하이닉스 비중이 커서 반도체가 오르면 같이 올라요.",
-   "diff": "KODEX 200 쌍둥이",
-   "points": [
-    "**코스피 큰 회사 200개**를 한 번에 사요",
-    "KODEX 200과 **같은 지수**예요",
-    "**반도체가 오르면 같이 올라요**"
-   ]
-  },
-  {
-   "id": "kodex-nasdaq100",
-   "yahoo": "379810.KS",
-   "market": "kr",
-   "code": "나스닥100",
-   "name": "KODEX 미국나스닥100",
-   "kw": "원화로 사는 QQQ 2",
-   "sector": "ai",
-   "rank": 12,
-   "sub": "나스닥 100개를 원화로. 올해 국내에서 돈이 많이 들어온 미국 ETF 중 하나.",
-   "about": "QQQ와 같은 나스닥100을 한국 증권사에서 원화로 사요. 연금계좌에서도 살 수 있어요.",
-   "diff": "TIGER 나스닥 쌍둥이",
-   "points": [
-    "**QQQ를 원화로** 사는 거예요",
-    "나스닥 **큰 회사 100개**가 들어 있어요",
-    "**연금계좌에서도** 살 수 있어요"
-   ]
-  },
-  {
-   "id": "tiger-bio-top10",
-   "yahoo": "364970.KS",
-   "market": "kr",
-   "code": "바이오TOP10",
-   "name": "TIGER 바이오TOP10",
-   "kw": "K바이오 신약파",
-   "sector": "bio",
-   "rank": 13,
-   "sub": "한국 바이오 TOP10. 임상·기술수출 뉴스에 크게 움직여요.",
-   "about": "신약 개발·바이오시밀러 회사 중심. 임상 결과 하나로 하루에 크게 오르내리는 일이 많아서 조금만.",
-   "diff": "K신약 로또 · 극매운맛",
-   "points": [
-    "**신약·바이오시밀러** 회사 10곳이에요",
-    "**임상 결과 하나로** 하루에 크게 움직여요",
-    "그래서 **조금만** 담아요"
-   ]
-  },
-  {
-   "id": "tiger-us-tech10",
-   "yahoo": "381170.KS",
-   "market": "kr",
-   "code": "테크10",
-   "name": "TIGER 미국테크TOP10",
-   "kw": "빅테크 10개 몰빵",
-   "sector": "ai",
-   "rank": 14,
-   "sub": "미국 빅테크 상위 10개.",
-   "about": "미국 빅테크 상위 10개에 몰아서 투자. 나스닥100보다 더 집중돼 있어서 더 크게 움직여요.",
-   "diff": "빅테크 10개 몰빵",
-   "points": [
-    "**미국 빅테크 10개**에 몰아서 투자해요",
-    "나스닥100보다 **더 몰려 있어요**",
-    "그래서 **더 크게 움직여요**"
-   ]
-  },
-  {
-   "id": "kodex-ai-power",
-   "yahoo": "487240.KS",
-   "market": "kr",
-   "code": "AI전력",
-   "name": "KODEX AI전력핵심설비",
-   "kw": "한국판 전기짱",
-   "sector": "power",
-   "rank": 15,
-   "sub": "변압기·전선 같은 전력 설비 회사들.",
-   "about": "변압기·전선·전력기기를 만드는 한국 회사들. AI 데이터센터 전기 수요 기대로 많이 올랐다가 크게 쉬어가는 중이에요.",
-   "diff": "한국 전력 · 매운맛",
-   "points": [
-    "**변압기·전선·전력기기** 만드는 한국 회사들",
-    "**AI 데이터센터 전기 수요**로 주목받아요",
-    "많이 올랐다가 **크게 쉬어가는 중**"
-   ]
-  },
-  {
-   "id": "ace-gold",
-   "yahoo": "411060.KS",
-   "market": "kr",
-   "code": "금",
-   "name": "ACE KRX금현물",
-   "kw": "원화로 사는 금덩이",
-   "sector": "safe",
-   "rank": 16,
-   "sub": "한국거래소 금 가격을 따라가요.",
-   "about": "한국거래소의 금 가격을 따라가는 ETF. 원화로 금에 투자하는 가장 쉬운 방법 중 하나예요.",
-   "diff": "원화 금 · 연금 OK",
-   "points": [
-    "**한국 금 시장 가격**을 따라가요",
-    "**원화로 금 사는** 제일 쉬운 방법",
-    "주식이 무서울 때 **피난처**"
-   ]
-  },
-  {
-   "id": "ace-us30y",
-   "yahoo": "453850.KS",
-   "market": "kr",
-   "code": "30년채",
-   "name": "ACE 미국30년국채액티브",
-   "kw": "원화로 사는 장기채",
-   "sector": "safe",
-   "rank": 17,
-   "sub": "금리가 내리면 오르는 채권.",
-   "about": "미국 30년 국채에 투자하는 ETF. 금리가 내리면 오르고, 오르면 내려요. 연금계좌의 안전자산 칸을 채울 때 많이 써요.",
-   "diff": "금리 내리면 웃음",
-   "points": [
-    "**미국 30년 국채**에 투자해요",
-    "**금리가 내리면 오르고**, 오르면 내려요",
-    "연금계좌의 **안전자산 칸** 채울 때 많이 써요"
-   ]
-  }
- ],
- "fx": [
-  {
-   "id": "usd",
-   "yahoo": "KRW=X",
-   "name": "미국 달러",
-   "short": "달러",
-   "unit": "1달러",
-   "mult": 1
-  },
-  {
-   "id": "jpy",
-   "yahoo": "JPYKRW=X",
-   "name": "일본 엔",
-   "short": "엔 (100엔)",
-   "unit": "100엔",
-   "mult": 100
-  },
-  {
-   "id": "eur",
-   "yahoo": "EURKRW=X",
-   "name": "유로",
-   "short": "유로",
-   "unit": "1유로",
-   "mult": 1
-  }
- ]
+  "_note": "DIP에서 다루는 ETF 목록. rank = 화면에 보이는 인기 순서(지금은 수동, 나중에 거래대금·조회수로 자동화). 순서를 바꾸려면 rank만 고치면 돼요.",
+  "etfs": [
+    {
+      "id": "voo",
+      "yahoo": "VOO",
+      "market": "us",
+      "code": "VOO",
+      "name": "Vanguard S&P 500 ETF",
+      "kw": "미국 대표 500짱",
+      "sector": "idx",
+      "rank": 1,
+      "sub": "미국 큰 회사 500개를 한 번에. 처음이라면 여기부터. 지난주 미국 ETF 중 돈이 두 번째로 많이 들어왔어요.",
+      "about": "애플·마이크로소프트·엔비디아 같은 미국 대표 회사 500개를 한 번에 사는 ETF. 수수료가 아주 낮아서 장기 투자의 기본기로 많이 써요. 요즘 S&P500은 5일 연속 하락 중이라 \"세일 때 조금씩\"이 잘 맞는 구간이에요.",
+      "diff": "수수료 최저 · 묻어두기용",
+      "points": [
+        "미국 **대표 회사 500개**를 한 번에 사요",
+        "애플·마이크로소프트·엔비디아가 다 들어 있어요",
+        "**수수료가 아주 싸서** 오래 묻어두기 좋아요"
+      ],
+      "kwEn": "America's top 500",
+      "subEn": "500 of America's biggest companies in one go. Start here if you're new. Second-biggest inflows of any US ETF last week.",
+      "aboutEn": "Buys America's 500 biggest companies, like Apple, Microsoft and Nvidia, all at once. Fees are super low, so it's the classic long-term holding. The S&P 500 has been falling for days, so a little at a time during the sale fits well right now.",
+      "diffEn": "Lowest fee · buy and forget",
+      "pointsEn": [
+        "Buys **America's top 500 companies** at once",
+        "Apple, Microsoft and Nvidia are all inside",
+        "**Fees are tiny**, great for holding long"
+      ]
+    },
+    {
+      "id": "qqq",
+      "yahoo": "QQQ",
+      "market": "us",
+      "code": "QQQ",
+      "name": "Invesco QQQ Trust",
+      "kw": "빅테크 몰빵쟁이",
+      "sector": "ai",
+      "rank": 2,
+      "sub": "나스닥 대표 100개. 애플·엔비디아·마이크로소프트 같은 빅테크가 절반. 지난주 미국 ETF 중 돈이 제일 많이 들어왔어요.",
+      "about": "나스닥에 있는 큰 회사 100개. 빅테크 비중이 커서 오를 땐 시원하게 오르고, 금리가 오를 땐 먼저 흔들려요.",
+      "diff": "VOO의 매운맛",
+      "points": [
+        "나스닥 **큰 회사 100개**를 한 번에 사요",
+        "**빅테크가 절반**이라 오를 땐 시원하게 올라요",
+        "대신 **금리가 오르면 먼저 흔들려요**"
+      ],
+      "kwEn": "Big Tech all-in",
+      "subEn": "Nasdaq's top 100. Big Tech like Apple, Nvidia and Microsoft make up half. Biggest inflows of any US ETF last week.",
+      "aboutEn": "The 100 biggest Nasdaq companies. Heavy on Big Tech, so it rises hard in good times and wobbles first when rates go up.",
+      "diffEn": "VOO, but spicy",
+      "pointsEn": [
+        "Buys **Nasdaq's top 100** at once",
+        "**Half is Big Tech**, so rallies are big",
+        "But **it shakes first when rates rise**"
+      ]
+    },
+    {
+      "id": "spy",
+      "yahoo": "SPY",
+      "market": "us",
+      "code": "SPY",
+      "name": "SPDR S&P 500 ETF",
+      "kw": "원조 S&P500",
+      "sector": "idx",
+      "rank": 3,
+      "sub": "VOO와 같은 미국 대표 500개. 세계에서 거래가 제일 많은 ETF예요.",
+      "about": "1993년에 나온 세계 첫 ETF. VOO와 담는 회사는 같고, 수수료가 조금 더 비싼 대신 거래가 아주 활발해요. 이번 주 월요일 하루에만 약 67억 달러가 들어왔어요.",
+      "diff": "거래량 1등 · 단타용",
+      "points": [
+        "세계 **첫 번째 ETF**예요 (1993년생)",
+        "**VOO랑 담은 회사가 같아요**",
+        "수수료는 조금 비싸지만 **거래가 제일 활발해요**"
+      ],
+      "kwEn": "The original S&P 500",
+      "subEn": "Same 500 companies as VOO. The most traded ETF in the world.",
+      "aboutEn": "The world's first ETF, born in 1993. Holds the same companies as VOO; a bit pricier in fees but extremely liquid. About $6.7B flowed in on Monday alone this week.",
+      "diffEn": "Most traded · for traders",
+      "pointsEn": [
+        "The **world's first ETF** (born 1993)",
+        "**Same companies as VOO**",
+        "Slightly pricier, but **the most traded**"
+      ]
+    },
+    {
+      "id": "smh",
+      "yahoo": "SMH",
+      "market": "us",
+      "code": "SMH",
+      "name": "VanEck Semiconductor ETF",
+      "kw": "엔비디아 왕팬",
+      "sector": "semi",
+      "rank": 4,
+      "sub": "미국 반도체 25개. 이번 주 엔비디아 사장님 사임으로 제일 크게 흔들렸어요.",
+      "about": "미국 반도체 회사 25개를 한 번에 사는 ETF. 엔비디아·TSMC·ASML이 크게 들어 있어서 엔비디아 뉴스에 제일 크게 흔들려요.",
+      "diff": "엔비디아 몰빵 · 매운맛",
+      "points": [
+        "미국 **반도체 회사 25개**를 한 번에 사요",
+        "엔비디아·TSMC·ASML이 크게 들어 있어요",
+        "그래서 **엔비디아 뉴스에 제일 크게 흔들려요**"
+      ],
+      "kwEn": "Nvidia superfan",
+      "subEn": "25 US chip makers. Shook the hardest this week when Nvidia's CEO stepped down.",
+      "aboutEn": "25 US semiconductor companies in one ETF. Nvidia, TSMC and ASML are big pieces, so Nvidia news moves it the most.",
+      "diffEn": "Nvidia-heavy · spicy",
+      "pointsEn": [
+        "Buys **25 chip companies** at once",
+        "Nvidia, TSMC and ASML are big pieces",
+        "So **Nvidia news moves it the most**"
+      ]
+    },
+    {
+      "id": "schd",
+      "yahoo": "SCHD",
+      "market": "us",
+      "code": "SCHD",
+      "name": "Schwab US Dividend Equity ETF",
+      "kw": "배당 꼬박꼬박",
+      "sector": "div",
+      "rank": 5,
+      "sub": "배당을 꾸준히 주는 미국 회사 100개. 기술주가 흔들릴 때 덜 흔들려요.",
+      "about": "배당을 오래, 꾸준히 늘려온 미국 회사 100개. 기술주가 거의 없어서 급등장엔 느리지만 흔들릴 때 덜 흔들려요.",
+      "diff": "월급처럼 배당",
+      "points": [
+        "배당을 **꾸준히 늘려온 회사 100개**예요",
+        "기술주가 거의 없어서 **급하게 오르진 않아요**",
+        "대신 **시장이 흔들릴 때 덜 흔들려요**"
+      ],
+      "kwEn": "Steady dividends",
+      "subEn": "100 US companies that pay dividends reliably. Shakes less when tech wobbles.",
+      "aboutEn": "100 US companies that have raised dividends for a long time. Almost no tech, so it's slow in hot markets but steadier when things shake.",
+      "diffEn": "Dividends like a paycheck",
+      "pointsEn": [
+        "**100 companies that keep raising dividends**",
+        "Almost no tech, so **it won't rocket**",
+        "But **it shakes less when markets wobble**"
+      ]
+    },
+    {
+      "id": "xlv",
+      "yahoo": "XLV",
+      "market": "us",
+      "code": "XLV",
+      "name": "Health Care Select Sector SPDR",
+      "kw": "미국 병원·제약 대표",
+      "sector": "bio",
+      "rank": 6,
+      "sub": "일라이릴리·존슨앤존슨·유나이티드헬스 같은 미국 헬스케어 대표. 경기와 상관없이 꾸준한 편.",
+      "about": "미국 S&P500 안의 헬스케어 회사만 모은 ETF. 제약사(비만약 일라이릴리)와 보험사(유나이티드헬스)가 같이 들어 있어요. 이번 주엔 메디케어 감사 강화 소식에 보험사들이 크게 빠지면서 같이 흔들렸어요.",
+      "diff": "제약 대장 · 순한맛",
+      "points": [
+        "미국 **병원·약·보험 회사**만 모았어요",
+        "비만약 회사와 보험사가 같이 들어 있어요",
+        "**경기가 나빠도 덜 흔들리는** 편이에요"
+      ],
+      "kwEn": "US hospitals & pharma",
+      "subEn": "US healthcare leaders like Eli Lilly, J&J and UnitedHealth. Fairly steady whatever the economy.",
+      "aboutEn": "Only the healthcare names inside the S&P 500. Drug makers (Eli Lilly, of weight-loss drug fame) and insurers (UnitedHealth) together. This week insurers fell on tougher Medicare audits and dragged it down.",
+      "diffEn": "Pharma leaders · mild",
+      "pointsEn": [
+        "Only **hospitals, drugs and insurers**",
+        "Weight-loss drug makers and insurers together",
+        "**Shakes less in a bad economy**"
+      ]
+    },
+    {
+      "id": "gld",
+      "yahoo": "GLD",
+      "market": "us",
+      "code": "GLD",
+      "name": "SPDR Gold Shares",
+      "kw": "금덩이",
+      "sector": "safe",
+      "rank": 7,
+      "sub": "금 가격을 그대로 따라가요. 금리 인상 얘기에 요즘은 쉬어가는 중.",
+      "about": "진짜 금 가격을 따라가는 ETF. 주식이 무서울 때 피난처로 쓰지만 배당은 없어요. 금리가 오르면 약해지는 편이에요.",
+      "diff": "위기 때 피난처",
+      "points": [
+        "**진짜 금값**을 그대로 따라가요",
+        "주식이 무서울 때 **피난처**로 써요",
+        "**배당은 없고**, 금리가 오르면 약해져요"
+      ],
+      "kwEn": "Gold bar",
+      "subEn": "Tracks the price of gold. Taking a breather on rate-hike talk.",
+      "aboutEn": "Follows the real price of gold. People use it as a shelter when stocks get scary, but it pays no dividend and weakens when rates rise.",
+      "diffEn": "Shelter in a storm",
+      "pointsEn": [
+        "Tracks **the real gold price**",
+        "A **shelter** when stocks get scary",
+        "**No dividend**, weaker when rates rise"
+      ]
+    },
+    {
+      "id": "xlu",
+      "yahoo": "XLU",
+      "market": "us",
+      "code": "XLU",
+      "name": "Utilities Select Sector SPDR",
+      "kw": "전기짱",
+      "sector": "power",
+      "rank": 8,
+      "sub": "미국 전력회사들. AI 데이터센터가 전기를 많이 써서 주목받아요.",
+      "about": "미국 전력·가스 회사들. AI 데이터센터가 전기를 엄청 써서 주목받고, 배당도 꽤 줘요. 금리가 오르면 부담이에요.",
+      "diff": "전기세 받는 집주인",
+      "points": [
+        "미국 **전기·가스 회사**들이에요",
+        "**AI가 전기를 많이 써서** 주목받는 중",
+        "**배당도 꽤 줘요.** 금리가 오르면 부담"
+      ],
+      "kwEn": "Power company boss",
+      "subEn": "US power companies. In the spotlight because AI data centers eat electricity.",
+      "aboutEn": "US electric and gas utilities. AI data centers use huge amounts of power, so they're in focus, and they pay decent dividends. Rising rates are a burden.",
+      "diffEn": "Landlord collecting the power bill",
+      "pointsEn": [
+        "US **electric and gas companies**",
+        "**AI eats electricity**, so all eyes here",
+        "**Decent dividends.** Rate hikes hurt"
+      ]
+    },
+    {
+      "id": "soxx",
+      "yahoo": "SOXX",
+      "market": "us",
+      "code": "SOXX",
+      "name": "iShares Semiconductor ETF",
+      "kw": "반도체 골고루쟁이",
+      "sector": "semi",
+      "rank": 9,
+      "sub": "미국 반도체 30개, 한 종목 비중을 제한해서 엔비디아 리스크를 덜 받아요.",
+      "about": "미국 반도체 30개. 한 회사가 너무 커지지 않게 비중을 제한해서, SMH보다 엔비디아 한 회사에 덜 흔들려요.",
+      "diff": "반도체 골고루 · 순한맛",
+      "points": [
+        "미국 **반도체 회사 30개**를 한 번에 사요",
+        "**한 회사가 너무 커지지 않게** 나눠 담아요",
+        "그래서 SMH보다 **엔비디아에 덜 흔들려요**"
+      ],
+      "kwEn": "Chips, spread out",
+      "subEn": "30 US chip makers with a cap per stock, so less Nvidia risk.",
+      "aboutEn": "30 US semiconductor companies. Weights are capped so no one company gets too big, so it swings less on Nvidia than SMH.",
+      "diffEn": "Chips, evenly · mild",
+      "pointsEn": [
+        "Buys **30 chip companies** at once",
+        "**Caps each company** so none gets too big",
+        "So **less Nvidia swing** than SMH"
+      ]
+    },
+    {
+      "id": "aiq",
+      "yahoo": "AIQ",
+      "market": "us",
+      "code": "AIQ",
+      "name": "Global X AI & Technology ETF",
+      "kw": "AI 관련쟁이들",
+      "sector": "ai",
+      "rank": 10,
+      "sub": "전 세계 AI·테크 회사들을 골고루 담아요.",
+      "about": "AI를 만들거나 쓰는 전 세계 테크 회사들을 골고루 담은 ETF. 빅테크와 소프트웨어, 반도체가 섞여 있어요.",
+      "diff": "AI 넓게 · 분산형",
+      "points": [
+        "**AI를 만들거나 쓰는** 세계 테크 회사들",
+        "빅테크·소프트웨어·반도체가 **골고루** 섞였어요",
+        "AI 전체에 **넓게** 걸고 싶을 때"
+      ],
+      "kwEn": "AI crowd",
+      "subEn": "AI and tech companies from around the world, evenly mixed.",
+      "aboutEn": "Global tech companies that build or use AI, spread out. Big Tech, software and chips all mixed in.",
+      "diffEn": "Broad AI · diversified",
+      "pointsEn": [
+        "Global tech that **builds or uses AI**",
+        "Big Tech, software and chips **all mixed**",
+        "For a **broad bet** on AI"
+      ]
+    },
+    {
+      "id": "ibit",
+      "yahoo": "IBIT",
+      "market": "us",
+      "code": "IBIT",
+      "name": "iShares Bitcoin Trust ETF",
+      "kw": "비트코인 바로 사기",
+      "sector": "crypto",
+      "rank": 11,
+      "sub": "비트코인 값을 그대로 따라가요. 지갑 없이 증권 계좌로 사는 비트코인.",
+      "about": "세계 최대 비트코인 ETF. 비트코인 가격이 곧 이 ETF 가격이에요. 11월 들어 비트코인 ETF에서는 돈이 계속 빠져나가는 중이라, 들어가도 아주 조금만.",
+      "diff": "제일 매움 · 한 스푼만",
+      "points": [
+        "세계에서 제일 큰 **비트코인 ETF**예요",
+        "**비트코인 값 = 이 ETF 값**",
+        "오르내림이 아주 커서 **아주 조금만**"
+      ],
+      "kwEn": "Bitcoin, the easy way",
+      "subEn": "Tracks the bitcoin price. Bitcoin in your brokerage account, no wallet needed.",
+      "aboutEn": "The world's biggest bitcoin ETF. Bitcoin's price is this ETF's price. Money has kept flowing out of bitcoin ETFs this November, so only a tiny bit if you go in.",
+      "diffEn": "Spiciest · one spoon only",
+      "pointsEn": [
+        "The world's **biggest bitcoin ETF**",
+        "**Bitcoin price = this ETF's price**",
+        "Swings are huge, so **just a tiny bit**"
+      ]
+    },
+    {
+      "id": "dia",
+      "yahoo": "DIA",
+      "market": "us",
+      "code": "DIA",
+      "name": "SPDR Dow Jones Industrial Average ETF",
+      "kw": "다우 30 대장들",
+      "sector": "idx",
+      "rank": 12,
+      "sub": "뉴스에 나오는 \"다우지수\" 30개 회사를 그대로. 오래된 큰 회사가 많아요.",
+      "about": "보잉·골드만삭스·유나이티드헬스 같은 미국 대표 30개 회사. 기술주보다 전통 대기업 비중이 높아서, 이번 주처럼 헬스케어가 빠지면 같이 흔들려요.",
+      "diff": "올드보이 30 · 기술주 싫으면",
+      "points": [
+        "미국 **대표 대기업 30개**예요",
+        "보잉·골드만삭스 같은 **전통 대기업**이 많아요",
+        "기술주보다 **천천히 움직여요**"
+      ],
+      "kwEn": "Dow 30 heavyweights",
+      "subEn": "The 30 companies in the 'Dow' you hear on the news. Lots of old giants.",
+      "aboutEn": "30 iconic US companies like Boeing, Goldman Sachs and UnitedHealth. More old-school giants than tech, so it dips with healthcare, like this week.",
+      "diffEn": "Old-school 30 · no-tech option",
+      "pointsEn": [
+        "America's **30 blue-chip giants**",
+        "Lots of **old-school names** like Boeing, Goldman",
+        "**Moves slower** than tech"
+      ]
+    },
+    {
+      "id": "ita",
+      "yahoo": "ITA",
+      "market": "us",
+      "code": "ITA",
+      "name": "iShares U.S. Aerospace & Defense ETF",
+      "kw": "미국 방산 대표",
+      "sector": "defense",
+      "rank": 13,
+      "sub": "록히드마틴·RTX·보잉 같은 미국 방산·항공 회사. 방산 ETF 중 제일 커요.",
+      "about": "미국 방위산업·항공우주 회사를 모은 ETF. 전쟁·국방 예산 뉴스에 민감해요. 방산 ETF 중 가장 커서 거래가 편해요.",
+      "diff": "국방예산 따라감",
+      "points": [
+        "미국 **방위산업·항공우주** 회사들이에요",
+        "**전쟁·국방 예산 뉴스**에 크게 움직여요",
+        "방산 ETF 중 **제일 커서** 사고팔기 편해요"
+      ],
+      "kwEn": "US defense leaders",
+      "subEn": "US defense and aerospace like Lockheed Martin, RTX and Boeing. The biggest defense ETF.",
+      "aboutEn": "US defense and aerospace companies. Sensitive to war and defense-budget news. The largest defense ETF, so it's easy to trade.",
+      "diffEn": "Follows the defense budget",
+      "pointsEn": [
+        "US **defense and aerospace** companies",
+        "**War and defense budget news** move it",
+        "**Biggest** defense ETF, easy to trade"
+      ]
+    },
+    {
+      "id": "xbi",
+      "yahoo": "XBI",
+      "market": "us",
+      "code": "XBI",
+      "name": "SPDR S&P Biotech ETF",
+      "kw": "신약 개발 벤처들",
+      "sector": "bio",
+      "rank": 14,
+      "sub": "미국 바이오 회사들을 골고루. 임상 결과 하나에 크게 오르내려요.",
+      "about": "큰 제약사보다 신약을 개발 중인 중소형 바이오 회사가 많아요. 금리가 내려가면 강해지고, 임상 실패 뉴스에 약해요. 변동이 커서 조금만 담는 게 좋아요.",
+      "diff": "신약 로또 · 극매운맛",
+      "points": [
+        "**신약을 만드는 작은 바이오 회사**가 많아요",
+        "금리가 내리면 강해지고, **임상 실패에 약해요**",
+        "오르내림이 커서 **조금만** 담아요"
+      ],
+      "kwEn": "Drug-discovery startups",
+      "subEn": "US biotech, evenly weighted. One trial result can swing it big.",
+      "aboutEn": "More small and mid biotech firms developing new drugs than big pharma. Strong when rates fall, weak on failed-trial news. Very volatile, so keep it small.",
+      "diffEn": "New-drug lottery · extra spicy",
+      "pointsEn": [
+        "Lots of **small biotechs making new drugs**",
+        "Strong when rates fall, **weak on failed trials**",
+        "Big swings, so **keep it small**"
+      ]
+    },
+    {
+      "id": "ura",
+      "yahoo": "URA",
+      "market": "us",
+      "code": "URA",
+      "name": "Global X Uranium ETF",
+      "kw": "우라늄·원전짱",
+      "sector": "power",
+      "rank": 15,
+      "sub": "원전 연료인 우라늄 회사들. AI 데이터센터 전기 수요로 원전이 다시 주목받아요.",
+      "about": "카메코 같은 우라늄 채굴 회사와 원전 관련 회사를 담아요. AI가 전기를 많이 먹으면서 원전이 다시 뜨는 중. 대신 오르내림이 아주 커요.",
+      "diff": "원전 · 극매운맛",
+      "points": [
+        "**우라늄 캐는 회사**와 **원전 회사**를 담아요",
+        "AI가 전기를 많이 먹어서 **원전이 다시 뜨는 중**",
+        "대신 **오르내림이 아주 커요**"
+      ],
+      "kwEn": "Uranium & nuclear",
+      "subEn": "Uranium companies, the fuel for nuclear plants. Nuclear is back thanks to AI power demand.",
+      "aboutEn": "Uranium miners like Cameco plus nuclear-related companies. AI's power hunger is bringing nuclear back. But it swings a lot.",
+      "diffEn": "Nuclear · extra spicy",
+      "pointsEn": [
+        "**Uranium miners** and **nuclear companies**",
+        "AI eats power, so **nuclear is back**",
+        "But **swings are very big**"
+      ]
+    },
+    {
+      "id": "botz",
+      "yahoo": "BOTZ",
+      "market": "us",
+      "code": "BOTZ",
+      "name": "Global X Robotics & AI ETF",
+      "kw": "로봇·피지컬 AI",
+      "sector": "ai",
+      "rank": 16,
+      "sub": "엔비디아·인튜이티브서지컬 같은 로봇·자동화 회사. \"피지컬 AI\" 테마.",
+      "about": "공장 로봇, 수술 로봇, 자율주행처럼 AI가 몸을 가진 분야에 투자해요. 로봇·AI ETF에는 올해 돈이 꾸준히 들어오고 있어요.",
+      "diff": "로봇 테마 · 한 스푼만",
+      "points": [
+        "**로봇·자율주행** 회사에 투자해요",
+        "공장 로봇, 수술 로봇이 다 들어 있어요",
+        "AI가 **몸을 가진 분야**에 걸고 싶을 때"
+      ],
+      "kwEn": "Robots & physical AI",
+      "subEn": "Robotics and automation like Nvidia and Intuitive Surgical. The 'physical AI' theme.",
+      "aboutEn": "Invests where AI gets a body: factory robots, surgical robots, self-driving. Money has kept flowing into robot and AI ETFs this year.",
+      "diffEn": "Robot theme · one spoon only",
+      "pointsEn": [
+        "Invests in **robots and self-driving**",
+        "Factory robots and surgical robots inside",
+        "For a bet on **AI with a body**"
+      ]
+    },
+    {
+      "id": "grid",
+      "yahoo": "GRID",
+      "market": "us",
+      "code": "GRID",
+      "name": "First Trust Smart Grid Infrastructure",
+      "kw": "전력망 공사짱",
+      "sector": "power",
+      "rank": 17,
+      "sub": "전력망 장비·공사 회사들. AI 데이터센터 전기 수요의 수혜주예요.",
+      "about": "전기를 보내는 전력망을 만드는 장비·공사 회사들. 전력회사(XLU)보다 성장성은 크고 배당은 적어요.",
+      "diff": "전력망 · 성장형",
+      "points": [
+        "**전기를 보내는 길(전력망)**을 만드는 회사들",
+        "장비 회사와 공사 회사가 들어 있어요",
+        "전력회사(XLU)보다 **성장은 크고 배당은 적어요**"
+      ],
+      "kwEn": "Power-grid builders",
+      "subEn": "Grid equipment and construction firms. A winner from AI data-center power demand.",
+      "aboutEn": "Companies that build the grid that carries electricity: equipment makers and builders. More growth than utilities (XLU), less dividend.",
+      "diffEn": "Power grid · growth",
+      "pointsEn": [
+        "Companies building **the power grid**",
+        "Equipment makers and builders inside",
+        "**More growth, less dividend** than XLU"
+      ]
+    },
+    {
+      "id": "tlt",
+      "yahoo": "TLT",
+      "market": "us",
+      "code": "TLT",
+      "name": "iShares 20+ Year Treasury Bond",
+      "kw": "미국 장기채",
+      "sector": "safe",
+      "rank": 18,
+      "sub": "미국 20년 넘는 국채. 금리가 내리면 오르고, 오르면 내려요.",
+      "about": "미국 정부에 20년 넘게 돈을 빌려주는 채권. 금리가 내리면 오르고, 오르면 내려요. 지금처럼 인상 얘기가 나올 땐 약해요.",
+      "diff": "금리 내리면 웃음",
+      "points": [
+        "미국 정부에 **20년 넘게 돈을 빌려주는 채권**",
+        "**금리가 내리면 오르고**, 오르면 내려요",
+        "주식이랑 **반대로 움직일 때가 많아요**"
+      ],
+      "kwEn": "Long US bonds",
+      "subEn": "US Treasuries over 20 years. Up when rates fall, down when they rise.",
+      "aboutEn": "Bonds where you lend to the US government for 20+ years. Rises when rates fall, falls when they rise. Weak when hike talk is in the air, like now.",
+      "diffEn": "Smiles when rates fall",
+      "pointsEn": [
+        "**Lending to the US government 20+ years**",
+        "**Up when rates fall**, down when they rise",
+        "**Often moves opposite** to stocks"
+      ]
+    },
+    {
+      "id": "tiger-sp500",
+      "yahoo": "360750.KS",
+      "market": "kr",
+      "code": "S&P500",
+      "name": "TIGER 미국S&P500",
+      "kw": "원화로 사는 VOO",
+      "sector": "idx",
+      "rank": 1,
+      "sub": "연금계좌에서도 살 수 있는 미국 대표 500개.",
+      "about": "VOO와 같은 S&P500을 원화로, 한국 증권사에서 사는 ETF. 연금저축·IRP에서도 살 수 있어요. 달러가 오르면 덤으로 이득이에요.",
+      "diff": "원화 VOO · 연금 OK",
+      "points": [
+        "**VOO를 원화로** 사는 거예요",
+        "한국 증권사에서, **연금계좌에서도** 살 수 있어요",
+        "**달러가 오르면 덤으로 이득**이에요"
+      ],
+      "nameEn": "TIGER US S&P500",
+      "kwEn": "VOO in Korean won",
+      "subEn": "America's top 500, buyable even in Korean pension accounts.",
+      "aboutEn": "The same S&P 500 as VOO, bought in won through a Korean broker. Works in Korean pension accounts too. If the dollar rises, that's a bonus.",
+      "diffEn": "Won VOO · pension OK",
+      "pointsEn": [
+        "It's **VOO in Korean won**",
+        "Buy at a Korean broker, **even in pension accounts**",
+        "**Dollar up = bonus gain**"
+      ]
+    },
+    {
+      "id": "kodex-200",
+      "yahoo": "069500.KS",
+      "market": "kr",
+      "code": "200",
+      "name": "KODEX 200",
+      "kw": "한국 대표 200짱",
+      "sector": "kidx",
+      "rank": 2,
+      "sub": "코스피 대표 200개를 한 번에. 올해 국내 ETF 중 돈이 많이 들어온 상품 중 하나예요.",
+      "about": "코스피 큰 회사 200개. 삼성전자·SK하이닉스 비중이 커서 사실상 반도체 따라 움직여요.",
+      "diff": "코스피 그 자체",
+      "points": [
+        "**코스피 큰 회사 200개**를 한 번에 사요",
+        "**삼성전자·SK하이닉스** 비중이 커요",
+        "그래서 사실상 **반도체 따라 움직여요**"
+      ],
+      "nameEn": "KODEX 200",
+      "kwEn": "Korea's top 200",
+      "subEn": "KOSPI's top 200 in one go. One of this year's most popular Korean ETFs.",
+      "aboutEn": "The 200 biggest KOSPI companies. Samsung Electronics and SK hynix are huge pieces, so it basically follows chips.",
+      "diffEn": "KOSPI itself",
+      "pointsEn": [
+        "Buys **KOSPI's top 200** at once",
+        "**Samsung and SK hynix** are huge pieces",
+        "So it basically **follows chips**"
+      ]
+    },
+    {
+      "id": "tiger-semi-top10",
+      "yahoo": "396500.KS",
+      "market": "kr",
+      "code": "TOP10",
+      "name": "TIGER 반도체TOP10",
+      "kw": "삼전닉스 몰빵",
+      "sector": "semi",
+      "rank": 3,
+      "sub": "삼성전자+SK하이닉스가 절반 넘어요.",
+      "about": "한국 반도체 상위 10개. 삼성전자와 SK하이닉스가 절반 넘게 들어 있어서 두 회사 따라 크게 움직여요.",
+      "diff": "삼전닉스 몰빵",
+      "points": [
+        "**한국 반도체 상위 10개**를 담아요",
+        "**삼성전자+SK하이닉스가 절반 넘어요**",
+        "두 회사 따라 **크게 움직여요**"
+      ],
+      "nameEn": "TIGER Semiconductor TOP10",
+      "kwEn": "Samsung + SK hynix all-in",
+      "subEn": "Samsung Electronics + SK hynix are over half.",
+      "aboutEn": "Korea's top 10 chip companies. Samsung Electronics and SK hynix make up more than half, so it moves big with those two.",
+      "diffEn": "Samsung + hynix all-in",
+      "pointsEn": [
+        "Korea's **top 10 chip companies**",
+        "**Samsung + SK hynix are over half**",
+        "**Moves big** with those two"
+      ]
+    },
+    {
+      "id": "kodex-ai-semi-top2",
+      "yahoo": "395160.KS",
+      "market": "kr",
+      "code": "AI반도체",
+      "name": "KODEX AI반도체TOP2플러스",
+      "kw": "삼전닉스 반 + 부품 반",
+      "sector": "semi",
+      "rank": 4,
+      "sub": "삼성전자·SK하이닉스에 약 50%, 나머지는 삼성전기 같은 AI 반도체 부품 회사.",
+      "about": "삼성전자·SK하이닉스에 절반, 삼성전기·SK스퀘어 같은 AI 반도체 밸류체인에 절반. 올해 국내 반도체 집중형 ETF로 돈이 크게 몰렸어요. 대신 두 회사에 많이 쏠려 있어 흔들림도 커요.",
+      "diff": "삼전닉스 반 + 부품 반",
+      "points": [
+        "**삼성전자·SK하이닉스에 절반**을 담아요",
+        "나머지 절반은 **AI 반도체 부품 회사**",
+        "두 회사에 몰려 있어서 **흔들림이 커요**"
+      ],
+      "nameEn": "KODEX AI Semiconductor TOP2 Plus",
+      "kwEn": "Half Samsung/hynix, half parts",
+      "subEn": "About 50% Samsung Electronics and SK hynix, the rest AI chip suppliers like Samsung Electro-Mechanics.",
+      "aboutEn": "Half in Samsung Electronics and SK hynix, half in the AI chip supply chain like Samsung Electro-Mechanics and SK Square. Big money poured into Korean chip ETFs this year. Concentrated, so it shakes a lot.",
+      "diffEn": "Half big two + half parts",
+      "pointsEn": [
+        "**Half in Samsung and SK hynix**",
+        "The other half: **AI chip parts makers**",
+        "Concentrated, so **it shakes a lot**"
+      ]
+    },
+    {
+      "id": "tiger-nasdaq100",
+      "yahoo": "133690.KS",
+      "market": "kr",
+      "code": "N100",
+      "name": "TIGER 미국나스닥100",
+      "kw": "원화로 사는 QQQ",
+      "sector": "ai",
+      "rank": 5,
+      "sub": "빅테크 100개를 원화로.",
+      "about": "QQQ와 같은 나스닥100을 원화로 사는 ETF. 연금계좌에서도 살 수 있어요.",
+      "diff": "원화 QQQ · 연금 OK",
+      "points": [
+        "**QQQ를 원화로** 사는 거예요",
+        "나스닥 **큰 회사 100개**가 들어 있어요",
+        "**연금계좌에서도** 살 수 있어요"
+      ],
+      "nameEn": "TIGER US Nasdaq100",
+      "kwEn": "QQQ in Korean won",
+      "subEn": "Big Tech 100 in won.",
+      "aboutEn": "The same Nasdaq 100 as QQQ, bought in won. Works in Korean pension accounts too.",
+      "diffEn": "Won QQQ · pension OK",
+      "pointsEn": [
+        "It's **QQQ in Korean won**",
+        "Nasdaq's **top 100** inside",
+        "**Works in pension accounts** too"
+      ]
+    },
+    {
+      "id": "tiger-us-dividend",
+      "yahoo": "458730.KS",
+      "market": "kr",
+      "code": "배당",
+      "name": "TIGER 미국배당다우존스",
+      "kw": "원화로 사는 SCHD",
+      "sector": "div",
+      "rank": 6,
+      "sub": "배당 꾸준한 미국 회사 100개.",
+      "about": "SCHD와 같은 지수를 원화로 사는 ETF. 매달 분배금을 줘서 생활비용으로 인기가 많아요.",
+      "diff": "원화 SCHD · 연금 OK",
+      "points": [
+        "**SCHD를 원화로** 사는 거예요",
+        "**매달 분배금**을 줘요",
+        "그래서 **생활비 통장**처럼 많이 써요"
+      ],
+      "nameEn": "TIGER US Dividend Dow Jones",
+      "kwEn": "SCHD in Korean won",
+      "subEn": "100 US companies with steady dividends.",
+      "aboutEn": "Tracks the same index as SCHD, in won. Pays out every month, so it's popular for living expenses.",
+      "diffEn": "Won SCHD · pension OK",
+      "pointsEn": [
+        "It's **SCHD in Korean won**",
+        "**Pays out every month**",
+        "Used like a **living-expenses account**"
+      ]
+    },
+    {
+      "id": "tiger-phlx-semi",
+      "yahoo": "381180.KS",
+      "market": "kr",
+      "code": "SOX",
+      "name": "TIGER 미국필라델피아반도체나스닥",
+      "kw": "원조 필라델피아",
+      "sector": "semi",
+      "rank": 7,
+      "sub": "미국 반도체 30개.",
+      "about": "원조 필라델피아 반도체지수(SOX)를 원화로 따라가는 ETF. 미국 반도체 30개를 담아요.",
+      "diff": "원화 SOXX",
+      "points": [
+        "원조 **미국 반도체지수**를 원화로 따라가요",
+        "미국 **반도체 회사 30개**가 들어 있어요",
+        "**SOXX와 비슷한** 원화 버전이에요"
+      ],
+      "nameEn": "TIGER US Philadelphia Semiconductor Nasdaq",
+      "kwEn": "The original SOX",
+      "subEn": "30 US chip makers.",
+      "aboutEn": "Tracks the original Philadelphia Semiconductor Index (SOX) in won. Holds 30 US chip companies.",
+      "diffEn": "Won SOXX",
+      "pointsEn": [
+        "Tracks the **original US chip index** in won",
+        "**30 US chip companies** inside",
+        "A won version **similar to SOXX**"
+      ]
+    },
+    {
+      "id": "tiger-ship-top10",
+      "yahoo": "494670.KS",
+      "market": "kr",
+      "code": "조선TOP10",
+      "name": "TIGER 조선TOP10",
+      "kw": "K조선 대장들",
+      "sector": "defense",
+      "rank": 8,
+      "sub": "HD현대중공업·한화오션·삼성중공업 같은 한국 조선 TOP10.",
+      "about": "한국 대표 조선사 10곳. 미국과 조선 협력(마스가) 기대로 크게 올랐다가, 최근엔 오르내림이 아주 커졌어요.",
+      "diff": "조선만 · 극매운맛",
+      "points": [
+        "**한국 배 만드는 회사 10곳**이에요",
+        "**미국과 조선 협력** 기대로 크게 올랐어요",
+        "요즘은 **오르내림이 아주 커요**"
+      ],
+      "nameEn": "TIGER Shipbuilding TOP10",
+      "kwEn": "K-shipbuilding leaders",
+      "subEn": "Korea's top 10 shipbuilders like HD Hyundai Heavy, Hanwha Ocean and Samsung Heavy.",
+      "aboutEn": "Korea's 10 leading shipbuilders. Soared on hopes of US-Korea shipbuilding cooperation, and swings have gotten huge lately.",
+      "diffEn": "Ships only · extra spicy",
+      "pointsEn": [
+        "**Korea's 10 shipbuilders**",
+        "Soared on **US-Korea shipbuilding** hopes",
+        "These days **swings are huge**"
+      ]
+    },
+    {
+      "id": "plus-k-defense",
+      "yahoo": "449450.KS",
+      "market": "kr",
+      "code": "K방산",
+      "name": "PLUS K방산",
+      "kw": "K방산 원조",
+      "sector": "defense",
+      "rank": 9,
+      "sub": "현대로템·한화에어로스페이스·LIG넥스원 같은 한국 방산 대표.",
+      "about": "국내 방산 ETF 중 가장 먼저, 가장 크게 큰 상품. 수출 계약 뉴스에 크게 움직여요.",
+      "diff": "수출 뉴스에 출렁",
+      "points": [
+        "**한국 방산 회사**들을 담아요",
+        "국내 방산 ETF 중 **가장 먼저 나온 큰 상품**",
+        "**수출 계약 뉴스**에 크게 움직여요"
+      ],
+      "nameEn": "PLUS K-Defense",
+      "kwEn": "The original K-defense",
+      "subEn": "Korean defense leaders like Hyundai Rotem, Hanwha Aerospace and LIG Nex1.",
+      "aboutEn": "The first and biggest Korean defense ETF. Moves a lot on export-deal news.",
+      "diffEn": "Rides export news",
+      "pointsEn": [
+        "Holds **Korean defense companies**",
+        "The **first big** Korean defense ETF",
+        "**Export-deal news** moves it a lot"
+      ]
+    },
+    {
+      "id": "tiger-healthcare",
+      "yahoo": "143860.KS",
+      "market": "kr",
+      "code": "헬스케어",
+      "name": "TIGER 헬스케어",
+      "kw": "한국 제약·바이오 대표",
+      "sector": "bio",
+      "rank": 10,
+      "sub": "삼성바이오로직스·셀트리온 같은 한국 헬스케어 대표.",
+      "about": "국내 제약·바이오 대형주를 모아요. 올해 내내 부진했지만, 최근 실적 좋은 회사 위주로 반등 기대가 나오고 있어요.",
+      "diff": "K제약 대장 · 순한맛",
+      "points": [
+        "**한국 제약·바이오 큰 회사**들이에요",
+        "올해 내내 **쉬었어요**",
+        "실적 좋은 회사 위주로 **반등 기대** 중"
+      ],
+      "nameEn": "TIGER Healthcare",
+      "kwEn": "Korean pharma & bio leaders",
+      "subEn": "Korean healthcare leaders like Samsung Biologics and Celltrion.",
+      "aboutEn": "Large Korean pharma and bio companies. Sluggish all year, but hopes of a rebound are growing around firms with good earnings.",
+      "diffEn": "K-pharma leaders · mild",
+      "pointsEn": [
+        "**Big Korean pharma and bio** names",
+        "**Rested** all year",
+        "**Rebound hopes** for strong earners"
+      ]
+    },
+    {
+      "id": "tiger-200",
+      "yahoo": "102110.KS",
+      "market": "kr",
+      "code": "200",
+      "name": "TIGER 200",
+      "kw": "코스피 200 쌍둥이",
+      "sector": "kidx",
+      "rank": 11,
+      "sub": "KODEX 200과 같은 코스피 200개. 수수료만 조금 달라요.",
+      "about": "코스피 대표 200개 회사를 담아요. 삼성전자·SK하이닉스 비중이 커서 반도체가 오르면 같이 올라요.",
+      "diff": "KODEX 200 쌍둥이",
+      "points": [
+        "**코스피 큰 회사 200개**를 한 번에 사요",
+        "KODEX 200과 **같은 지수**예요",
+        "**반도체가 오르면 같이 올라요**"
+      ],
+      "nameEn": "TIGER 200",
+      "kwEn": "KOSPI 200 twin",
+      "subEn": "The same KOSPI 200 as KODEX 200. Only the fee differs a bit.",
+      "aboutEn": "Holds KOSPI's top 200 companies. Samsung Electronics and SK hynix are big, so it rises when chips rise.",
+      "diffEn": "KODEX 200's twin",
+      "pointsEn": [
+        "Buys **KOSPI's top 200** at once",
+        "**Same index** as KODEX 200",
+        "**Rises when chips rise**"
+      ]
+    },
+    {
+      "id": "kodex-nasdaq100",
+      "yahoo": "379810.KS",
+      "market": "kr",
+      "code": "나스닥100",
+      "name": "KODEX 미국나스닥100",
+      "kw": "원화로 사는 QQQ 2",
+      "sector": "ai",
+      "rank": 12,
+      "sub": "나스닥 100개를 원화로. 올해 국내에서 돈이 많이 들어온 미국 ETF 중 하나.",
+      "about": "QQQ와 같은 나스닥100을 한국 증권사에서 원화로 사요. 연금계좌에서도 살 수 있어요.",
+      "diff": "TIGER 나스닥 쌍둥이",
+      "points": [
+        "**QQQ를 원화로** 사는 거예요",
+        "나스닥 **큰 회사 100개**가 들어 있어요",
+        "**연금계좌에서도** 살 수 있어요"
+      ],
+      "nameEn": "KODEX US Nasdaq100",
+      "kwEn": "QQQ in Korean won, #2",
+      "subEn": "Nasdaq 100 in won. One of the most popular US ETFs in Korea this year.",
+      "aboutEn": "The same Nasdaq 100 as QQQ, in won at a Korean broker. Works in pension accounts too.",
+      "diffEn": "TIGER Nasdaq's twin",
+      "pointsEn": [
+        "It's **QQQ in Korean won**",
+        "Nasdaq's **top 100** inside",
+        "**Works in pension accounts** too"
+      ]
+    },
+    {
+      "id": "tiger-bio-top10",
+      "yahoo": "364970.KS",
+      "market": "kr",
+      "code": "바이오TOP10",
+      "name": "TIGER 바이오TOP10",
+      "kw": "K바이오 신약파",
+      "sector": "bio",
+      "rank": 13,
+      "sub": "한국 바이오 TOP10. 임상·기술수출 뉴스에 크게 움직여요.",
+      "about": "신약 개발·바이오시밀러 회사 중심. 임상 결과 하나로 하루에 크게 오르내리는 일이 많아서 조금만.",
+      "diff": "K신약 로또 · 극매운맛",
+      "points": [
+        "**신약·바이오시밀러** 회사 10곳이에요",
+        "**임상 결과 하나로** 하루에 크게 움직여요",
+        "그래서 **조금만** 담아요"
+      ],
+      "nameEn": "TIGER Bio TOP10",
+      "kwEn": "K-bio drug hunters",
+      "subEn": "Korea's top 10 biotechs. Trial and licensing news move it a lot.",
+      "aboutEn": "Mostly new-drug and biosimilar companies. One trial result can swing it hard in a day, so keep it small.",
+      "diffEn": "K-drug lottery · extra spicy",
+      "pointsEn": [
+        "**10 new-drug and biosimilar** companies",
+        "**One trial result** can move it a lot",
+        "So **keep it small**"
+      ]
+    },
+    {
+      "id": "tiger-us-tech10",
+      "yahoo": "381170.KS",
+      "market": "kr",
+      "code": "테크10",
+      "name": "TIGER 미국테크TOP10",
+      "kw": "빅테크 10개 몰빵",
+      "sector": "ai",
+      "rank": 14,
+      "sub": "미국 빅테크 상위 10개.",
+      "about": "미국 빅테크 상위 10개에 몰아서 투자. 나스닥100보다 더 집중돼 있어서 더 크게 움직여요.",
+      "diff": "빅테크 10개 몰빵",
+      "points": [
+        "**미국 빅테크 10개**에 몰아서 투자해요",
+        "나스닥100보다 **더 몰려 있어요**",
+        "그래서 **더 크게 움직여요**"
+      ],
+      "nameEn": "TIGER US Tech TOP10",
+      "kwEn": "Top 10 Big Tech all-in",
+      "subEn": "America's top 10 Big Tech.",
+      "aboutEn": "All-in on America's 10 biggest tech names. More concentrated than the Nasdaq 100, so it moves bigger.",
+      "diffEn": "10 Big Tech all-in",
+      "pointsEn": [
+        "**All-in on 10 Big Tech** names",
+        "**More concentrated** than Nasdaq 100",
+        "So **it moves bigger**"
+      ]
+    },
+    {
+      "id": "kodex-ai-power",
+      "yahoo": "487240.KS",
+      "market": "kr",
+      "code": "AI전력",
+      "name": "KODEX AI전력핵심설비",
+      "kw": "한국판 전기짱",
+      "sector": "power",
+      "rank": 15,
+      "sub": "변압기·전선 같은 전력 설비 회사들.",
+      "about": "변압기·전선·전력기기를 만드는 한국 회사들. AI 데이터센터 전기 수요 기대로 많이 올랐다가 크게 쉬어가는 중이에요.",
+      "diff": "한국 전력 · 매운맛",
+      "points": [
+        "**변압기·전선·전력기기** 만드는 한국 회사들",
+        "**AI 데이터센터 전기 수요**로 주목받아요",
+        "많이 올랐다가 **크게 쉬어가는 중**"
+      ],
+      "nameEn": "KODEX AI Power Core Equipment",
+      "kwEn": "Korea's power boss",
+      "subEn": "Power equipment makers: transformers, cables and more.",
+      "aboutEn": "Korean makers of transformers, cables and power gear. Rallied hard on AI data-center power demand, now taking a big breather.",
+      "diffEn": "Korean power · spicy",
+      "pointsEn": [
+        "Korean makers of **transformers, cables, power gear**",
+        "In focus for **AI data-center power demand**",
+        "Ran up a lot, **now resting**"
+      ]
+    },
+    {
+      "id": "ace-gold",
+      "yahoo": "411060.KS",
+      "market": "kr",
+      "code": "금",
+      "name": "ACE KRX금현물",
+      "kw": "원화로 사는 금덩이",
+      "sector": "safe",
+      "rank": 16,
+      "sub": "한국거래소 금 가격을 따라가요.",
+      "about": "한국거래소의 금 가격을 따라가는 ETF. 원화로 금에 투자하는 가장 쉬운 방법 중 하나예요.",
+      "diff": "원화 금 · 연금 OK",
+      "points": [
+        "**한국 금 시장 가격**을 따라가요",
+        "**원화로 금 사는** 제일 쉬운 방법",
+        "주식이 무서울 때 **피난처**"
+      ],
+      "nameEn": "ACE KRX Gold Spot",
+      "kwEn": "Gold bar in Korean won",
+      "subEn": "Tracks the Korea Exchange gold price.",
+      "aboutEn": "Follows the gold price on the Korea Exchange. One of the easiest ways to invest in gold in won.",
+      "diffEn": "Won gold · pension OK",
+      "pointsEn": [
+        "Tracks the **Korean gold market price**",
+        "The **easiest way to buy gold in won**",
+        "A **shelter** when stocks get scary"
+      ]
+    },
+    {
+      "id": "ace-us30y",
+      "yahoo": "453850.KS",
+      "market": "kr",
+      "code": "30년채",
+      "name": "ACE 미국30년국채액티브",
+      "kw": "원화로 사는 장기채",
+      "sector": "safe",
+      "rank": 17,
+      "sub": "금리가 내리면 오르는 채권.",
+      "about": "미국 30년 국채에 투자하는 ETF. 금리가 내리면 오르고, 오르면 내려요. 연금계좌의 안전자산 칸을 채울 때 많이 써요.",
+      "diff": "금리 내리면 웃음",
+      "points": [
+        "**미국 30년 국채**에 투자해요",
+        "**금리가 내리면 오르고**, 오르면 내려요",
+        "연금계좌의 **안전자산 칸** 채울 때 많이 써요"
+      ],
+      "nameEn": "ACE US 30Y Treasury Active",
+      "kwEn": "Long bonds in Korean won",
+      "subEn": "A bond that rises when rates fall.",
+      "aboutEn": "Invests in 30-year US Treasuries. Up when rates fall, down when they rise. Often used to fill the safe-asset slot in pension accounts.",
+      "diffEn": "Smiles when rates fall",
+      "pointsEn": [
+        "Invests in **30-year US Treasuries**",
+        "**Up when rates fall**, down when they rise",
+        "Fills the **safe-asset slot** in pensions"
+      ]
+    }
+  ],
+  "fx": [
+    {
+      "id": "usd",
+      "yahoo": "KRW=X",
+      "name": "미국 달러",
+      "short": "달러",
+      "unit": "1달러",
+      "mult": 1
+    },
+    {
+      "id": "jpy",
+      "yahoo": "JPYKRW=X",
+      "name": "일본 엔",
+      "short": "엔 (100엔)",
+      "unit": "100엔",
+      "mult": 100
+    },
+    {
+      "id": "eur",
+      "yahoo": "EURKRW=X",
+      "name": "유로",
+      "short": "유로",
+      "unit": "1유로",
+      "mult": 1
+    }
+  ]
 }

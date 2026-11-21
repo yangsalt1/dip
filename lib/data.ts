@@ -35,6 +35,7 @@ export interface Etf {
   /** 비슷한 ETF와 뭐가 다른지 · 어떤 사람에게 맞는지 (짧게) */
   diff: string;
   about: string;
+  nameEn?: string; kwEn?: string; subEn?: string; diffEn?: string; aboutEn?: string; pointsEn?: string[];
   q: Quote;
   kind: Kind;
 }
@@ -84,19 +85,24 @@ export const PRICE_DATE = quotes['VOO'].date;
 export const FX = cfg.fx.map((f) => ({ ...f, q: quotes[f.yahoo] }));
 
 export const BRIEF = brief;
+/** 언어별 뉴스: 영어 블록(en)이 있으면 그걸로 덮어써요. 없는 칸은 한국어 그대로 */
+export function briefFor(lang: 'ko' | 'en'): typeof brief & { insightsEn?: unknown } {
+  const en = (brief as { en?: Partial<typeof brief> }).en;
+  return lang === 'en' && en ? { ...brief, ...en } : brief;
+}
 
-export const SECTORS: { id: Sector | 'all'; label: string; color: string }[] = [
-  { id: 'all', label: '전체', color: '#111111' },
-  { id: 'idx', label: '미국 대표', color: '#F06C3C' },
-  { id: 'kidx', label: '한국 대표', color: '#FF9E80' },
-  { id: 'semi', label: '반도체', color: '#B1A6FF' },
-  { id: 'ai', label: 'AI·로봇', color: '#C9DDF7' },
-  { id: 'power', label: '전력·원전', color: '#F2F28E' },
-  { id: 'bio', label: '제약·바이오', color: '#FFB8D6' },
-  { id: 'defense', label: '방산·조선', color: '#A8B8C8' },
-  { id: 'div', label: '배당', color: '#2DB866' },
-  { id: 'safe', label: '금·채권', color: '#D8D0C4' },
-  { id: 'crypto', label: '비트코인', color: '#FFC85C' },
+export const SECTORS: { id: Sector | 'all'; label: string; labelEn: string; color: string }[] = [
+  { id: 'all', label: '전체', labelEn: 'All', color: '#111111' },
+  { id: 'idx', label: '미국 대표', labelEn: 'US index', color: '#F06C3C' },
+  { id: 'kidx', label: '한국 대표', labelEn: 'Korea', color: '#FF9E80' },
+  { id: 'semi', label: '반도체', labelEn: 'Chips', color: '#B1A6FF' },
+  { id: 'ai', label: 'AI·로봇', labelEn: 'AI·Robots', color: '#C9DDF7' },
+  { id: 'power', label: '전력·원전', labelEn: 'Power', color: '#F2F28E' },
+  { id: 'bio', label: '제약·바이오', labelEn: 'Pharma', color: '#FFB8D6' },
+  { id: 'defense', label: '방산·조선', labelEn: 'Defense', color: '#A8B8C8' },
+  { id: 'div', label: '배당', labelEn: 'Dividend', color: '#2DB866' },
+  { id: 'safe', label: '금·채권', labelEn: 'Gold·Bond', color: '#D8D0C4' },
+  { id: 'crypto', label: '비트코인', labelEn: 'Bitcoin', color: '#FFC85C' },
 ];
 
 export const PALETTE = ['#B1A6FF', '#D8D0C4', '#F06C3C', '#F2F28E', '#2DB866', '#C9DDF7'];

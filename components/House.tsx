@@ -1,4 +1,5 @@
 'use client';
+import { Brand } from './Lang';
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { BottomNav } from './ui';
@@ -162,7 +163,7 @@ export default function House() {
     <main className="app">
       <header className="hdr">
         <div>
-          <Link href="/" className="brand">JUP<small>떨어질 때 줍는다</small></Link>
+          <Brand />
           <h1 className="title">청약 <span>{edit || !pref ? '내 조건' : list ? `딱 맞는 ${hits.length}개` : '찾는 중'}</span></h1>
         </div>
       </header>

@@ -1,4 +1,5 @@
 'use client';
+import { Brand } from './Lang';
 import { useState } from 'react';
 import Link from 'next/link';
 import { PLANS, pensionCalc, type Goal } from '@/lib/plans';
@@ -37,7 +38,7 @@ export default function Money() {
     <main className="app">
       <header className="hdr">
         <div>
-          <Link href="/" className="brand">JUP<small>떨어질 때 줍는다</small></Link>
+          <Brand />
           <h1 className="title">포트폴리오<br /><span>짜보기</span></h1>
         </div>
         <div style={{ marginTop: 34, display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-end' }}>

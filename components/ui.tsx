@@ -1,27 +1,37 @@
+'use client';
 import Link from 'next/link';
 import type { Kind } from '@/lib/data';
-import { KIND_CHIP } from '@/lib/format';
+import { kindChip } from '@/lib/format';
+import { LangSwitch, useLang } from './Lang';
 import { stickerStyle } from '@/lib/sticker';
 
 export function BottomNav({ active }: { active: 'news' | 'etf' | 'jup' | 'money' | 'house' }) {
+  const en = useLang() === 'en';
   return (
-    <nav className="nav" aria-label="메뉴">
-      <Link href="/" className="navBrand">JUP<small>떨어질 때 줍는다</small></Link>
-      <Link href="/" aria-current={active === 'news' ? 'page' : undefined}>오늘</Link>
+    <nav className="nav" aria-label={en ? 'Menu' : '메뉴'}>
+      <Link href="/" className="navBrand">{en ? 'DIP' : 'JUP'}<small>{en ? 'Buy the dip' : '떨어질 때 줍는다'}</small></Link>
+      <Link href="/" aria-current={active === 'news' ? 'page' : undefined}>{en ? 'Today' : '오늘'}</Link>
       <Link href="/etf/" aria-current={active === 'etf' ? 'page' : undefined}>ETF</Link>
-      <Link href="/money/" aria-current={active === 'money' || active === 'jup' ? 'page' : undefined}>포트폴리오</Link>
-      <Link href="/house/" aria-current={active === 'house' ? 'page' : undefined}>청약</Link>
+      <Link href="/money/" aria-current={active === 'money' || active === 'jup' ? 'page' : undefined}>{en ? 'Portfolio' : '포트폴리오'}</Link>
+      {!en && <Link href="/house/" aria-current={active === 'house' ? 'page' : undefined}>청약</Link>}
+      <span className="navLang"><LangSwitch /></span>
     </nav>
   );
 }
 
 export function StatusChip({ kind }: { kind: Kind }) {
-  return <span className={`chip ${kind}`}>{KIND_CHIP[kind]}</span>;
+  return <span className={`chip ${kind}`}>{kindChip(kind, useLang())}</span>;
 }
 
 /** 할인 딱지. B = 동그란 도장, F = 숫자만 크게 */
 export function Sticker({ kind, dd, d1, label }: { kind: Kind; dd: number; d1: number; label?: string }) {
   const off = Math.abs(dd);
+  const en = useLang() === 'en';
+  if (en) {
+    const t = kind === 'mega' ? `↓ ${off.toFixed(1)}% mega off` : kind === 'sale' ? `↓ ${off.toFixed(1)}% off`
+      : kind === 'up' ? `↑ ${Math.abs(d1).toFixed(2)}% up` : 'Easy · near the high';
+    return <span className={`pilltag ${kind}`}>{t}</span>;
+  }
   if (stickerStyle() === 'b') {
     const big = kind === 'mega' || kind === 'sale' ? `${Math.round(off)}%` : kind === 'up' ? `${d1 >= 0 ? '+' : ''}${d1.toFixed(1)}%` : '워워';
     const small = kind === 'mega' ? '특급' : kind === 'sale' ? '할인' : kind === 'up' ? '상승' : '고점';

@@ -550,5 +550,262 @@
       ],
       "buy": "월요일엔 3번에 나눠서, 조금만"
     }
-  ]
+  ],
+  "en": {
+    "dateLabel": "Sat 11.21",
+    "cards": [
+      {
+        "label": "What happened?",
+        "kid": "Nvidia crashed in a single day.",
+        "mid": "Nvidia crashed in a single day.",
+        "pro": "Nvidia crashed in a single day.",
+        "more": "Rumors of an **Nvidia accounting probe** sent **AI stocks tumbling**. The Nasdaq **fell hard in one day**.",
+        "short": "Rumors of an **Nvidia accounting probe** sent **AI stocks tumbling**. The Nasdaq **fell hard in one day**.",
+        "etfs": [
+          "qqq",
+          "aiq",
+          "smh"
+        ],
+        "buy": "Just watch for now. Don't rush to buy",
+        "story": "nvidia-ceo"
+      },
+      {
+        "label": "So what?",
+        "kid": "The US market just hit a 'correction'.",
+        "mid": "The US market just hit a 'correction'.",
+        "pro": "The US market just hit a 'correction'.",
+        "more": "The S&P 500 is **down more than 10% from the top**, which is a **'correction'**. Meanwhile **sturdy stocks like Walmart and utilities** went up.",
+        "short": "The S&P 500 is **down more than 10% from the top**, which is a **'correction'**. Meanwhile **sturdy stocks like Walmart and utilities** went up.",
+        "etfs": [
+          "voo",
+          "xlu",
+          "dia"
+        ],
+        "buy": "Buy broad ETFs a little at a time, in 3 parts"
+      },
+      {
+        "label": "And me?",
+        "kid": "A big sale, but take it slow.",
+        "mid": "A big sale, but take it slow.",
+        "pro": "A big sale, but take it slow.",
+        "more": "After a week of drops, **price tags are cheaper.** But **nobody knows where the bottom is**, so **splitting your buys** is safer.",
+        "short": "After a week of drops, **price tags are cheaper.** But **nobody knows where the bottom is**, so **splitting your buys** is safer.",
+        "etfs": [
+          "voo",
+          "schd",
+          "gld"
+        ],
+        "buy": "Not all at once. Split it into 3"
+      }
+    ],
+    "cardsKr": [
+      {
+        "label": "What happened?",
+        "kid": "KOSPI plunged in a single day.",
+        "mid": "KOSPI plunged in a single day.",
+        "pro": "KOSPI plunged in a single day.",
+        "more": "A **'Black Friday'**: **KOSPI and KOSDAQ both fell hard**. It dropped so fast that a **temporary pause (sidecar)** kicked in.",
+        "short": "A **'Black Friday'**: **KOSPI and KOSDAQ both fell hard**. It dropped so fast that a **temporary pause (sidecar)** kicked in.",
+        "etfs": [
+          "kodex-200",
+          "tiger-200"
+        ],
+        "buy": "Just watch. Don't panic-sell either"
+      },
+      {
+        "label": "So what?",
+        "kid": "US chip worries reached Korea.",
+        "mid": "US chip worries reached Korea.",
+        "pro": "US chip worries reached Korea.",
+        "more": "News of **US chip restrictions** hit **Samsung Electronics and SK hynix** hard. **Foreign investors keep selling.**",
+        "short": "News of **US chip restrictions** hit **Samsung Electronics and SK hynix** hard. **Foreign investors keep selling.**",
+        "etfs": [
+          "tiger-semi-top10",
+          "kodex-ai-semi-top2"
+        ],
+        "buy": "Only a little chips, slowly"
+      },
+      {
+        "label": "And me?",
+        "kid": "Rest up this weekend and make a plan.",
+        "mid": "Rest up this weekend and make a plan.",
+        "pro": "Rest up this weekend and make a plan.",
+        "more": "The **US fell hard again overnight**, so Monday **could be shaky.** If you're buying, **split the amount ahead of time.**",
+        "short": "The **US fell hard again overnight**, so Monday **could be shaky.** If you're buying, **split the amount ahead of time.**",
+        "etfs": [
+          "kodex-200",
+          "tiger-sp500",
+          "ace-gold"
+        ],
+        "buy": "Monday: split into 3, just a little"
+      }
+    ],
+    "insights": {
+      "idx": [
+        [
+          "Money is flowing into the big index ETFs",
+          "$13.4B into QQQ and $9.7B into VOO last week",
+          "ETF.com"
+        ],
+        [
+          "S&P 500 down 5 days in a row",
+          "Longest losing streak since June. A quiet sale",
+          "Yahoo Finance"
+        ],
+        [
+          "Dow -1.1% on healthcare",
+          "Insurers fell hard, so the Dow dropped more",
+          "Yahoo Finance"
+        ]
+      ],
+      "kidx": [
+        [
+          "KOSPI back above 5,000",
+          "Up 1.99% on the 18th thanks to Nvidia earnings",
+          "Newspim"
+        ],
+        [
+          "Foreigners are still selling",
+          "Sold over ₩300B on the 18th too. Institutions held it up",
+          "Nate News"
+        ],
+        [
+          "The ETF that drew the most money",
+          "₩5.7T flowed into KODEX 200 this year",
+          "Korea Economic Daily"
+        ]
+      ],
+      "semi": [
+        [
+          "Nvidia's numbers were huge",
+          "Revenue $115.8B, $7B above estimates",
+          "Kiplinger"
+        ],
+        [
+          "But the stock fell 2.9%",
+          "Who's the next CEO? Plus China export worries",
+          "Motley Fool"
+        ],
+        [
+          "Money is leaving US chip ETFs",
+          "$1.2B out of SOXX and $0.9B out of SMH last week",
+          "Nate News"
+        ],
+        [
+          "Korea loves concentrated chip ETFs",
+          "85% of money into new popular ETFs went to chip themes",
+          "Korea Economic Daily"
+        ]
+      ],
+      "ai": [
+        [
+          "AMD and Broadcom went up",
+          "The day after Nvidia: AMD +5.8%, Broadcom +4.6%",
+          "Yahoo Finance"
+        ],
+        [
+          "Next big event: Anthropic IPO",
+          "Watching where money goes with a big AI listing",
+          "Stocktitan"
+        ],
+        [
+          "Robot & AI ETFs stay popular",
+          "$2B flowed in during October alone",
+          "State Street"
+        ]
+      ],
+      "power": [
+        [
+          "AI is a power-hungry hippo",
+          "Data-center power demand is a chance for power and nuclear",
+          "ETF.com"
+        ],
+        [
+          "Nuclear is back in focus",
+          "ETFs holding uranium miners (Cameco) were strong",
+          "Smart Today"
+        ],
+        [
+          "Rates are a burden",
+          "Utilities carry a lot of debt, so rising rates hurt",
+          "ETF.com"
+        ]
+      ],
+      "bio": [
+        [
+          "US insurers plunged",
+          "Tougher Medicare audits: Humana -13%, UnitedHealth -10% on the 18th",
+          "Stocktitan"
+        ],
+        [
+          "Still, XLV is up 21% this year",
+          "Drug makers like weight-loss pioneers are holding up",
+          "Trefis"
+        ],
+        [
+          "Korean bio hopes for a rebound",
+          "Weak all year, but money may flow to firms with good earnings",
+          "Finpoint News"
+        ],
+        [
+          "Trial news cuts both ways",
+          "Related stocks hit limit-down on AriBio's phase 3 day",
+          "Edaily"
+        ]
+      ],
+      "defense": [
+        [
+          "Ships and defense: a rollercoaster",
+          "A shipbuilding leveraged ETF jumped 15% on Nov 2",
+          "Newspim"
+        ],
+        [
+          "US-Korea shipbuilding hopes remain",
+          "Real results will take time",
+          "Dailian"
+        ],
+        [
+          "ITA is the biggest US defense ETF",
+          "$11.6B in assets",
+          "Motley Fool"
+        ]
+      ],
+      "div": [
+        [
+          "SCHD is this year's #1 dividend ETF",
+          "$27.5B flowed in this year",
+          "EBC"
+        ],
+        [
+          "A shelter in a storm",
+          "Dividend ETFs held up even on rough tech days",
+          "Yahoo Finance"
+        ]
+      ],
+      "safe": [
+        [
+          "Dollar is the strongest in 19 months",
+          "A strong dollar often means gold takes a breather",
+          "Benzinga"
+        ],
+        [
+          "Rate-hike talk weighs",
+          "Bonds are weak on signs the Fed could hike more",
+          "Yahoo Finance"
+        ]
+      ],
+      "crypto": [
+        [
+          "Money is leaving bitcoin ETFs",
+          "Over $1.9B out of US bitcoin ETFs since November began",
+          "TFTC"
+        ],
+        [
+          "Swings are very big",
+          "Only a tiny slice of your money",
+          "DIP"
+        ]
+      ]
+    }
+  }
 }

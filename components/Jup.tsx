@@ -1,4 +1,6 @@
 'use client';
+import { useLang } from './Lang';
+import { Brand } from './Lang';
 import { useLive } from '@/lib/live';
 import { etfTitle } from '@/lib/format';
 import Link from 'next/link';
@@ -18,15 +20,16 @@ function Plus() {
 /** ETF 상세: 줍줍리스트에 담기 */
 export function JupButton({ id }: { id: string }) {
   const s = useJup();
+  const en = useLang() === 'en';
   const on = s.status === 'in' && s.ids.includes(id);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
       <button type="button" className={`cta jupBtn${on ? ' on' : ''}`} aria-pressed={on} disabled={s.status === 'loading'}
         onClick={() => toggleJup(id)}>
-        <span>{on ? '줍줍리스트에 담았어요' : s.status === 'out' ? '로그인하고 줍줍리스트에 담기' : '줍줍리스트에 담기'}</span>
+        <span>{en ? (on ? 'Added to my dip list' : s.status === 'out' ? 'Log in to add to my dip list' : 'Add to my dip list') : on ? '줍줍리스트에 담았어요' : s.status === 'out' ? '로그인하고 줍줍리스트에 담기' : '줍줍리스트에 담기'}</span>
         {on ? <Check /> : <Plus />}
       </button>
-      {on && <Link href="/jup/" className="small" style={{ margin: '0 8px', fontWeight: 800 }}>내 줍줍리스트 보기 →</Link>}
+      {on && <Link href="/jup/" className="small" style={{ margin: '0 8px', fontWeight: 800 }}>{en ? 'See my dip list →' : '내 줍줍리스트 보기 →'}</Link>}
       {s.error && <p role="alert" className="small" style={{ margin: '0 8px', color: '#A3200F' }}>{s.error}</p>}
     </div>
   );
@@ -35,10 +38,11 @@ export function JupButton({ id }: { id: string }) {
 /** 목록 안의 작은 담기 버튼 */
 export function JupMini({ id }: { id: string }) {
   const s = useJup();
+  const en = useLang() === 'en';
   const on = s.status === 'in' && s.ids.includes(id);
   const e = etfById(id);
   return (
-    <button type="button" className={`jupMini${on ? ' on' : ''}`} aria-pressed={on} aria-label={`${e?.code ?? id} 줍줍리스트${on ? '에서 빼기' : '에 담기'}`}
+    <button type="button" className={`jupMini${on ? ' on' : ''}`} aria-pressed={on} aria-label={en ? `${on ? 'Remove' : 'Add'} ${e?.code ?? id} ${on ? 'from' : 'to'} my dip list` : `${e?.code ?? id} 줍줍리스트${on ? '에서 빼기' : '에 담기'}`}
       onClick={(ev) => { ev.preventDefault(); ev.stopPropagation(); toggleJup(id); }}>
       {on ? <Check /> : <Plus />}
     </button>
@@ -77,7 +81,7 @@ export default function JupPage() {
     <main className="app">
       <header className="hdr">
         <div>
-          <Link href="/" className="brand">JUP<small>떨어질 때 줍는다</small></Link>
+          <Brand />
           <h1 className="title">줍줍<br /><span>리스트</span></h1>
         </div>
       </header>

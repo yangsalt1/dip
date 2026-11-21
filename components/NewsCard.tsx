@@ -4,25 +4,27 @@ import Link from 'next/link';
 import { BRIEF, etfById } from '@/lib/data';
 import { Arrow, Sticker } from './ui';
 import { etfTitle, etfSubtitle } from '@/lib/format';
+import { useLang } from './Lang';
 
 type Card = (typeof BRIEF.cards)[number] & { short?: string; etfs?: string[]; buy?: string; story?: string };
 
 /** 뉴스 한 장 아래 붙는 '관련 ETF + 사? 말아?' */
 export function NewsExtra({ c }: { c: Card }) {
+  const lang = useLang();
   const etfs = (c.etfs ?? []).map((id) => etfById(id)).filter(Boolean);
   return (
     <div className="nx">
       <div className="nxEtfs">
         {etfs.map((e) => (
           <Link key={e!.id} href={`/etf/${e!.id}/`} className="nxEtf">
-            <span className="nxNm"><b>{etfTitle(e!)}</b><small>{etfSubtitle(e!)}</small></span>
+            <span className="nxNm"><b>{etfTitle(e!, lang)}</b><small>{etfSubtitle(e!, lang)}</small></span>
             <Sticker kind={e!.kind} dd={e!.q.dd} d1={e!.q.d1} />
           </Link>
         ))}
       </div>
       {c.buy && (
         <Link href={c.story ? `/story/${c.story}/` : `/etf/${(c.etfs ?? [])[0] ?? ''}/`} className="nxBuy">
-          <span>사? 말아?</span><b>{c.buy}</b><Arrow color="#111" />
+          <span>{lang === 'en' ? 'Buy or wait?' : '사? 말아?'}</span><b>{c.buy}</b><Arrow color="#111" />
         </Link>
       )}
     </div>

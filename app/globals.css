@@ -608,3 +608,22 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
 .ovBarLite .ovLegend b { font-size: 14px; }
 .chipCol { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
 .partTag { display: inline-flex; align-items: center; font-size: 12px; font-weight: 800; color: #111; white-space: nowrap; padding: 4px 10px; border-radius: 999px; border: 2px solid #111; transform: rotate(-3deg); }
+
+/* 한 / EN 스위치 */
+.langSw { display: inline-flex; background: #DEDEDA; border-radius: 999px; padding: 3px; gap: 2px; flex: none; }
+.langSw button { border: 0; background: transparent; font: inherit; font-size: 12px; font-weight: 800; color: #6B6B67; padding: 5px 9px; border-radius: 999px; cursor: pointer; }
+.langSw button[aria-pressed="true"] { background: #111; color: #fff; }
+.langSw.dark { background: #2A2A28; }
+.langSw.dark button { color: #BDBDBA; }
+.langSw.dark button[aria-pressed="true"] { background: #F4F4F2; color: #111; }
+.brandRow { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.brandRow .brand { margin-bottom: 0; }
+.mOnly .brandRow { margin-bottom: 6px; }
+.navLang { margin-left: auto; display: flex; align-items: center; }
+/* 메뉴 칸 수가 언어마다 달라서(영어는 청약 없음) 자동으로 나눠요 */
+.nav { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+.nav .navLang { display: none; }
+@media (min-width: 1024px) {
+  .nav { display: flex; align-items: flex-end; }
+  .nav .navLang { display: flex; align-self: center; padding-bottom: 6px; }
+}

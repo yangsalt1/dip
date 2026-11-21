@@ -1,4 +1,5 @@
-import { ETFS, type Sector } from './data';
+import { ETFS, SECTORS, type Sector } from './data';
+import type { Lang } from './i18n';
 
 /** 오늘 시장 한눈에: 섹터별로 '지금 떨어지는 중 / 바닥 다지는 중 / 오르는 중' 자동 분류 */
 const NAME: Record<Sector, string> = { idx: '미국 대표', kidx: '한국 대표', semi: '반도체', ai: 'AI·로봇', power: '전력·원전', bio: '제약·바이오', defense: '방산·조선', div: '배당', safe: '금·채권', crypto: '비트코인' };
@@ -13,7 +14,8 @@ function topic(word: string) {
   return '는';
 }
 
-export function overview(mkt: 'us' | 'kr'): OvGroup[] {
+export function overview(mkt: 'us' | 'kr', lang: Lang = 'ko'): OvGroup[] {
+  const label = (s: Sector) => (lang === 'en' ? SECTORS.find((x) => x.id === s)?.labelEn ?? NAME[s] : NAME[s]);
   const sectors = Object.keys(NAME) as Sector[];
   const stat = sectors.map((s) => {
     const qs = ETFS.filter((e) => e.market === mkt && e.sector === s).map((e) => e.q);
@@ -30,21 +32,29 @@ export function overview(mkt: 'us' | 'kr'): OvGroup[] {
   const out: OvGroup[] = [];
   const add = (key: OvGroup['key'], arr: typeof stat, word: string) => {
     if (!arr.length) return;
-    const all = arr.map((x) => NAME[x.s]);
+    const all = arr.map((x) => label(x.s));
     // 한 줄이 너무 길어지지 않게 4개까지만
     const names = all.slice(0, 4);
     out.push({ key, names, lead: `${names.join(', ')}${topic(names[names.length - 1])}`, word });
   };
-  add('mega', mega, '특급세일');
-  add('sale', sale, '일반 세일');
-  add('bottom', bottom, '줍줍준비');
-  add('rising', rising, '상승중');
+  const en = lang === 'en';
+  add('mega', mega, en ? 'Mega sale' : '특급세일');
+  add('sale', sale, en ? 'On sale' : '일반 세일');
+  add('bottom', bottom, en ? 'Bottoming' : '줍줍준비');
+  add('rising', rising, en ? 'Rising' : '상승중');
   return out;
 }
 
 /** 오늘의 한 줄: 세일 폭 + 대표 ETF 흐름으로 '줍기 / 조금씩 / 구경' 판단 (투자 권유 아님) */
 export type Signal = { tone: 'go' | 'slow' | 'dip' | 'top'; text: string; chips: string[]; sub?: string };
 export const SIGNAL_SUB: Partial<Record<Signal['tone'], string>> = { slow: '현금 딱 들고 있어' };
+export const SIGNAL_SUB_EN: Partial<Record<Signal['tone'], string>> = { slow: 'Keep your cash ready' };
+export const SIGNAL_TEXT_EN = {
+  slow: 'Mega sale is on!',
+  go: 'Sale is finding a floor. Start easing in.',
+  dip: 'First pullback in an uptrend. Buy a little, as planned.',
+  top: 'Very pricey. At the top. No FOMO.',
+};
 export const SIGNAL_TEXT = {
   slow: '왕세일 시작!',
   go: '세일 바닥 다진다. 슬슬 들어가자.',
@@ -58,11 +68,14 @@ export const SIGNAL_TEXT = {
  *   눌림 뒤 다시 빠지는 중 / 세일 중 아직 하락 → slow
  *   10% 넘게 빠졌는데 바닥 신호  → go
  */
-export function signal(mkt: 'us' | 'kr'): Signal {
-  const s = signalRaw(mkt);
-  return { ...s, sub: SIGNAL_SUB[s.tone] };
+export function signal(mkt: 'us' | 'kr', lang: Lang = 'ko'): Signal {
+  const s = signalRaw(mkt, lang);
+  return lang === 'en'
+    ? { ...s, text: SIGNAL_TEXT_EN[s.tone], sub: SIGNAL_SUB_EN[s.tone] }
+    : { ...s, sub: SIGNAL_SUB[s.tone] };
 }
-function signalRaw(mkt: 'us' | 'kr'): Signal {
+function signalRaw(mkt: 'us' | 'kr', lang: Lang): Signal {
+  const en = lang === 'en';
   const list = ETFS.filter((e) => e.market === mkt);
   const idx = ETFS.find((e) => e.id === (mkt === 'us' ? 'voo' : 'kodex-200'));
   const mega = list.filter((e) => e.kind === 'mega').length;
@@ -74,13 +87,13 @@ function signalRaw(mkt: 'us' | 'kr'): Signal {
   const fallingAgain = st <= -2 || d1 <= -0.5;
 
   const chips: string[] = [];
-  if (mega > 0) chips.push(`특급세일 ${mega}개`);
-  else if (sale > 0) chips.push(`세일 ${sale}개`);
-  if (st <= -2) chips.push(`${-st}일 연속 하락`);
-  else if (st >= 2) chips.push(`${st}일 연속 상승`);
-  if (d1 >= 0.5) chips.push('오늘 반등');
-  if (usDrop) chips.push('밤새 미국 급락');
-  if (dd > -3) chips.push('최고가 근처');
+  if (mega > 0) chips.push(en ? `${mega} mega sales` : `특급세일 ${mega}개`);
+  else if (sale > 0) chips.push(en ? `${sale} on sale` : `세일 ${sale}개`);
+  if (st <= -2) chips.push(en ? `Down ${-st} days in a row` : `${-st}일 연속 하락`);
+  else if (st >= 2) chips.push(en ? `Up ${st} days in a row` : `${st}일 연속 상승`);
+  if (d1 >= 0.5) chips.push(en ? 'Bounced today' : '오늘 반등');
+  if (usDrop) chips.push(en ? 'US dropped overnight' : '밤새 미국 급락');
+  if (dd > -3) chips.push(en ? 'Near the high' : '최고가 근처');
 
   if (usDrop) return { tone: 'slow', text: SIGNAL_TEXT.slow, chips };
   if (dd > -3 && (trend > 0 || wk > 0)) return { tone: 'top', text: SIGNAL_TEXT.top, chips };

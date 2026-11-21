@@ -1,4 +1,4 @@
-export default function Chart({ points, start, label }: { points: number[]; start: string; label: string }) {
+export default function Chart({ points, start, label, en }: { points: number[]; start: string; label: string; en?: boolean }) {
   const W = 318, H = 150;
   const lo = Math.min(...points), hi = Math.max(...points);
   const pad = (hi - lo) * 0.08 || 1;
@@ -16,11 +16,11 @@ export default function Chart({ points, start, label }: { points: number[]; star
       <polyline points={line} fill="none" stroke="#111" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
       <line x1="0" y1={y(hi)} x2={W} y2={y(hi)} stroke="#111" strokeWidth="1" strokeDasharray="3 4" opacity="0.5" />
       <circle cx={x(iMax)} cy={y(hi)} r="5" fill="#111" />
-      <text x={Math.max(24, x(iMax) - 8)} y={y(hi) - 8} fontSize="11" fontWeight="700" textAnchor="end" fill="#111">고점</text>
+      <text x={Math.max(24, x(iMax) - 8)} y={y(hi) - 8} fontSize="11" fontWeight="700" textAnchor="end" fill="#111">{en ? "High" : "고점"}</text>
       <circle cx={x(last)} cy={y(points[last])} r="6" fill="#F06C3C" stroke="#111" strokeWidth="2" />
       <text x="0" y="168" fontSize="11" fontWeight="600" fill="#5A5A58">{ym(start)}</text>
       <text x={W / 2} y="168" fontSize="11" fontWeight="600" textAnchor="middle" fill="#5A5A58">{ym(mid.toISOString())}</text>
-      <text x={W} y="168" fontSize="11" fontWeight="600" textAnchor="end" fill="#5A5A58">지금</text>
+      <text x={W} y="168" fontSize="11" fontWeight="600" textAnchor="end" fill="#5A5A58">{en ? "Now" : "지금"}</text>
     </svg>
   );
 }
