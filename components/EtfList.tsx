@@ -8,6 +8,7 @@ import { ETFS, FX_RATE, PALETTE, PRICE_DATE, SECTORS, type Etf, type Market, isR
 import { priceText, statusLine, type Cur } from '@/lib/format';
 import { BottomNav, StatusChip, Sticker } from './ui';
 import { stickerStyle } from '@/lib/sticker';
+import { etfPart } from '@/lib/fng';
 
 export default function EtfList() {
   useLive();
@@ -44,7 +45,7 @@ export default function EtfList() {
             style={{ background: s.color, color: s.id === 'all' ? '#F4F4F2' : '#111' }}>{s.label}</button>
         ))}
       </div>
-      <p className="note" style={{ margin: '12px 24px 0', fontSize: 13 }}>줍줍타이밍 먼저, 그다음 많이 보는 순서 · {PRICE_DATE.slice(5).replace('-', '/')} 종가</p>
+      <p className="note" style={{ margin: '12px 24px 0', fontSize: 13 }}>반등 시작 먼저, 그다음 많이 보는 순서 · 몸 위치는 1년 최저가=발바닥, 최고가=정수리 · {PRICE_DATE.slice(5).replace('-', '/')} 종가</p>
 
       {hero && (
         <div className="stack etfGrid mOnlyB" style={{ paddingTop: 16 }}>
@@ -63,7 +64,7 @@ export default function EtfList() {
                 <b className="wRank">{isRebound(e) ? '줍' : i + 1}</b>
                 <span className="wListName"><b>{etfTitle(e)}</b><small>{etfSubtitle(e)}</small></span>
                 <span className="wListKw"><i style={{ background: sc?.color }} /><span style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}><span>{e.diff}</span>{e.market === 'us' && <small className="wDiff">{e.name}</small>}</span></span>
-                <span><Sticker kind={e.kind} dd={e.q.dd} d1={e.q.d1} /></span>
+                <span className="chipCol" style={{ alignItems: 'flex-start' }}><Sticker kind={e.kind} dd={e.q.dd} d1={e.q.d1} /><PartTag e={e} /></span>
                 <b className="wListPrice">{priceText(e, cur)}</b>
                 <b style={{ textAlign: 'right', color: e.q.d1 >= 0 ? '#A3200F' : '#1A3FA8' }}>{e.q.d1 >= 0 ? '+' : ''}{e.q.d1.toFixed(2)}%</b>
                 <span className="wTemp"><span><i style={{ width: `${e.q.buy}%` }} /></span><small>{e.q.buy}</small></span>
@@ -88,7 +89,10 @@ function Card({ e, cur, hero, tag, rank, bg }: { e: Etf; cur: Cur; hero?: boolea
         {hero
           ? <span className="chip" style={{ background: '#F2F28E', color: '#111', fontSize: 12, padding: '5px 11px' }}>{tag}</span>
           : <span style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}><b style={{ fontSize: 13, color: '#3A3A38' }}>{rank}위</b><b style={{ fontSize: etfTitle(e).length > 12 ? 19 : etfTitle(e).length > 5 ? 24 : 30, letterSpacing: '-0.045em' }}>{etfTitle(e)}</b></span>}
-        {stickerStyle() === 'b' ? <Sticker kind={e.kind} dd={e.q.dd} d1={e.q.d1} /> : <StatusChip kind={e.kind} />}
+        <span className="chipCol">
+          {stickerStyle() === 'b' ? <Sticker kind={e.kind} dd={e.q.dd} d1={e.q.d1} /> : <StatusChip kind={e.kind} />}
+          <PartTag e={e} dark={hero} />
+        </span>
       </span>
       {hero && <span style={{ fontSize: etfTitle(e).length > 6 ? 38 : 64, fontWeight: 800, lineHeight: 1, letterSpacing: '-0.05em', wordBreak: 'keep-all' }}>{etfTitle(e)}</span>}
       <span style={{ display: 'flex', flexDirection: 'column', gap: hero ? 6 : 3 }}>
@@ -105,4 +109,10 @@ function Card({ e, cur, hero, tag, rank, bg }: { e: Etf; cur: Cur; hero?: boolea
       </span>
     </Link>
   );
+}
+
+/** 1년 최저(발바닥)~최고(정수리) 중 지금 위치 */
+function PartTag({ e, dark }: { e: Etf; dark?: boolean }) {
+  const p = etfPart(e.q);
+  return <span className={`partTag${dark ? ' dark' : ''}`} title="1년 최저가=발바닥, 최고가=정수리"><i />지금 {p.ko}</span>;
 }

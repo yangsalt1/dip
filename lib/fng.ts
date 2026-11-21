@@ -13,3 +13,8 @@ export const partOf = (score: number): Part => PARTS.find((p) => score >= p.min)
 export const DOT_AT: Record<Part['key'], [number, number]> = {
   top: [50, 10], shoulder: [50, 70], waist: [50, 140], knee: [39, 181], ankle: [28, 214], sole: [22, 226],
 };
+
+/** ETF 하나의 위치: 1년 최저가(발바닥) ~ 최고가(정수리) 사이 어디쯤인지 */
+export const etfPos = (q: { last: number; hi: number | null; lo: number | null }) =>
+  q.hi != null && q.lo != null && q.hi > q.lo ? Math.max(0, Math.min(100, ((q.last - q.lo) / (q.hi - q.lo)) * 100)) : 50;
+export const etfPart = (q: { last: number; hi: number | null; lo: number | null }) => partOf(etfPos(q));
