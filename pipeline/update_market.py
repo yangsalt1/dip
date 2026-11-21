@@ -12,6 +12,8 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import urllib.request
+
 import yfinance as yf
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -40,6 +42,29 @@ def streak(closes):
     return n
 
 
+def fear_greed():
+    """CNN Fear & Greed 지수 (0~100). 실패하면 None"""
+    req = urllib.request.Request(
+        "https://production.dataviz.cnn.io/index/fearandgreed/graphdata",
+        headers={
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36",
+            "Accept": "application/json",
+            "Referer": "https://edition.cnn.com/markets/fear-and-greed",
+            "Origin": "https://edition.cnn.com",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=20) as r:
+        j = json.loads(r.read().decode("utf-8"))["fear_and_greed"]
+    r1 = lambda v: round(float(v)) if v is not None else None  # noqa: E731
+    ts = j.get("timestamp")
+    date = ts[:10] if isinstance(ts, str) else datetime.fromtimestamp(float(ts) / 1000, timezone.utc).strftime("%Y-%m-%d")
+    return {
+        "score": r1(j["score"]), "rating": j.get("rating", ""), "date": date,
+        "prev": r1(j.get("previous_close")), "week": r1(j.get("previous_1_week")),
+        "month": r1(j.get("previous_1_month")), "year": r1(j.get("previous_1_year")),
+    }
+
+
 def main() -> int:
     old = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {"quotes": {}}
     quotes = dict(old.get("quotes", {}))
@@ -56,6 +81,12 @@ def main() -> int:
         except Exception as e:  # 한 종목이 실패해도 나머지는 갱신하고, 실패한 건 어제 값 유지
             failed.append(t)
             print(f"ERR {t}: {e}", file=sys.stderr)
+    fng = old.get("fng")
+    try:
+        fng = fear_greed()
+        print(f"ok  F&G {fng['score']} {fng['rating']}")
+    except Exception as e:  # 실패하면 지난 값 유지
+        print(f"ERR F&G: {e}", file=sys.stderr)
     out = {
         "updatedAt": datetime.now(KST).isoformat(timespec="minutes"),
         "source": "Yahoo Finance",
@@ -63,6 +94,8 @@ def main() -> int:
         "failed": failed,
         "quotes": quotes,
     }
+    if fng:
+        out["fng"] = fng
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"저장: {OUT} (실패 {len(failed)}개)")
     return 1 if len(failed) == len(tickers) else 0
