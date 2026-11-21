@@ -147,13 +147,6 @@ export default function Home() {
           {megas.length ? megas.map((e) => <Row key={e.id} e={e} />)
             : <p className="small" style={{ margin: '6px 0 0', fontWeight: 700 }}>지금 특급세일은 없어요. 기다리는 것도 실력!</p>}
         </section>
-        <section className="card" style={{ background: '#C9DDF7', gap: 6 }}>
-          <div className="row"><span className="chip sale">일반세일 리스트</span><span style={{ fontSize: 15, fontWeight: 800 }}>{sales.length}개</span></div>
-          <p style={{ margin: '8px 0 0', fontSize: 26, lineHeight: 1.15, fontWeight: 800, letterSpacing: '-0.04em' }}>세일 시작했다</p>
-          <p className="nShort" style={{ margin: '0 0 4px' }}>조금씩 빠지는 종목들</p>
-          {sales.length ? sales.map((e) => <Row key={e.id} e={e} />)
-            : <p className="small" style={{ margin: '6px 0 0', fontWeight: 700 }}>지금 일반 세일도 없어요.</p>}
-        </section>
         <section className="card" style={{ background: '#F4F4F2', gap: 10 }}>
           <div className="row"><b style={{ fontSize: 15 }}>올랐을 땐 평정심</b><span style={{ fontSize: 13, fontWeight: 700, color: '#5A5A58' }}>상승 중 {ups.length} · 워워 {wows.length}</span></div>
           {wows.length ? wows.map((e) => (

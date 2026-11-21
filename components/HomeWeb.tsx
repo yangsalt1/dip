@@ -84,12 +84,6 @@ export default function HomeWeb() {
               <p className="nShort" style={{ color: '#BDBDBA' }}>최고가보다 15% 넘게 빠진 종목들</p>
               <div>{megas.length ? megas.map((e) => <Row key={e.id} e={e} />) : <p className="wBody" style={{ color: '#CFCFCB' }}>지금 특급세일은 없어요. 기다리는 것도 실력!</p>}</div>
             </section>
-            <section className="wCard" style={{ background: '#C9DDF7' }}>
-              <div className="row"><h3 className="wListTitle">일반세일 리스트</h3><b className="wCnt">{sales.length}개</b></div>
-              <p className="wMid">세일 시작했다</p>
-              <p className="nShort">조금씩 빠지는 종목들</p>
-              <div>{sales.length ? sales.map((e) => <Row key={e.id} e={e} />) : <p className="wBody">지금 일반 세일은 없어요.</p>}</div>
-            </section>
           </div>
           {wows.map((e) => (
             <Link key={e.id} href={`/etf/${e.id}/`} className="wWow"><HandIcon /><span><b>워워! {nameOf(e)}는 최고가 바로 근처</b> · 많이 들어가지 않기</span></Link>
