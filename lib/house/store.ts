@@ -85,3 +85,19 @@ export async function sendPush(uid: string, payload: { title: string; body: stri
   }
   return sent;
 }
+
+/** 관리자용: 조건을 저장한 모든 사람의 조건 (최대 2000명) */
+export async function allPrefs(): Promise<Pref[]> {
+  if (!redis) return [];
+  const keys: string[] = [];
+  let cursor: string | number = 0;
+  do {
+    const [next, ks] = (await redis.scan(cursor, { match: 'hpref:*', count: 500 })) as [string | number, string[]];
+    keys.push(...ks); cursor = next;
+  } while (String(cursor) !== '0' && keys.length < 2000);
+  if (!keys.length) return [];
+  const vals = (await redis.mget(...keys)) as (Pref | null)[];
+  return vals.filter(Boolean) as Pref[];
+}
+/** 관리자용: 저장된 공고 목록만 읽기 (새로 모으지 않아서 빨라요) */
+export async function peekNotices(): Promise<Cache | null> { return rget<Cache>('house:v2'); }
