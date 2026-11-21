@@ -628,3 +628,20 @@ button:focus-visible, a:focus-visible { outline: 3px solid #1A3FA8; outline-offs
   .nav { display: flex; align-items: flex-end; }
   .nav .navLang { display: flex; align-self: center; padding-bottom: 6px; }
 }
+
+/* 관리자 · 방문 분석 */
+.anl { display: flex; flex-direction: column; gap: 14px; }
+.anlH { margin: 8px 0 0; font-size: 26px; letter-spacing: -0.04em; }
+.anlH small { font-size: 13px; color: #6B6B69; font-weight: 600; margin-left: 6px; letter-spacing: 0; }
+.anlBox { background: #fff; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.anlBox > b { font-size: 16px; }
+.anlDays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; height: 150px; align-items: end; }
+.anlDays div { height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; font-size: 12px; }
+.anlDays i { width: 70%; background: #B1A6FF; border-radius: 8px 8px 3px 3px; }
+.anlDays span { color: #6B6B69; font-weight: 600; }
+.anlRow { display: grid; grid-template-columns: minmax(0, 2.4fr) 0.8fr 1fr 1fr; gap: 10px; align-items: center; font-size: 14px; padding: 6px 0; border-top: 1px solid #EEE; }
+.anlRow.head { font-size: 12px; font-weight: 700; color: #6B6B69; border-top: 0; }
+.anlRow > span:first-child { position: relative; font-weight: 700; padding: 4px 8px; border-radius: 8px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.anlRow > span:first-child em { position: absolute; inset: 0 auto 0 0; background: #F2F28E; z-index: -1; border-radius: 8px; }
+.anlRow > span:first-child { z-index: 0; }
+.anlRow > span:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }

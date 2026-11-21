@@ -76,7 +76,7 @@ export default function Home() {
       <div className="homeGrid">
       <div className="colA">
       <div className="stack keep">
-        <section className="card dark" style={{ gap: 12, paddingTop: 16 }}>
+        <section className="card dark" data-track="banner" style={{ gap: 12, paddingTop: 16 }}>
           <MktToggle mkt={mkt} onChange={setMkt} />
           <Overview size="app" mkt={mkt} />
         </section>
@@ -84,7 +84,7 @@ export default function Home() {
         {cards.map((c, i) => {
           const isOpen = open === i;
           return (
-            <div key={i} className="card" style={{ background: CARD_BG[i] }}>
+            <div key={i} className="card" data-track={`news${i + 1}`} style={{ background: CARD_BG[i] }}>
               <button type="button" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? -1 : i)}
                 style={{ border: 0, background: 'transparent', padding: 0, textAlign: 'left', display: 'flex', flexDirection: 'column', gap: 12, width: '100%' }}>
                 <span className="row" style={{ width: '100%' }}>
@@ -108,7 +108,7 @@ export default function Home() {
 
       </div>
       <div className="colB">
-      <section className="section" aria-label={t('할인 중인 환율', 'Exchange rates on sale')}>
+      <section className="section" data-track="fx" aria-label={t('할인 중인 환율', 'Exchange rates on sale')}>
         <div className="rowEnd" style={{ padding: '0 12px' }}>
           <h2 style={{ margin: 0 }}>{t('환율', 'FX')}<br /><span>{t('사? 말아?', 'Buy or wait?')}</span></h2>
           <span className="meta" style={{ fontSize: 12 }}>{t('1년 최고 대비', 'vs 1-year high')}</span>
@@ -139,14 +139,14 @@ export default function Home() {
         </div>
       </div>
       <div className="stack keep" aria-label={t('세일 현황', 'Sale status')}>
-        <section className="card reboundCard" style={{ gap: 6 }}>
+        <section className="card reboundCard" data-track="bounce" style={{ gap: 6 }}>
           <div className="row"><span className="chip" style={{ background: '#111', color: '#fff' }}>{t('반등리스트', 'Bounce list')}</span><span style={{ fontSize: 15, fontWeight: 800 }}>{rebs.length}{t('개', '')}</span></div>
           <p style={{ margin: '8px 0 0', fontSize: 30, lineHeight: 1.12, fontWeight: 800, letterSpacing: '-0.045em' }}>{t('반등 시작됐다 줍자.', 'The bounce is on. Pick it up.')}</p>
           <p className="nShort" style={{ margin: '0 0 4px', color: '#123' }}>{t('슬슬 오를 기미가 보이는 녀석들만 모아보기', 'Only the ones starting to climb back')}</p>
           <p className="small" style={{ margin: '6px 0 0', fontWeight: 800, fontSize: 16 }}>{rebs.length ? t(`${rebs.length}개`, `${rebs.length} ETFs`) : t('아직은 0개', 'None yet')}</p>
           {rebs.map((e) => <Row key={e.id} e={e} />)}
         </section>
-        <section className="card dark" style={{ gap: 6 }}>
+        <section className="card dark" data-track="mega" style={{ gap: 6 }}>
           <div className="row"><span className="live">{t('특급세일 리스트', 'Mega sale list')}</span><span style={{ fontSize: 15, fontWeight: 800 }}>{megas.length}{t('개', '')}</span></div>
           <p style={{ margin: '8px 0 4px', fontSize: 30, lineHeight: 1.12, fontWeight: 800, letterSpacing: '-0.045em' }}>{t('최고가대비', 'Way off')}<br />{t('특급할인', 'the high')}</p>
           <p className="nShort" style={{ margin: '0 0 4px', color: '#BDBDBA' }}>{t('최고가보다 15% 넘게 빠진 종목들', 'Down more than 15% from the high')}</p>
@@ -154,7 +154,7 @@ export default function Home() {
             : <p className="small" style={{ margin: '6px 0 0', fontWeight: 700 }}>{t('지금 특급세일은 없어요. 기다리는 것도 실력!', 'No mega sales right now. Waiting is a skill too!')}</p>}
         </section>
         <Fng />
-        <section className="card" style={{ background: '#F4F4F2', gap: 10 }}>
+        <section className="card" data-track="calm" style={{ background: '#F4F4F2', gap: 10 }}>
           <div className="row"><b style={{ fontSize: 15 }}>{t('올랐을 땐 평정심', 'Stay calm when it’s up')}</b><span style={{ fontSize: 13, fontWeight: 700, color: '#5A5A58' }}>{t('상승 중', 'Rising')} {ups.length} · {t('워워', 'Easy')} {wows.length}</span></div>
           {wows.length ? wows.map((e) => (
             <Link key={e.id} href={`/etf/${e.id}/`} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '12px 14px', borderRadius: 18, background: '#F2F28E', textDecoration: 'none', color: '#111' }}>
@@ -168,7 +168,7 @@ export default function Home() {
           {ups.length > 0 && <p className="small" style={{ margin: 0, color: '#3D3D3B' }}>{en ? `Rising: ${ups.map(nameOf).join(', ')} — going well. Don’t chase, stick to the plan.` : `상승 중: ${ups.map(nameOf).join(', ')} — 잘 가고 있어요. 쫓아 사지 말고 원래 계획대로.`}</p>}
           <Link href="/etf/" className="cta" style={{ marginTop: 4 }}>{t('ETF 전체 보기', 'See all ETFs')}<Arrow /></Link>
         </section>
-        <section className="card" style={{ background: '#fff', border: '2px solid #111', gap: 6 }} id="myjup">
+        <section className="card" data-track="mylist" style={{ background: '#fff', border: '2px solid #111', gap: 6 }} id="myjup">
           <div className="row"><b style={{ fontSize: 18 }}>{t('내 줍줍리스트', 'My dip list')}</b><span style={{ fontSize: 15, fontWeight: 800 }}>{mine.length}{t('개', '')}</span></div>
           {jup.status === 'out' ? (
             <button type="button" className="cta" onClick={goLogin} style={{ marginTop: 4 }}>{t('로그인하고 내 리스트 보기', 'Log in to see your list')}<Arrow /></button>

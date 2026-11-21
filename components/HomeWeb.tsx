@@ -54,7 +54,7 @@ export default function HomeWeb() {
 
       <div className="wHome">
         <div className="wMain">
-          <section className="wBanner">
+          <section className="wBanner" data-track="banner">
             <div className="row" style={{ alignItems: 'baseline' }}>
               <MktToggle mkt={mkt} onChange={setMkt} />
             </div>
@@ -64,7 +64,7 @@ export default function HomeWeb() {
           <div className="wSecHead">
             <h2 style={{ margin: 0 }}>{en ? `Today’s ${mkt === 'us' ? 'US' : 'Korea'} news` : `오늘 ${mkt === 'us' ? '미국' : '한국'} 뉴스`}</h2>
           </div>
-          <div className="wNews3">
+          <div className="wNews3" data-track="news">
             {(mkt === 'us' ? BRIEF.cards : BRIEF.cardsKr).map((c, i) => <NewsCard key={mkt + i} c={c} i={i} bg={NEWS_BG[i]} />)}
           </div>
 
@@ -76,14 +76,14 @@ export default function HomeWeb() {
             </div>
           </div>
           <div className="wSale2">
-            <section className="wCard reboundCard" style={{ gridColumn: '1 / -1' }}>
+            <section className="wCard reboundCard" data-track="bounce" style={{ gridColumn: '1 / -1' }}>
               <div className="row"><h3 className="wListTitle">{t('반등리스트', 'Bounce list')}</h3><b className="wCnt">{rebs.length}{t('개', '')}</b></div>
               <p className="wMid">{t('반등 시작됐다 줍자.', 'The bounce is on. Pick it up.')}</p>
               <p className="nShort">{t('슬슬 오를 기미가 보이는 녀석들만 모아보기', 'Only the ones starting to climb back')}</p>
               <p className="wBody" style={{ fontWeight: 800 }}>{rebs.length ? t(`${rebs.length}개`, `${rebs.length} ETFs`) : t('아직은 0개', 'None yet')}</p>
               <div>{rebs.map((e) => <Row key={e.id} e={e} />)}</div>
             </section>
-            <section className="wCard dark">
+            <section className="wCard dark" data-track="mega">
               <div className="row"><h3 className="wListTitle">{t('특급세일 리스트', 'Mega sale list')}</h3><b className="wCnt">{megas.length}{t('개', '')}</b></div>
               <p className="wMid" style={{ color: '#F4F4F2' }}>{t('최고가대비 특급할인', 'Way off the high')}</p>
               <p className="nShort" style={{ color: '#BDBDBA' }}>{t('최고가보다 15% 넘게 빠진 종목들', 'Down more than 15% from the high')}</p>
@@ -95,7 +95,7 @@ export default function HomeWeb() {
             <Link key={e.id} href={`/etf/${e.id}/`} className="wWow"><HandIcon /><span><b>{en ? `Easy! ${nameOf(e)} is right near its high` : `워워! ${nameOf(e)}는 최고가 바로 근처`}</b> · {t('많이 들어가지 않기', 'don’t go big')}</span></Link>
           ))}
           <Link href="/etf/" className="cta" style={{ alignSelf: 'flex-start', width: 'auto', gap: 16 }}>{t('ETF 전체 보기', 'See all ETFs')}<Arrow /></Link>
-          <section className="wCard" style={{ background: '#fff', border: '2px solid #111' }} id="myjup">
+          <section className="wCard" data-track="mylist" style={{ background: '#fff', border: '2px solid #111' }} id="myjup">
             <div className="row"><h3 className="wListTitle">{t('내 줍줍리스트', 'My dip list')}</h3><b className="wCnt">{mine.length}{t('개', '')}</b></div>
             <div>{jup.status === 'out'
               ? <button type="button" className="cta" onClick={goLogin} style={{ width: 'auto' }}>{t('로그인하고 내 리스트 보기', 'Log in to see your list')}<Arrow /></button>
@@ -104,7 +104,7 @@ export default function HomeWeb() {
         </div>
 
         <aside className="wSide">
-          <section className="wPanel">
+          <section className="wPanel" data-track="fx">
             <h3 className="wListTitle">{t('환율 사? 말아?', 'FX: buy or wait?')}</h3>
             {FX.map((f, i) => {
               const v = fxVerdict(f);

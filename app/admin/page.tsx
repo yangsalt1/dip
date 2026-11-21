@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { auth } from '@/auth';
 import { allUsers, storeReady, userStats } from '@/lib/store';
+import Analytics from './Analytics';
 
 export const metadata = { title: 'JUP · 관리자', robots: { index: false, follow: false } };
 export const dynamic = 'force-dynamic';
@@ -42,6 +43,8 @@ export default async function Admin() {
           <div><b>{by('kakao')} · {by('naver')} · {by('google')}</b><span>카카오 · 네이버 · 구글</span></div>
           <div><b>{stats.filter((x) => x.port).length}</b><span>내 주식 분석함</span></div>
         </div>
+        <Analytics />
+        <h2 className="anlH">회원 목록</h2>
         <div className="admTable" role="table">
           <div className="admRow head" role="row"><span>이름</span><span>이메일</span><span>로그인</span><span>가입</span><span>최근</span><span>줍줍</span><span>분석</span></div>
           {users.map((u, i) => (

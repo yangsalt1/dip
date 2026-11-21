@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import SwRegister from '@/components/SwRegister';
 import AppBridge from '@/components/AppBridge';
+import Tracker from '@/components/Tracker';
 import LoginSheet from '@/components/LoginSheet';
 import { LangProvider } from '@/components/Lang';
 import { getLang } from '@/lib/i18n-server';
@@ -52,6 +53,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {children}
           <SwRegister />
           <AppBridge />
+          <Tracker />
           <LoginSheet />
         </LangProvider>
       </body>
